@@ -33,7 +33,7 @@ class tile extends StatelessWidget {
                     Text(
                       'Excercise',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                     ),
                     SizedBox(
                       height: 8,
