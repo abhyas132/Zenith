@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const userRouter = require("./router/user_router");
 const authRouter = require("./router/auth_router");
+const task_router = require('./router/task_router') ;
 
 app.use(express.json());
 
@@ -24,6 +25,7 @@ mongoose
 
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
+app.use("/task", task_router);
 
 
 
