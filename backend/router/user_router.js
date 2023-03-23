@@ -4,12 +4,12 @@ const userRouter = express.Router();
 let userModal = require("../modals/user_modal");
 
 userRouter
-  .route("/")
-  .get(getUser)
-  .post(postUser)
-  .patch(updateUser)
-  .delete(deleteUser);
-
+    .route("/")
+    .get(getUser)
+    .post(postUser)
+    .patch(updateUser)
+    .delete(deleteUser);
+    
 
 async function getUser(req, res) {
   try {
@@ -30,11 +30,10 @@ async function postUser(req, res) {
     let newUser = req.body;
     newUser = await userModal.create(newUser);
     const token = jwt.sign({ uid: newUser._id }, "uid");
-    res.cookie("isLoggedIn", token);
-    console.log("token : " + token);
     return res.json({
       message: "user created succesfully",
-      users: newUser,
+      user: newUser,
+      token
     });
   } catch (e) {
     return res.json({
