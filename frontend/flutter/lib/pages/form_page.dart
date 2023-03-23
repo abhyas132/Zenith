@@ -27,7 +27,7 @@ class _AddFormState extends State<AddForm> {
         .post(Uri.parse('http://10.20.36.38/api/v1/create/task'), body: {
       "title": _title1,
       "description": _description1,
-      "duration": (_selectedItem),
+      "duration": _selectedItem,
     });
     print(response.body);
   }
@@ -37,8 +37,8 @@ class _AddFormState extends State<AddForm> {
         .post(Uri.parse('http://localhost:3000/api/v1/create/task'), body: {
       "title": _title2,
       "description": _description2,
-      "startTime": formatTimeOfDay(_startTime),
-      "endTime": formatTimeOfDay(_endTime),
+      "startTime": (_startTime),
+      "endTime": (_endTime),
     });
     print(response.body);
   }
@@ -180,21 +180,6 @@ class _AddFormState extends State<AddForm> {
                 },
               ),
               SizedBox(height: 16),
-              // TextFormField(
-              //   decoration: InputDecoration(
-              //     labelText: 'Duration',
-              //     border: OutlineInputBorder(),
-              //   ),
-              //   validator: (value) {
-              //     if (value!.isEmpty) {
-              //       return 'Please enter a duration';
-              //     }
-              //     return null;
-              //   },
-              //   onSaved: (value) {
-              //     _duration = value!;
-              //   },
-              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -361,9 +346,9 @@ class _AddFormState extends State<AddForm> {
             child: ElevatedButton(
               child: Text('Save'),
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  print(formatTimeOfDay(_startTime));
+                if (_formKey1.currentState!.validate()) {
+                  _formKey1.currentState!.save();
+                  print((_startTime));
                   postDataDynamic();
                   // Save the data to your database or perform any other necessary action.
                 }
