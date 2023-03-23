@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zenith/pages/bodypage.dart';
 import 'package:zenith/pages/homepage.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: body_page(),
     );
   }
 }

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const shortid = require('shortid');
 
-const taskSchema = new Schema({
+const taskSchema = new mongoose.Schema({
     uid : {
         type : String,
         required : true,
@@ -15,7 +15,6 @@ const taskSchema = new Schema({
     },
     description : {
         type : String,
-        require : ['true', 'Provide the task description']
     },
     taskType : {
         type : String,
@@ -32,7 +31,7 @@ const taskSchema = new Schema({
         type : Date,
     },
     duration:{
-        type : mongoose.Schema.Types.Double
+        type : mongoose.Schema.Types.Number
     },
     taskTag : {
         type : String,

@@ -3,63 +3,57 @@ const jwt = require("jsonwebtoken");
 const userRouter = express.Router();
 let userModal = require("../modals/user_modal");
 
-userRouter
-  .route("/")
-  .get(getUser)
-  .post(postUser)
-  .patch(updateUser)
-  .delete(deleteUser);
-
+userRouter.route("/").get(getUser).post(postUser).patch(updateUser).delete(deleteUser);
 
 async function getUser(req, res) {
-  try {
-    let users = await userModal.find();
-    res.json({
-      message: "retrieved successfully",
-      users,
-    });
-  } catch (e) {
-    res.json({
-      error: e.message,
-    });
-  }
+    try {
+        let users = await userModal.find();
+        res.json({
+            message: "retrieved successfully",
+            users,
+        });
+    } catch(e) {
+        res.json({
+            error: e.message,
+        });
+    }
 }
 
 async function postUser(req, res) {
-  try {
-    let newUser = req.body;
-    newUser = await userModal.create(newUser);
-    const token = jwt.sign({ uid: newUser._id }, "uid");
-    res.cookie("isLoggedIn", token);
-    console.log("token : " + token);
-    return res.json({
-      message: "user created succesfully",
-      users: newUser,
-    });
-  } catch (e) {
-    return res.json({
-      error: e.message,
-    });
-  }
+    try {
+        let newUser = req.body;
+        newUser = await userModal.create(newUser);
+        const token = jwt.sign({ uid: newUser._id }, "uid");
+        res.cookie("isLoggedIn", token);
+        console.log("token : " + token);
+        return res.json({
+          message: "user created succesfully",
+          users: newUser,
+        });
+    } catch (e) {
+        return res.json({
+          error: e.message,
+        });
+    }
 }
 
 async function updateUser(req, res) {
-  try {
-    let updatedUser = req.body;
-    let users = await userModal.findOneAndUpdate(
-      { email: updatedUser.email },
-      updateUser
-    );
-    users = await userModal.find({});
-    res.json({
-      message: "done",
-      updatedUsers: users,
-    });
-  } catch (e) {
-    res.json({
-      error: e.message,
-    });
-  }
+    try {
+        let updatedUser = req.body;
+        let users = await userModal.findOneAndUpdate(
+          { email: updatedUser.email },
+          updateUser
+        );
+        users = await userModal.find({});
+        res.json({
+          message: "done",
+          updatedUsers: users,
+        });
+    } catch (e) {
+        res.json({
+          error: e.message,
+        });
+    }
 }
 
 async function deleteUser(req, res) {
