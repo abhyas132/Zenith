@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -22,7 +23,8 @@ class _HomePageState extends State<HomePage> {
           //
           child: Column(
             children: [
-              Padding(
+              Container(
+                height: MediaQuery.of(context).size.height * .45,
                 padding: EdgeInsets.all(25),
                 child: Column(
                   children: [
@@ -55,6 +57,8 @@ class _HomePageState extends State<HomePage> {
                             iconSize: 20,
                             icon: const Icon(Icons.add),
                             onPressed: () {
+                              print('hello');
+                              log(909);
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => AddForm()));
                             },
@@ -140,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              Expanded(
+              Flexible(
                 child: Stack(children: <Widget>[
                   Container(
                     color: Colors.grey[200],
@@ -161,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: 20,
                         ),
-                        Expanded(
+                        Flexible(
                             child: ListView(
                           children: [
                             tile(),

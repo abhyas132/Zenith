@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const shortid = require('shortid');
 
-const taskSchema = new mongoose.Schema({
+const taskSchema = mongoose.Schema({
     uid : {
         type : String,
         required : true,
@@ -33,7 +33,7 @@ const taskSchema = new mongoose.Schema({
     duration:{
         type : mongoose.Schema.Types.Number
     },
-    taskTag : {
+    taskTag: {
         type : String,
         default : 'flexible',
         enum : {
@@ -43,4 +43,4 @@ const taskSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Task', taskSchema) ;
+module.exports = mongoose.model('Task', taskSchema);

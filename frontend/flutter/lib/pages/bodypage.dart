@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:zenith/pages/homepage.dart';
-import 'package:zenith/pages/leaderboard.dart';
 
 class body_page extends StatefulWidget {
   const body_page({super.key});
@@ -16,9 +14,9 @@ class _body_pageState extends State<body_page> {
 
   final _pageOptions = [
     const HomePage(),
-    leaderboard(),
-    HomePage(),
-    HomePage(),
+    const HomePage(),
+    const HomePage(),
+    const HomePage(),
     HomePage(),
   ];
   @override
