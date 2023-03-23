@@ -3,34 +3,33 @@ const mongoose = require("mongoose");
 //user schema...
 
 const userSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    minLength: 3,
-  },
-  zenCoins: {
-    type: Number,
-    default: 0,
-  },
+    name: {
+        type: String,
+        require: true,
+    },
+    email: {
+        type: String,
+        require: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        require: true,
+        minLength: 3,
+    },
+    zenCoins: {
+        type: Number,
+        default: 0,
+    },
 });
 
 
 userSchema.pre("save", function () {
-  //I will add
+    //I will add
 });
 
 userSchema.post("save", function (doc) {
-  // I wil add
-    
+    // I wil add
 });
 
 // model...

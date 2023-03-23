@@ -4,12 +4,12 @@ const userRouter = express.Router();
 let userModal = require("../modals/user_modal");
 
 userRouter
-  .route("/")
-  .get(getUser)
-  .post(postUser)
-  .patch(updateUser)
-  .delete(deleteUser);
-
+    .route("/")
+    .get(getUser)
+    .post(postUser)
+    .patch(updateUser)
+    .delete(deleteUser);
+    
 
 async function getUser(req, res) {
   try {

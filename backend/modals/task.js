@@ -15,7 +15,6 @@ const taskSchema = mongoose.Schema({
     },
     description : {
         type : String,
-        require : ['true', 'Provide the task description']
     },
     taskType : {
         type : String,
@@ -32,7 +31,7 @@ const taskSchema = mongoose.Schema({
         type : Date,
     },
     duration:{
-        type : mongoose.Schema.Types.Double
+        type : mongoose.Schema.Types.Number
     },
     taskTag : {
         type : String,
