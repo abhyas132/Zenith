@@ -1,31 +1,12 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
-const scheduleRouter = express.Router();
-let scheduleModal = require("../modals/schedule_modal");
+const router = express.Router();
 
-scheduleRouter
-    .route("/schedule")
-    .get(getSchedule)
-    .post(createSchedule);
+const {getSchedule} = require('../controller/scheduleController') ;
 
-    async function getSchedule(req, res){
-        try {
-          let schedule = await scheduleModal.find();
-          res.json({
-            message: "schedule retrieved successfully",
-            schedule,
-          });
-        } catch (e) {
-          res.json({
-            error: e.message,
-          });
-        }
-}
-    
-async function createSchedule(req, res) {
-    
-}
+router.route("/get/schedule").get(getSchedule)
+router.route("/create/schedule").post(createSchedule);
+
+router.route('/create/task').post(createTask) ;
 
 
-
-module.exports = userRouter;
+module.exports = router;
