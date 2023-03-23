@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zenith/utils/emotion_face.dart';
 import 'package:zenith/utils/excercise_tile.dart';
 import 'form_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,10 +37,12 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text(
                           'Zenith',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold),
+                          style: GoogleFonts.varelaRound(
+                            textStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         SizedBox(height: 8),
                         Text(
