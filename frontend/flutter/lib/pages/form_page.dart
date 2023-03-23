@@ -37,7 +37,7 @@ class _AddFormState extends State<AddForm> {
     print(response.body);
   }
 
-  List<String> _durationhrs = ['1 hrs', '2 hrs', '3 hrs', '4 hrs'];
+  List<String> _durationhrs = ["1", "1.5", "2.5", "3", "3.5", "4", "4.5"];
   late TimeOfDay _startTime;
   late TimeOfDay _endTime;
   final _formKey = GlobalKey<FormState>();
@@ -46,7 +46,7 @@ class _AddFormState extends State<AddForm> {
   String _duration = '';
   String _description1 = '';
   String _description2 = '';
-  String? _selectedItem;
+  double? _selectedItem;
   // DateTime _dateTime;
   bool _isStatic = true;
   Future<void> _selectTime(BuildContext context) async {
@@ -159,7 +159,7 @@ class _AddFormState extends State<AddForm> {
             children: [
               Text("Duration"),
               DropdownButton<String>(
-                value: _selectedItem,
+                value: _selectedItem.toString(),
                 items: _durationhrs.map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -168,7 +168,7 @@ class _AddFormState extends State<AddForm> {
                 }).toList(),
                 onChanged: (String? selectedItem) {
                   setState(() {
-                    _selectedItem = selectedItem!;
+                    _selectedItem = double.parse(selectedItem!);
                     print(_selectedItem);
                   });
                 },
