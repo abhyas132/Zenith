@@ -33,7 +33,7 @@ const taskSchema = new mongoose.Schema({
     duration:{
         type : mongoose.Schema.Types.Number
     },
-    taskTag : {
+    taskTag: {
         type : String,
         default : 'flexible',
         enum : {
