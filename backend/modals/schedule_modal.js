@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Task = require("./task")
 const shortid = require("shortid");
 const scheduleSchema = mongoose.Schema({
-<<<<<<< HEAD
   tasks: [
     {
       uid: {
@@ -50,13 +49,6 @@ const scheduleSchema = mongoose.Schema({
     type: Number,
     default: 24,
   },
-=======
-    tasks: [task],
-    hours: {
-      type: Number,
-      default: 24,
-    },
->>>>>>> 7a310da87e4ce1ef29f3c1e2ede57c3c25f6a495
 });
 
 const Schedule = mongoose.model("Schedule", scheduleSchema);

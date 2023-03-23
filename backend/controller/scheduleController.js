@@ -1,5 +1,5 @@
 const BigPromise = require("../middleware/bigPromise");
-
+const scheduleModal = require("../modals/schedule_modal")
 
 exports.getSchedule = BigPromise(async (req,res, next) => {
     const schedule = await scheduleModal.find();
