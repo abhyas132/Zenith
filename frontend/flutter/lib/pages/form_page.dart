@@ -1,7 +1,9 @@
+import 'package:chips_choice_null_safety/chips_choice_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:zenith/globalvariables.dart';
 
 class AddForm extends StatefulWidget {
   @override
@@ -9,6 +11,10 @@ class AddForm extends StatefulWidget {
 }
 
 class _AddFormState extends State<AddForm> {
+  int tag = 1;
+  List<String> tags = [];
+  List<String> options = ['flexible', 'morning', 'afternoon', 'evening'];
+  // GlobalVariables GL =  GlobalVariables();
   String formatTimeOfDay(TimeOfDay tod) {
     final now = new DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
@@ -18,17 +24,17 @@ class _AddFormState extends State<AddForm> {
 
   postDataStatic() async {
     var response = await http
-        .post(Uri.parse('http://localhost:3000/api/v1/create/task'), body: {
+        .post(Uri.parse('http://10.20.36.38/api/v1/create/task'), body: {
       "title": _title1,
       "description": _description1,
-      "duration": _selectedItem,
+      "duration": (_selectedItem),
     });
     print(response.body);
   }
 
   postDataDynamic() async {
     var response = await http
-        .post(Uri.parse('https://jsonplaceholder.typicode.com/posts'), body: {
+        .post(Uri.parse('http://localhost:3000/api/v1/create/task'), body: {
       "title": _title2,
       "description": _description2,
       "startTime": formatTimeOfDay(_startTime),
@@ -37,16 +43,25 @@ class _AddFormState extends State<AddForm> {
     print(response.body);
   }
 
-  List<String> _durationhrs = ["1", "1.5", "2.5", "3", "3.5", "4", "4.5"];
+  final List<String> _durationhrs = [
+    '1',
+    '1.5',
+    '2',
+    '2.5',
+    '3',
+    '3.5',
+    '4',
+    '4.5'
+  ];
   late TimeOfDay _startTime;
   late TimeOfDay _endTime;
   final _formKey = GlobalKey<FormState>();
+  final _formKey1 = GlobalKey<FormState>();
   String _title1 = '';
   String _title2 = '';
-  String _duration = '';
   String _description1 = '';
   String _description2 = '';
-  double? _selectedItem;
+  String _selectedItem = '1';
   // DateTime _dateTime;
   bool _isStatic = true;
   Future<void> _selectTime(BuildContext context) async {
@@ -57,6 +72,18 @@ class _AddFormState extends State<AddForm> {
     if (pickedTime != null && pickedTime != _startTime) {
       setState(() {
         _startTime = pickedTime;
+      });
+    }
+  }
+
+  Future<void> _selectTime2(BuildContext context) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: _endTime,
+    );
+    if (pickedTime != null && pickedTime != _endTime) {
+      setState(() {
+        _endTime = pickedTime;
       });
     }
   }
@@ -116,113 +143,129 @@ class _AddFormState extends State<AddForm> {
     );
   }
 
-  Widget _buildStaticForm() {
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Title',
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter a title';
-              }
-              return null;
-            },
-            onSaved: (value) {
-              _title1 = value!;
-              print(_title1);
-            },
+  Widget _buildDynamicForm() {
+    return Column(
+      children: [
+        ChipsChoice.single(
+          value: tag,
+          onChanged: (val) => setState(() => tag = val),
+          choiceItems: C2Choice.listFrom(
+              source: options, value: (i, v) => i, label: (i, v) => v),
+          choiceActiveStyle: C2ChoiceStyle(
+            color: Colors.red,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          SizedBox(height: 16),
-          // TextFormField(
-          //   decoration: InputDecoration(
-          //     labelText: 'Duration',
-          //     border: OutlineInputBorder(),
-          //   ),
-          //   validator: (value) {
-          //     if (value!.isEmpty) {
-          //       return 'Please enter a duration';
-          //     }
-          //     return null;
-          //   },
-          //   onSaved: (value) {
-          //     _duration = value!;
-          //   },
-          // ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          choiceStyle: C2ChoiceStyle(color: Colors.black),
+          wrapped: true,
+        ),
+        Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Duration"),
-              DropdownButton<String>(
-                value: _selectedItem.toString(),
-                items: _durationhrs.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? selectedItem) {
-                  setState(() {
-                    _selectedItem = double.parse(selectedItem!);
-                    print(_selectedItem);
-                  });
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _title1 = value!;
+                  print(_title1);
                 },
               ),
+              SizedBox(height: 16),
+              // TextFormField(
+              //   decoration: InputDecoration(
+              //     labelText: 'Duration',
+              //     border: OutlineInputBorder(),
+              //   ),
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return 'Please enter a duration';
+              //     }
+              //     return null;
+              //   },
+              //   onSaved: (value) {
+              //     _duration = value!;
+              //   },
+              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text("Duration"),
+                  DropdownButton<String>(
+                    value: _selectedItem,
+                    items: _durationhrs.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? selectedItem) {
+                      setState(() {
+                        _selectedItem = (selectedItem!);
+                        print(_selectedItem);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              // TextButton(
+              //   onPressed: () => _selectTime(context),
+              //   child: Text(
+              //     _selectedTime.format(context),
+              //     style: TextStyle(fontSize: 20.0),
+              //   ),
+              // ),
+              SizedBox(height: 16),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _description1 = value!;
+                  print(_description1);
+                },
+              ),
+              SizedBox(height: 32),
+              Center(
+                child: ElevatedButton(
+                  child: Text('Save'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      print(_title1);
+                      postDataStatic();
+                      // Save the data to your database or perform any other necessary action.
+                    }
+                  },
+                ),
+              )
             ],
           ),
-          // TextButton(
-          //   onPressed: () => _selectTime(context),
-          //   child: Text(
-          //     _selectedTime.format(context),
-          //     style: TextStyle(fontSize: 20.0),
-          //   ),
-          // ),
-          SizedBox(height: 16),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Description',
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter a description';
-              }
-              return null;
-            },
-            onSaved: (value) {
-              _description1 = value!;
-              print(_description1);
-            },
-          ),
-          SizedBox(height: 32),
-          Center(
-            child: ElevatedButton(
-              child: Text('Save'),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  print(_title1);
-                  postDataStatic();
-                  // Save the data to your database or perform any other necessary action.
-                }
-              },
-            ),
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildDynamicForm() {
+  Widget _buildStaticForm() {
     return Container(
         // Replace this with your dynamic form code.
         child: Form(
-      key: _formKey,
+      key: _formKey1,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -289,7 +332,7 @@ class _AddFormState extends State<AddForm> {
             children: [
               Text("End Time"),
               TextButton(
-                onPressed: () => _selectTime(context),
+                onPressed: () => _selectTime2(context),
                 child: Text(
                   _endTime.format(context),
                   style: TextStyle(fontSize: 20.0),
