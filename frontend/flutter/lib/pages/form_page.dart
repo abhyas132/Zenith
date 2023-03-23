@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class AddForm extends StatefulWidget {
   @override
@@ -7,13 +9,43 @@ class AddForm extends StatefulWidget {
 }
 
 class _AddFormState extends State<AddForm> {
+  String formatTimeOfDay(TimeOfDay tod) {
+    final now = new DateTime.now();
+    final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
+    final format = DateFormat.jm(); //"6:00 AM"
+    return format.format(dt);
+  }
+
+  postDataStatic() async {
+    var response = await http
+        .post(Uri.parse('http://localhost:3000/api/v1/create/task'), body: {
+      "title": _title1,
+      "description": _description1,
+      "duration": _selectedItem,
+    });
+    print(response.body);
+  }
+
+  postDataDynamic() async {
+    var response = await http
+        .post(Uri.parse('https://jsonplaceholder.typicode.com/posts'), body: {
+      "title": _title2,
+      "description": _description2,
+      "startTime": formatTimeOfDay(_startTime),
+      "endTime": formatTimeOfDay(_endTime),
+    });
+    print(response.body);
+  }
+
   List<String> _durationhrs = ['1 hrs', '2 hrs', '3 hrs', '4 hrs'];
   late TimeOfDay _startTime;
   late TimeOfDay _endTime;
   final _formKey = GlobalKey<FormState>();
-  String _title = '';
+  String _title1 = '';
+  String _title2 = '';
   String _duration = '';
-  String _description = '';
+  String _description1 = '';
+  String _description2 = '';
   String? _selectedItem;
   // DateTime _dateTime;
   bool _isStatic = true;
@@ -102,8 +134,8 @@ class _AddFormState extends State<AddForm> {
               return null;
             },
             onSaved: (value) {
-              _title = value!;
-              print(_title);
+              _title1 = value!;
+              print(_title1);
             },
           ),
           SizedBox(height: 16),
@@ -163,8 +195,8 @@ class _AddFormState extends State<AddForm> {
               return null;
             },
             onSaved: (value) {
-              _description = value!;
-              print(_description);
+              _description1 = value!;
+              print(_description1);
             },
           ),
           SizedBox(height: 32),
@@ -174,7 +206,8 @@ class _AddFormState extends State<AddForm> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  print(_title);
+                  print(_title1);
+                  postDataStatic();
                   // Save the data to your database or perform any other necessary action.
                 }
               },
@@ -205,7 +238,7 @@ class _AddFormState extends State<AddForm> {
               return null;
             },
             onSaved: (value) {
-              _title = value!;
+              _title2 = value!;
             },
           ),
           SizedBox(height: 16),
@@ -277,7 +310,7 @@ class _AddFormState extends State<AddForm> {
               return null;
             },
             onSaved: (value) {
-              _description = value!;
+              _description2 = value!;
             },
           ),
           SizedBox(height: 32),
@@ -287,6 +320,8 @@ class _AddFormState extends State<AddForm> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
+                  print(formatTimeOfDay(_startTime));
+                  postDataDynamic();
                   // Save the data to your database or perform any other necessary action.
                 }
               },
