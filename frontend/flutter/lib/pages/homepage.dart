@@ -177,19 +177,16 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      body: Column(
-        children: [
-          SizedBox(height: 30),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => AddForm()));
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
+
+        // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     Navigator.of(context)
+        //         .push(MaterialPageRoute(builder: (context) => AddForm()));
+        //   },
+        //   child: Icon(Icons.add),
+        //   backgroundColor: Colors.blue,
+        // ),
       ),
     );
   }
