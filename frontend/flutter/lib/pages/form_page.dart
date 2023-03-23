@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:chips_choice_null_safety/chips_choice_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:zenith/globalvariables.dart';
+import 'package:zenith/utils/snackbar.dart';
+
+const url = GlobalVariables.baseUrl;
 
 class AddForm extends StatefulWidget {
   @override
@@ -22,25 +27,34 @@ class _AddFormState extends State<AddForm> {
     return format.format(dt);
   }
 
-  postDataStatic() async {
-    var response = await http
-        .post(Uri.parse('http://10.20.36.38/api/v1/create/task'), body: {
-      "title": _title1,
-      "description": _description1,
-      "duration": (_selectedItem),
-    });
-    print(response.body);
+  postDataDynamic() async {
+    try {
+      var response =
+          await http.post(Uri.parse('${url}api/v1/create/task'), body: {
+        "title": _title1,
+        "description": _description1,
+        "duration": (_selectedItem),
+      });
+      print(_startTime);
+    } catch (e) {
+      print(e.toString());
+      ShowSnakBar(context: context, content: e.toString());
+    }
   }
 
-  postDataDynamic() async {
-    var response = await http
-        .post(Uri.parse('http://localhost:3000/api/v1/create/task'), body: {
-      "title": _title2,
-      "description": _description2,
-      "startTime": formatTimeOfDay(_startTime),
-      "endTime": formatTimeOfDay(_endTime),
-    });
-    print(response.body);
+  postDataStatic() async {
+    try {
+      var response =
+          await http.post(Uri.parse('${url}api/v1/create/task'), body: {
+        "title": _title2,
+        "description": _description2,
+        "startTime": formatTimeOfDay(_startTime),
+        "endTime": formatTimeOfDay(_endTime),
+      });
+      print(_startTime);
+    } catch (e) {
+      ShowSnakBar(context: context, content: e.toString());
+    }
   }
 
   final List<String> _durationhrs = [
@@ -246,9 +260,13 @@ class _AddFormState extends State<AddForm> {
                   child: Text('Save'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-                      print(_title1);
-                      postDataStatic();
+                      try {
+                        _formKey.currentState!.save();
+                        print(_title1);
+                        postDataDynamic();
+                      } catch (e) {
+                        ShowSnakBar(context: context, content: e.toString());
+                      }
                       // Save the data to your database or perform any other necessary action.
                     }
                   },
@@ -353,6 +371,7 @@ class _AddFormState extends State<AddForm> {
               return null;
             },
             onSaved: (value) {
+              //log(value!);
               _description2 = value!;
             },
           ),
@@ -361,11 +380,15 @@ class _AddFormState extends State<AddForm> {
             child: ElevatedButton(
               child: Text('Save'),
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  print(formatTimeOfDay(_startTime));
-                  postDataDynamic();
-                  // Save the data to your database or perform any other necessary action.
+                try {
+                  if (_formKey1.currentState!.validate()) {
+                    _formKey1.currentState!.save();
+                    print(formatTimeOfDay(_startTime));
+                    postDataStatic();
+                    // Save the data to your database or perform any other necessary action.
+                  }
+                } catch (e) {
+                  ShowSnakBar(context: context, content: e.toString());
                 }
               },
             ),

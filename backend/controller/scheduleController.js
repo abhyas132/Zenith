@@ -1,8 +1,8 @@
 const BigPromise = require("../middleware/bigPromise");
 const scheduleModal = require("../modals/schedule_modal")
-
+const taskModal = require("../modals/task")
 exports.getSchedule = BigPromise(async (req,res, next) => {
-    const schedule = await scheduleModal.find();
+    const schedule = await taskModal.find();
     
     if(!schedule){
         return res.status(200).json({

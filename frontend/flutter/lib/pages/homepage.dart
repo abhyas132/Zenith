@@ -27,7 +27,8 @@ class _HomePageState extends State<HomePage> {
           //
           child: Column(
             children: [
-              Padding(
+              Container(
+                height: MediaQuery.of(context).size.height * .45,
                 padding: EdgeInsets.all(25),
                 child: Column(
                   children: [
@@ -145,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              Expanded(
+              Flexible(
                 child: Stack(children: <Widget>[
                   Container(
                     color: Colors.grey[200],
@@ -166,7 +167,7 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: 20,
                         ),
-                        Expanded(
+                        Flexible(
                             child: ListView(
                           children: [
                             tile(),
