@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class tile extends StatelessWidget {
-  const tile({super.key});
+  final String? title;
+  final String? description;
+  tile({
+    required this.title,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +35,9 @@ class tile extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Excercise',
+                      title!,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
@@ -39,7 +45,7 @@ class tile extends StatelessWidget {
                       height: 8,
                     ),
                     Text(
-                      'Sport Exercises',
+                      description!,
                       style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,

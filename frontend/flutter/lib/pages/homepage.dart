@@ -2,8 +2,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:zenith/utils/emotion_face.dart';
 import 'package:zenith/utils/excercise_tile.dart';
+import 'package:zenith/utils/getrequest.dart';
+
+import '../models/scheduleModel.dart';
 import 'form_page.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,20 +15,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<ScheduleModel> schedule = [];
+  bool _loading = true;
+  @override
+  void initState() {
+    super.initState;
+    getData();
+  }
+
+  getData() async {
+    GetRequest sc = GetRequest();
+    await sc.getData();
+    schedule = sc.schedules;
+    setState(() {
+      _loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blue[800],
         body: SafeArea(
-            //
-            child: Column(children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.35,
-            padding: EdgeInsets.all(25),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * .35,
+                padding: EdgeInsets.all(25),
+                child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,145 +90,113 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Zenith',
-                          style: GoogleFonts.varelaRound(
-                            textStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          '23 March,23',
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.blue[600],
-                          borderRadius: BorderRadius.circular(12)),
-                      padding: EdgeInsets.all(1),
-                      child: IconButton(
-                        iconSize: 20,
-                        icon: const Icon(Icons.add),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AddForm()));
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'How do you feel',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Icon(
-                      Icons.more_horiz,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-                        emotionface(emoji: '😔'),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Bad',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        emotionface(emoji: '🙂'),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Fine',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        emotionface(emoji: '😀'),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Well',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        emotionface(emoji: '😁'),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          'Excellent',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Flexible(
-            child: Stack(children: <Widget>[
-              Container(
-                color: Colors.grey[200],
-                padding: EdgeInsets.all(25),
-                child: Center(
-                  child: Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Todays Sceduele',
+                          'How do you feel',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
                         ),
-                        Icon(Icons.more_horiz)
+                        Icon(
+                          Icons.more_horiz,
+                          color: Colors.white,
+                        ),
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 25,
                     ),
-                    Flexible(
-                        child: ListView(
-                      children: [tile(), tile(), tile(), tile()],
-                    )),
-                  ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            emotionface(emoji: '😔'),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Bad',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            emotionface(emoji: '🙂'),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Fine',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            emotionface(emoji: '😀'),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Well',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            emotionface(emoji: '😁'),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Excellent',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ]),
+              Flexible(
+                child: Stack(children: <Widget>[
+                  Container(
+                    color: Colors.grey[200],
+                    padding: EdgeInsets.all(25),
+                    child: Center(
+                      child: Column(children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Todays Sceduele',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            ),
+                            Icon(Icons.more_horiz)
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Flexible(
+                          child: ListView.builder(
+                            itemCount: schedule.length,
+                            itemBuilder: (context, index) => tile(
+                                title: schedule[index].title,
+                                description: schedule[index].description),
+                          ),
+                        )
+                      ]),
+                    ),
+                  ),
+                ]),
+              ),
+            ],
           ),
-        ])));
+        ));
   }
 }

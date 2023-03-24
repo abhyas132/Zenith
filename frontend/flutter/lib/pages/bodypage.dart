@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:zenith/pages/homepage.dart';
+import 'package:zenith/utils/getrequest.dart';
+import 'package:zenith/utils/getuser.dart';
 
 class body_page extends StatefulWidget {
   const body_page({super.key});
@@ -50,7 +52,13 @@ class _body_pageState extends State<body_page> {
               label: "Profile",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
+              icon: IconButton(
+                onPressed: () {
+                  // print("onpressed");
+                  //  GetUser.getData();
+                },
+                icon: Icon(Icons.account_circle),
+              ),
               label: "Profile",
             ),
           ],
