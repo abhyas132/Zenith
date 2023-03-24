@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,8 +73,13 @@ class _HomePageState extends State<HomePage> {
                             '25 March,23',
                             style: TextStyle(color: Colors.blue[100]),
                           ),
-                          progress(),
                         ],
+                      ),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Row(
+                        children: [progress()],
                       ),
                     ],
                   ),
