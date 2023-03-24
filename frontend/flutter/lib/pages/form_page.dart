@@ -127,41 +127,50 @@ class _AddFormState extends State<AddForm> {
       appBar: AppBar(
         title: Text('Add New Item'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Radio(
-                    value: true,
-                    groupValue: _isStatic,
-                    onChanged: (bool? val) {
-                      setState(() {
-                        _isStatic = val!;
-                      });
-                    },
-                  ),
-                  Text('Static'),
-                  SizedBox(width: 32),
-                  Radio(
-                    value: false,
-                    groupValue: _isStatic,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _isStatic = value!;
-                      });
-                    },
-                  ),
-                  Text('Dynamic'),
-                ],
-              ),
-              SizedBox(height: 16),
-              _isStatic ? _buildStaticForm() : _buildDynamicForm(),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/background2.jpg"),
+            opacity: 0.1,
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Radio(
+                      value: true,
+                      groupValue: _isStatic,
+                      onChanged: (bool? val) {
+                        setState(() {
+                          _isStatic = val!;
+                        });
+                      },
+                    ),
+                    Text('Static'),
+                    SizedBox(width: 32),
+                    Radio(
+                      value: false,
+                      groupValue: _isStatic,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isStatic = value!;
+                        });
+                      },
+                    ),
+                    Text('Dynamic'),
+                  ],
+                ),
+                SizedBox(height: 16),
+                _isStatic ? _buildStaticForm() : _buildDynamicForm(),
+              ],
+            ),
           ),
         ),
       ),

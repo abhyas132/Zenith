@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
-
 import 'package:zenith/pages/homepage.dart';
-import 'package:zenith/utils/getrequest.dart';
-import 'package:zenith/utils/getuser.dart';
 
-class body_page extends StatefulWidget {
-  const body_page({super.key});
+void main() => runApp(MyApp());
 
+class MyApp extends StatefulWidget {
   @override
-  State<body_page> createState() => _body_pageState();
+  State<StatefulWidget> createState() {
+    return MyAppState();
+  }
 }
 
-class _body_pageState extends State<body_page> {
-  int _selectedPage = 0;
+class MyAppState extends State<MyApp> {
+  int _selectedPage = 1;
 
   final _pageOptions = [
     const HomePage(),
-    const HomePage(),
-    const HomePage(),
-    const HomePage(),
-    HomePage(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,13 +48,7 @@ class _body_pageState extends State<body_page> {
               label: "Profile",
             ),
             BottomNavigationBarItem(
-              icon: IconButton(
-                onPressed: () {
-                  // print("onpressed");
-                  //  GetUser.getData();
-                },
-                icon: Icon(Icons.account_circle),
-              ),
+              icon: Icon(Icons.account_circle),
               label: "Profile",
             ),
           ],
