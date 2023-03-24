@@ -8,8 +8,9 @@ class GetRequest {
   List<ScheduleModel> schedules = [];
   Future<void> getData() async {
     var Url = Uri.parse('${url}api/v1/create/schedule');
-    var response = await http.get(Url);
+    var response = await http.post(Url);
     var jsonData = jsonDecode(response.body);
+    print(jsonData);
     if (jsonData['status'] == 200) {
       jsonData['schedule'].forEach((element) {
         ScheduleModel scheduleModel = ScheduleModel(

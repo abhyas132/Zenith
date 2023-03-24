@@ -1,6 +1,6 @@
 class ScheduleModel {
-  String? startTime;
-  String? endTime;
+  int? startTime;
+  int? endTime;
   String? title;
   String? description;
   String? duration;

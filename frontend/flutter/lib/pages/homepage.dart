@@ -163,6 +163,8 @@ class _HomePageState extends State<HomePage> {
                         child: ListView.builder(
                           itemCount: schedule.length,
                           itemBuilder: (context, index) => tile(
+                              startTime: schedule[index].startTime,
+                              endTime: schedule[index].endTime,
                               title: schedule[index].title,
                               description: schedule[index].description),
                         ),

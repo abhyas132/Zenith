@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class tile extends StatelessWidget {
+  final int? startTime;
+  final int? endTime;
   final String? title;
   final String? description;
+
   tile({
     required this.title,
+    required this.endTime,
+    required this.startTime,
     required this.description,
   });
 
@@ -44,7 +49,7 @@ class tile extends StatelessWidget {
                       height: 8,
                     ),
                     Text(
-                      description!,
+                      endTime!.toString(),
                       style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,

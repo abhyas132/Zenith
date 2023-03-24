@@ -24,14 +24,15 @@ class _AddFormState extends State<AddForm> {
     var replacingTime = selectedTime.replacing(
         hour: selectedTime.hour, minute: selectedTime.minute);
 
-    String formattedhour = replacingTime.hour > 10
-        ? replacingTime.hour.toString()
-        : "0" + replacingTime.hour.toString();
+    String formattedhour = replacingTime.hour < 10
+        ? "0" + replacingTime.hour.toString()
+        : replacingTime.hour.toString();
     String formattedminute = replacingTime.minute > 10
         ? replacingTime.minute.toString()
         : "0" + replacingTime.minute.toString();
     String formattedTime = formattedhour + formattedminute;
-    return formattedTime;
+    print(formattedTime);
+    return (formattedTime);
     //return formattedTime.replaceFirst(RegExp(':'), '');
   }
 
@@ -58,8 +59,8 @@ class _AddFormState extends State<AddForm> {
           await http.post(Uri.parse('${url}api/v1/create/task'), body: {
         "title": _title2,
         "description": _description2,
-        "startTime": int.parse(formatTimeOfDay(_startTime)),
-        "endTime": int.parse(formatTimeOfDay(_endTime)),
+        "startTime": (formatTimeOfDay(_startTime!)),
+        "endTime": (formatTimeOfDay(_endTime!)),
         "taskType": "static"
       });
       print(response.body);
@@ -78,8 +79,8 @@ class _AddFormState extends State<AddForm> {
     '4',
     '4.5'
   ];
-  late TimeOfDay _startTime;
-  late TimeOfDay _endTime;
+  TimeOfDay? _startTime;
+  TimeOfDay? _endTime;
   final _formKey = GlobalKey<FormState>();
   final _formKey1 = GlobalKey<FormState>();
   String _title1 = '';
@@ -92,7 +93,7 @@ class _AddFormState extends State<AddForm> {
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: _startTime,
+      initialTime: _startTime!,
     );
     if (pickedTime != null && pickedTime != _startTime) {
       setState(() {
@@ -104,7 +105,7 @@ class _AddFormState extends State<AddForm> {
   Future<void> _selectTime2(BuildContext context) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: _endTime,
+      initialTime: _endTime!,
     );
     if (pickedTime != null && pickedTime != _endTime) {
       setState(() {
@@ -320,7 +321,7 @@ class _AddFormState extends State<AddForm> {
                 TextButton(
                   onPressed: () => _selectTime(context),
                   child: Text(
-                    _startTime.format(context),
+                    _startTime!.format(context),
                     style: TextStyle(fontSize: 20.0),
                   ),
                 ),
@@ -340,7 +341,7 @@ class _AddFormState extends State<AddForm> {
                   TextButton(
                     onPressed: () => _selectTime2(context),
                     child: Text(
-                      _endTime.format(context),
+                      _endTime!.format(context),
                       style: TextStyle(fontSize: 20.0),
                     ),
                   ),
@@ -372,7 +373,7 @@ class _AddFormState extends State<AddForm> {
                     try {
                       if (_formKey1.currentState!.validate()) {
                         _formKey1.currentState!.save();
-                        print(formatTimeOfDay(_startTime));
+                        print(formatTimeOfDay(_startTime!));
                         postDataStatic();
                         // Save the data to your database or perform any other necessary action.
                       }
