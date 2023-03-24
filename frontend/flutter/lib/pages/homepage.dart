@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.blue[600],
+        backgroundColor: Colors.blue[600],
         body: SafeArea(
             child: Container(
           decoration: BoxDecoration(
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,8 +96,13 @@ class _HomePageState extends State<HomePage> {
                             '25 March,23',
                             style: TextStyle(color: Colors.blue[100]),
                           ),
-                          progress(),
                         ],
+                      ),
+                      SizedBox(
+                        width: 40,
+                      ),
+                      Row(
+                        children: [progress()],
                       ),
                     ],
                   ),
@@ -158,13 +164,9 @@ class _HomePageState extends State<HomePage> {
                         height: 20,
                       ),
                       Flexible(
-                        child: ListView.builder(
-                          itemCount: schedule.length,
-                          itemBuilder: (context, index) => tile(
-                              title: schedule[index].title,
-                              description: schedule[index].description),
-                        ),
-                      ),
+                          child: ListView(
+                        children: [],
+                      )),
                     ]),
                   ),
                 ),

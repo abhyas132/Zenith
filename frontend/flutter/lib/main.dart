@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/onBoarding/screens/onboding/onboding_screen.dart';
+import 'package:zenith/pages/bodypage.dart';
 import 'package:zenith/pages/homepage.dart';
 
 void main() {
@@ -38,7 +39,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: logged ? HomePage() : OnbodingScreen(),
+      home: logged ? body_page() : OnbodingScreen(),
     );
   }
 }
