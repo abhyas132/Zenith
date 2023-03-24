@@ -3,10 +3,10 @@ class ScheduleModel {
   int? endTime;
   String? title;
   String? description;
-  String? duration;
+  String duration;
   ScheduleModel(
       {this.description,
-      this.duration,
+      this.duration = '',
       this.endTime,
       this.startTime,
       this.title});

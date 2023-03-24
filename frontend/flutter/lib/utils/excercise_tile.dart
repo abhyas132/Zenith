@@ -5,12 +5,14 @@ class tile extends StatelessWidget {
   final int? endTime;
   final String? title;
   final String? description;
+  final String duration;
 
   tile({
     required this.title,
     required this.endTime,
     required this.startTime,
     required this.description,
+    required this.duration,
   });
 
   @override

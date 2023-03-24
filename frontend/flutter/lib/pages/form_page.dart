@@ -59,8 +59,9 @@ class _AddFormState extends State<AddForm> {
           await http.post(Uri.parse('${url}api/v1/create/task'), body: {
         "title": _title2,
         "description": _description2,
-        "startTime": (formatTimeOfDay(_startTime!)),
-        "endTime": (formatTimeOfDay(_endTime!)),
+        "startTime": (formatTimeOfDay(_startTime)),
+        "endTime": (formatTimeOfDay(_endTime)),
+        "duration": "0",
         "taskType": "static"
       });
       print(response.body);
@@ -79,8 +80,8 @@ class _AddFormState extends State<AddForm> {
     '4',
     '4.5'
   ];
-  TimeOfDay? _startTime;
-  TimeOfDay? _endTime;
+  late TimeOfDay _startTime;
+  late TimeOfDay _endTime;
   final _formKey = GlobalKey<FormState>();
   final _formKey1 = GlobalKey<FormState>();
   String _title1 = '';
@@ -93,7 +94,7 @@ class _AddFormState extends State<AddForm> {
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: _startTime!,
+      initialTime: _startTime,
     );
     if (pickedTime != null && pickedTime != _startTime) {
       setState(() {
@@ -105,7 +106,7 @@ class _AddFormState extends State<AddForm> {
   Future<void> _selectTime2(BuildContext context) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: _endTime!,
+      initialTime: _endTime,
     );
     if (pickedTime != null && pickedTime != _endTime) {
       setState(() {
@@ -321,7 +322,7 @@ class _AddFormState extends State<AddForm> {
                 TextButton(
                   onPressed: () => _selectTime(context),
                   child: Text(
-                    _startTime!.format(context),
+                    _startTime.format(context),
                     style: TextStyle(fontSize: 20.0),
                   ),
                 ),
@@ -341,7 +342,7 @@ class _AddFormState extends State<AddForm> {
                   TextButton(
                     onPressed: () => _selectTime2(context),
                     child: Text(
-                      _endTime!.format(context),
+                      _endTime.format(context),
                       style: TextStyle(fontSize: 20.0),
                     ),
                   ),
@@ -373,7 +374,7 @@ class _AddFormState extends State<AddForm> {
                     try {
                       if (_formKey1.currentState!.validate()) {
                         _formKey1.currentState!.save();
-                        print(formatTimeOfDay(_startTime!));
+                        print(formatTimeOfDay(_startTime));
                         postDataStatic();
                         // Save the data to your database or perform any other necessary action.
                       }
