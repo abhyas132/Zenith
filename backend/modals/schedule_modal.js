@@ -8,8 +8,7 @@ const scheduleSchema = mongoose.Schema({
         ref : 'User'
     },
     tasks:[{
-        type : mongoose.Types.ObjectId,
-        ref : 'Task'
+        type : mongoose.Schema.Types.Mixed,
     }],
     hours: {
       type: Number,
