@@ -15,6 +15,7 @@ class AddForm extends StatefulWidget {
 }
 
 class _AddFormState extends State<AddForm> {
+  String taskType = "static";
   int tag = 0;
   List<String> tags = [];
   List<String> options = ['flexible', 'morning', 'afternoon', 'evening'];
@@ -23,14 +24,15 @@ class _AddFormState extends State<AddForm> {
     var replacingTime = selectedTime.replacing(
         hour: selectedTime.hour, minute: selectedTime.minute);
 
-    String formattedhour = replacingTime.hour > 10
-        ? replacingTime.hour.toString()
-        : "0" + replacingTime.hour.toString();
+    String formattedhour = replacingTime.hour < 10
+        ? "0" + replacingTime.hour.toString()
+        : replacingTime.hour.toString();
     String formattedminute = replacingTime.minute > 10
         ? replacingTime.minute.toString()
         : "0" + replacingTime.minute.toString();
     String formattedTime = formattedhour + formattedminute;
-    return formattedTime;
+    print(formattedTime);
+    return (formattedTime);
     //return formattedTime.replaceFirst(RegExp(':'), '');
   }
 
@@ -42,6 +44,7 @@ class _AddFormState extends State<AddForm> {
         "description": _description1,
         "taskTag": options[tag],
         "duration": (_selectedItem),
+        "taskType": "dynamic"
       });
       print(response.body);
     } catch (e) {
@@ -56,8 +59,10 @@ class _AddFormState extends State<AddForm> {
           await http.post(Uri.parse('${url}api/v1/create/task'), body: {
         "title": _title2,
         "description": _description2,
-        "startTime": int.parse(formatTimeOfDay(_startTime)),
-        "endTime": int.parse(formatTimeOfDay(_endTime)),
+        "startTime": (formatTimeOfDay(_startTime)),
+        "endTime": (formatTimeOfDay(_endTime)),
+        "duration": "0",
+        "taskType": "static"
       });
       print(response.body);
     } catch (e) {
@@ -233,13 +238,6 @@ class _AddFormState extends State<AddForm> {
                   ),
                 ],
               ),
-              // TextButton(
-              //   onPressed: () => _selectTime(context),
-              //   child: Text(
-              //     _selectedTime.format(context),
-              //     style: TextStyle(fontSize: 20.0),
-              //   ),
-              // ),
               SizedBox(height: 16),
               TextFormField(
                 decoration: InputDecoration(
@@ -313,7 +311,6 @@ class _AddFormState extends State<AddForm> {
                 },
               ),
               SizedBox(height: 16),
-
               Row(children: [
                 SizedBox(
                   width: 20,
@@ -333,21 +330,6 @@ class _AddFormState extends State<AddForm> {
               SizedBox(
                 height: 16,
               ),
-              // TextFormField(
-              //   decoration: InputDecoration(
-              //     labelText: 'End Time',
-              //     border: OutlineInputBorder(),
-              //   ),
-              //   validator: (value) {
-              //     if (value!.isEmpty) {
-              //       return 'Please enter a duration';
-              //     }
-              //     return null;
-              //   },
-              //   onSaved: (value) {
-              //     _duration = value!;
-              //   },
-              // ),
               Row(
                 children: [
                   SizedBox(

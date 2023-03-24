@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
 class tile extends StatelessWidget {
-  const tile({super.key});
+  final int? startTime;
+  final int? endTime;
+  final String? title;
+  final String? description;
+  final String duration;
+
+  tile({
+    required this.title,
+    required this.endTime,
+    required this.startTime,
+    required this.description,
+    required this.duration,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +41,9 @@ class tile extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      'Excercise',
+                      title!,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
@@ -39,7 +51,7 @@ class tile extends StatelessWidget {
                       height: 8,
                     ),
                     Text(
-                      'Sport Exercises',
+                      endTime!.toString(),
                       style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,

@@ -8,5 +8,5 @@ router.route("/create/user").post(createUser) ;
 router.route("/get/user").get(isLoggedIn, getUser);
 router.route("/all/user").get(getAllUser);
 router.route("/update/user").patch(isLoggedIn, updateUser) ;
-    
+router.route("/all/user").get(getAllUser);
 module.exports = router;

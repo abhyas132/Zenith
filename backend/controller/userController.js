@@ -12,6 +12,18 @@ exports.getAllUser = BigPromise(async (req, res, next) => {
   });
 });
 
+
+
+exports.getAllUser = BigPromise(async (req, res, next) => {
+
+    let users = await User.find();
+
+  return res.status(200).json({
+    status: 200,
+    message: "retrieved successfully",
+    users,
+});
+});
 exports.getUser = BigPromise(async(req, res, next) => {
     let user = req.user ;
 
@@ -28,6 +40,7 @@ exports.getUser = BigPromise(async(req, res, next) => {
         user,
     })
 })
+
 
 exports.updateUser = BigPromise(async(req, res, next) => {
     const {name, email, password ,zenCoins} = req.body;
