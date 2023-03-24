@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           SizedBox(
-            height: 35,
+            height: 45,
           ),
           Flexible(
             child: Stack(children: <Widget>[
