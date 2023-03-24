@@ -74,6 +74,7 @@ exports.createUser = BigPromise(async(req, res, next) => {
     return res.status(200).json({
         status : 200,
         message: "User created succesfully",
+        user,
         token
     });
 })

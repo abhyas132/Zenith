@@ -1,12 +1,22 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/onBoarding/screens/onboding/onboding_screen.dart';
 import 'package:zenith/pages/bodypage.dart';
 import 'package:zenith/pages/homepage.dart';
+import 'package:zenith/provider/user_provider.dart';
+import 'package:zenith/services/auth_services.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => UserProvider(),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -18,20 +28,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool logged = false;
-  // void isLoggedIn() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   final String? email = prefs.getString('email');
-  //   log(email!);
-  //   if (email != null) {
-  //     logged = true;
-  //   }
-  // }
+  AuthServices auth = AuthServices();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     // isLoggedIn();
+    auth.getUser(context);
+    //print(Provider.of<UserProvider>(context).user.email);
   }
 
   @override
@@ -39,7 +44,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: logged ? body_page() : OnbodingScreen(),
-      home: OnbodingScreen(),
+      home: Provider.of<UserProvider>(context).user.email.isEmpty
+          ? OnbodingScreen()
+          : body_page(),
     );
   }
 }

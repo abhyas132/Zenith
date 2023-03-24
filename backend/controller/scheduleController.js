@@ -28,16 +28,8 @@ exports.getSchedule = BigPromise(async (req,res, next) => {
 })
 
 exports.createSchedule = BigPromise(async (req, res, next) => {
-<<<<<<< HEAD
-    // const userId = req.user.userId ;
-    // const {userId} = req.body ;
-    
-    // const tasks = await Task.find({userId}) ;
-    const tasks = await Task.find() ;
-=======
     const userId = req.user.userId ;
     const tasks = await Task.find({userId}) ;
->>>>>>> b5e1cc8507ca50db773ec1d041ae1fc58b8cf9be
 
     if(!tasks){
         return res.status(404).json({

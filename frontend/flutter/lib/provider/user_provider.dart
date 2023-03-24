@@ -3,7 +3,6 @@ import 'package:zenith/models/user_modal.dart';
 
 class UserProvider extends ChangeNotifier {
   User _user = User(
-    userId: '',
     name: '',
     email: '',
     password: '',
@@ -13,6 +12,7 @@ class UserProvider extends ChangeNotifier {
   User get user => _user;
 
   void setUser(String user) {
+    print(user);
     _user = User.fromJson(user);
     notifyListeners();
   }
