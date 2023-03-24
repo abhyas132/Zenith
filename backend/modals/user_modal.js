@@ -1,8 +1,15 @@
 const mongoose = require("mongoose");
-
+const shortid = require('shortid') ;
+const jwt = require('jsonwebtoken');
 //user schema...
 
 const userSchema = mongoose.Schema({
+    userId : {
+        type : String,
+        required : true,
+        unique : true,
+        default : shortid.generate 
+    },
     name: {
         type: String,
         require: true,
@@ -33,6 +40,12 @@ userSchema.post("save", function (doc) {
 });
 
 // model...
+userSchema.methods.getJwtToken = function () {
+	return jwt.sign(
+		{ tokenId: this.userId },
+		process.env.JWT_SECRET
+	);
+};
 
 const userModal = mongoose.model("userModel", userSchema);
 module.exports = userModal;

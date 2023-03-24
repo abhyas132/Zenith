@@ -25,10 +25,10 @@ const taskSchema = mongoose.Schema({
         }
     },
     startTime :{
-        type : Date
+        type : Number, //24hrs format : 15:10
     },
     endTime : {
-        type : Date,
+        type : Number,
     },
     duration:{
         type : mongoose.Schema.Types.Number
@@ -40,6 +40,9 @@ const taskSchema = mongoose.Schema({
             values : ['morning', 'afternoon', 'evening', 'flexible'],
 			message: "Please select the taskType as morning, afternoon, evening or dynamic only"
         }
+    },
+    userId : {
+        type : String
     }
 });
 
