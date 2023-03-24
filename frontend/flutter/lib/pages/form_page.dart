@@ -1,5 +1,13 @@
+import 'dart:developer';
+import 'package:chips_choice_null_safety/chips_choice_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:zenith/globalvariables.dart';
+import 'package:zenith/utils/snackbar.dart';
+
+const url = GlobalVariables.baseUrl;
 
 class AddForm extends StatefulWidget {
   @override
@@ -7,14 +15,66 @@ class AddForm extends StatefulWidget {
 }
 
 class _AddFormState extends State<AddForm> {
-  List<String> _durationhrs = ['1 hrs', '2 hrs', '3 hrs', '4 hrs'];
+  int tag = 1;
+  List<String> tags = [];
+  List<String> options = ['flexible', 'morning', 'afternoon', 'evening'];
+  // GlobalVariables GL =  GlobalVariables();
+  String formatTimeOfDay(TimeOfDay tod) {
+    final now = new DateTime.now();
+    final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
+    final format = DateFormat.jm(); //"6:00 AM"
+    return format.format(dt);
+  }
+
+  postDataDynamic() async {
+    try {
+      var response =
+          await http.post(Uri.parse('${url}api/v1/create/task'), body: {
+        "title": _title1,
+        "description": _description1,
+        "duration": (_selectedItem),
+      });
+      print(_startTime);
+    } catch (e) {
+      print(e.toString());
+      ShowSnakBar(context: context, content: e.toString());
+    }
+  }
+
+  postDataStatic() async {
+    try {
+      var response =
+          await http.post(Uri.parse('${url}api/v1/create/task'), body: {
+        "title": _title2,
+        "description": _description2,
+        "startTime": formatTimeOfDay(_startTime),
+        "endTime": formatTimeOfDay(_endTime),
+      });
+      print(_startTime);
+    } catch (e) {
+      ShowSnakBar(context: context, content: e.toString());
+    }
+  }
+
+  final List<String> _durationhrs = [
+    '1',
+    '1.5',
+    '2',
+    '2.5',
+    '3',
+    '3.5',
+    '4',
+    '4.5'
+  ];
   late TimeOfDay _startTime;
   late TimeOfDay _endTime;
   final _formKey = GlobalKey<FormState>();
-  String _title = '';
-  String _duration = '';
-  String _description = '';
-  String? _selectedItem;
+  final _formKey1 = GlobalKey<FormState>();
+  String _title1 = '';
+  String _title2 = '';
+  String _description1 = '';
+  String _description2 = '';
+  String _selectedItem = '1';
   // DateTime _dateTime;
   bool _isStatic = true;
   Future<void> _selectTime(BuildContext context) async {
@@ -25,6 +85,18 @@ class _AddFormState extends State<AddForm> {
     if (pickedTime != null && pickedTime != _startTime) {
       setState(() {
         _startTime = pickedTime;
+      });
+    }
+  }
+
+  Future<void> _selectTime2(BuildContext context) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: _endTime,
+    );
+    if (pickedTime != null && pickedTime != _endTime) {
+      setState(() {
+        _endTime = pickedTime;
       });
     }
   }
@@ -84,112 +156,133 @@ class _AddFormState extends State<AddForm> {
     );
   }
 
-  Widget _buildStaticForm() {
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Title',
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter a title';
-              }
-              return null;
-            },
-            onSaved: (value) {
-              _title = value!;
-              print(_title);
-            },
+  Widget _buildDynamicForm() {
+    return Column(
+      children: [
+        ChipsChoice.single(
+          value: tag,
+          onChanged: (val) => setState(() => tag = val),
+          choiceItems: C2Choice.listFrom(
+              source: options, value: (i, v) => i, label: (i, v) => v),
+          choiceActiveStyle: C2ChoiceStyle(
+            color: Colors.red,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          SizedBox(height: 16),
-          // TextFormField(
-          //   decoration: InputDecoration(
-          //     labelText: 'Duration',
-          //     border: OutlineInputBorder(),
-          //   ),
-          //   validator: (value) {
-          //     if (value!.isEmpty) {
-          //       return 'Please enter a duration';
-          //     }
-          //     return null;
-          //   },
-          //   onSaved: (value) {
-          //     _duration = value!;
-          //   },
-          // ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          choiceStyle: C2ChoiceStyle(color: Colors.black),
+          wrapped: true,
+        ),
+        Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Duration"),
-              DropdownButton<String>(
-                value: _selectedItem,
-                items: _durationhrs.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? selectedItem) {
-                  setState(() {
-                    _selectedItem = selectedItem!;
-                    print(_selectedItem);
-                  });
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _title1 = value!;
+                  print(_title1);
                 },
               ),
+              SizedBox(height: 16),
+              // TextFormField(
+              //   decoration: InputDecoration(
+              //     labelText: 'Duration',
+              //     border: OutlineInputBorder(),
+              //   ),
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return 'Please enter a duration';
+              //     }
+              //     return null;
+              //   },
+              //   onSaved: (value) {
+              //     _duration = value!;
+              //   },
+              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text("Duration"),
+                  DropdownButton<String>(
+                    value: _selectedItem,
+                    items: _durationhrs.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? selectedItem) {
+                      setState(() {
+                        _selectedItem = (selectedItem!);
+                        print(_selectedItem);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              // TextButton(
+              //   onPressed: () => _selectTime(context),
+              //   child: Text(
+              //     _selectedTime.format(context),
+              //     style: TextStyle(fontSize: 20.0),
+              //   ),
+              // ),
+              SizedBox(height: 16),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _description1 = value!;
+                  print(_description1);
+                },
+              ),
+              SizedBox(height: 32),
+              Center(
+                child: ElevatedButton(
+                  child: Text('Save'),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      try {
+                        _formKey.currentState!.save();
+                        print(_title1);
+                        postDataDynamic();
+                      } catch (e) {
+                        ShowSnakBar(context: context, content: e.toString());
+                      }
+                      // Save the data to your database or perform any other necessary action.
+                    }
+                  },
+                ),
+              )
             ],
           ),
-          // TextButton(
-          //   onPressed: () => _selectTime(context),
-          //   child: Text(
-          //     _selectedTime.format(context),
-          //     style: TextStyle(fontSize: 20.0),
-          //   ),
-          // ),
-          SizedBox(height: 16),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Description',
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter a description';
-              }
-              return null;
-            },
-            onSaved: (value) {
-              _description = value!;
-              print(_description);
-            },
-          ),
-          SizedBox(height: 32),
-          Center(
-            child: ElevatedButton(
-              child: Text('Save'),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  print(_title);
-                  // Save the data to your database or perform any other necessary action.
-                }
-              },
-            ),
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildDynamicForm() {
+  Widget _buildStaticForm() {
     return Container(
         // Replace this with your dynamic form code.
         child: Form(
-      key: _formKey,
+      key: _formKey1,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -205,7 +298,7 @@ class _AddFormState extends State<AddForm> {
               return null;
             },
             onSaved: (value) {
-              _title = value!;
+              _title2 = value!;
             },
           ),
           SizedBox(height: 16),
@@ -256,7 +349,7 @@ class _AddFormState extends State<AddForm> {
             children: [
               Text("End Time"),
               TextButton(
-                onPressed: () => _selectTime(context),
+                onPressed: () => _selectTime2(context),
                 child: Text(
                   _endTime.format(context),
                   style: TextStyle(fontSize: 20.0),
@@ -277,7 +370,8 @@ class _AddFormState extends State<AddForm> {
               return null;
             },
             onSaved: (value) {
-              _description = value!;
+              //log(value!);
+              _description2 = value!;
             },
           ),
           SizedBox(height: 32),
@@ -285,9 +379,15 @@ class _AddFormState extends State<AddForm> {
             child: ElevatedButton(
               child: Text('Save'),
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  // Save the data to your database or perform any other necessary action.
+                try {
+                  if (_formKey1.currentState!.validate()) {
+                    _formKey1.currentState!.save();
+                    print(formatTimeOfDay(_startTime));
+                    postDataStatic();
+                    // Save the data to your database or perform any other necessary action.
+                  }
+                } catch (e) {
+                  ShowSnakBar(context: context, content: e.toString());
                 }
               },
             ),
