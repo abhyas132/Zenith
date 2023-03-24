@@ -1,9 +1,9 @@
 import 'dart:ui';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class GlobalVariables {
-  static const baseUrl = "http://10.20.30.201:3000/";
+  static const baseUrl = "http://10.20.36.38:3000/";
   static const appBarGradient = LinearGradient(
     colors: [
       Color.fromARGB(255, 29, 201, 192),
@@ -22,4 +22,5 @@ class GlobalVariables {
   static const Color backgroundColorDark = Color(0xFF25254B);
   static const Color shadowColorLight = Color(0xFF4A5367);
   static const Color shadowColorDark = Colors.black;
+  // static const themeFont=GoogleFonts.lato(style:TextStyle(color: Colors.black26))
 }

@@ -15,15 +15,23 @@ class AddForm extends StatefulWidget {
 }
 
 class _AddFormState extends State<AddForm> {
-  int tag = 1;
+  int tag = 0;
   List<String> tags = [];
   List<String> options = ['flexible', 'morning', 'afternoon', 'evening'];
   // GlobalVariables GL =  GlobalVariables();
-  String formatTimeOfDay(TimeOfDay tod) {
-    final now = new DateTime.now();
-    final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
-    final format = DateFormat.jm(); //"6:00 AM"
-    return format.format(dt);
+  String formatTimeOfDay(TimeOfDay selectedTime) {
+    var replacingTime = selectedTime.replacing(
+        hour: selectedTime.hour, minute: selectedTime.minute);
+
+    String formattedhour = replacingTime.hour > 10
+        ? replacingTime.hour.toString()
+        : "0" + replacingTime.hour.toString();
+    String formattedminute = replacingTime.minute > 10
+        ? replacingTime.minute.toString()
+        : "0" + replacingTime.minute.toString();
+    String formattedTime = formattedhour + formattedminute;
+    return formattedTime;
+    //return formattedTime.replaceFirst(RegExp(':'), '');
   }
 
   postDataDynamic() async {
@@ -32,9 +40,10 @@ class _AddFormState extends State<AddForm> {
           await http.post(Uri.parse('${url}api/v1/create/task'), body: {
         "title": _title1,
         "description": _description1,
+        "taskTag": options[tag],
         "duration": (_selectedItem),
       });
-      print(_startTime);
+      print(response.body);
     } catch (e) {
       print(e.toString());
       ShowSnakBar(context: context, content: e.toString());
@@ -47,10 +56,10 @@ class _AddFormState extends State<AddForm> {
           await http.post(Uri.parse('${url}api/v1/create/task'), body: {
         "title": _title2,
         "description": _description2,
-        "startTime": formatTimeOfDay(_startTime),
-        "endTime": formatTimeOfDay(_endTime),
+        "startTime": int.parse(formatTimeOfDay(_startTime)),
+        "endTime": int.parse(formatTimeOfDay(_endTime)),
       });
-      print(_startTime);
+      print(response.body);
     } catch (e) {
       ShowSnakBar(context: context, content: e.toString());
     }
@@ -115,41 +124,50 @@ class _AddFormState extends State<AddForm> {
       appBar: AppBar(
         title: Text('Add New Item'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Radio(
-                    value: true,
-                    groupValue: _isStatic,
-                    onChanged: (bool? val) {
-                      setState(() {
-                        _isStatic = val!;
-                      });
-                    },
-                  ),
-                  Text('Static'),
-                  SizedBox(width: 32),
-                  Radio(
-                    value: false,
-                    groupValue: _isStatic,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        _isStatic = value!;
-                      });
-                    },
-                  ),
-                  Text('Dynamic'),
-                ],
-              ),
-              SizedBox(height: 16),
-              _isStatic ? _buildStaticForm() : _buildDynamicForm(),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/background2.jpg"),
+            opacity: 0.1,
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Radio(
+                      value: true,
+                      groupValue: _isStatic,
+                      onChanged: (bool? val) {
+                        setState(() {
+                          _isStatic = val!;
+                        });
+                      },
+                    ),
+                    Text('Static'),
+                    SizedBox(width: 32),
+                    Radio(
+                      value: false,
+                      groupValue: _isStatic,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isStatic = value!;
+                        });
+                      },
+                    ),
+                    Text('Dynamic'),
+                  ],
+                ),
+                SizedBox(height: 16),
+                _isStatic ? _buildStaticForm() : _buildDynamicForm(),
+              ],
+            ),
           ),
         ),
       ),
@@ -179,7 +197,8 @@ class _AddFormState extends State<AddForm> {
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Title',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30)),
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -193,21 +212,6 @@ class _AddFormState extends State<AddForm> {
                 },
               ),
               SizedBox(height: 16),
-              // TextFormField(
-              //   decoration: InputDecoration(
-              //     labelText: 'Duration',
-              //     border: OutlineInputBorder(),
-              //   ),
-              //   validator: (value) {
-              //     if (value!.isEmpty) {
-              //       return 'Please enter a duration';
-              //     }
-              //     return null;
-              //   },
-              //   onSaved: (value) {
-              //     _duration = value!;
-              //   },
-              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -240,7 +244,8 @@ class _AddFormState extends State<AddForm> {
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Description',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30)),
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -279,121 +284,128 @@ class _AddFormState extends State<AddForm> {
   }
 
   Widget _buildStaticForm() {
-    return Container(
-        // Replace this with your dynamic form code.
-        child: Form(
-      key: _formKey1,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Title',
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter a title';
-              }
-              return null;
-            },
-            onSaved: (value) {
-              _title2 = value!;
-            },
-          ),
-          SizedBox(height: 16),
-          // TextFormField(
-          //   decoration: InputDecoration(
-          //     labelText: 'Start Time',
-          //     border: OutlineInputBorder(),
-          //   ),
-          //   validator: (value) {
-          //     if (value!.isEmpty) {
-          //       return 'Please enter a duration';
-          //     }
-          //     return null;
-          //   },
-          //   onSaved: (value) {
-          //     _duration = value!;
-          //   },
-          // ),
-          Row(children: [
-            Text("Start Time"),
-            TextButton(
-              onPressed: () => _selectTime(context),
-              child: Text(
-                _startTime.format(context),
-                style: TextStyle(fontSize: 20.0),
-              ),
-            ),
-          ]),
-          SizedBox(
-            height: 16,
-          ),
-          // TextFormField(
-          //   decoration: InputDecoration(
-          //     labelText: 'End Time',
-          //     border: OutlineInputBorder(),
-          //   ),
-          //   validator: (value) {
-          //     if (value!.isEmpty) {
-          //       return 'Please enter a duration';
-          //     }
-          //     return null;
-          //   },
-          //   onSaved: (value) {
-          //     _duration = value!;
-          //   },
-          // ),
-          Row(
+    return Column(
+      children: [
+        SizedBox(
+          height: 30,
+        ),
+        Container(
+            // Replace this with your dynamic form code.
+            child: Form(
+          key: _formKey1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("End Time"),
-              TextButton(
-                onPressed: () => _selectTime2(context),
-                child: Text(
-                  _endTime.format(context),
-                  style: TextStyle(fontSize: 20.0),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30)),
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _title2 = value!;
+                },
               ),
+              SizedBox(height: 16),
+
+              Row(children: [
+                SizedBox(
+                  width: 20,
+                ),
+                Text("Start Time"),
+                SizedBox(
+                  width: 20,
+                ),
+                TextButton(
+                  onPressed: () => _selectTime(context),
+                  child: Text(
+                    _startTime.format(context),
+                    style: TextStyle(fontSize: 20.0),
+                  ),
+                ),
+              ]),
+              SizedBox(
+                height: 16,
+              ),
+              // TextFormField(
+              //   decoration: InputDecoration(
+              //     labelText: 'End Time',
+              //     border: OutlineInputBorder(),
+              //   ),
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return 'Please enter a duration';
+              //     }
+              //     return null;
+              //   },
+              //   onSaved: (value) {
+              //     _duration = value!;
+              //   },
+              // ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text("End Time"),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  TextButton(
+                    onPressed: () => _selectTime2(context),
+                    child: Text(
+                      _endTime.format(context),
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  //log(value!);
+                  _description2 = value!;
+                },
+              ),
+              SizedBox(height: 32),
+              Center(
+                child: ElevatedButton(
+                  child: Text('Save'),
+                  onPressed: () {
+                    try {
+                      if (_formKey1.currentState!.validate()) {
+                        _formKey1.currentState!.save();
+                        print(formatTimeOfDay(_startTime));
+                        postDataStatic();
+                        // Save the data to your database or perform any other necessary action.
+                      }
+                    } catch (e) {
+                      ShowSnakBar(context: context, content: e.toString());
+                    }
+                  },
+                ),
+              )
             ],
           ),
-          SizedBox(height: 16),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Description',
-              border: OutlineInputBorder(),
-            ),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter a description';
-              }
-              return null;
-            },
-            onSaved: (value) {
-              //log(value!);
-              _description2 = value!;
-            },
-          ),
-          SizedBox(height: 32),
-          Center(
-            child: ElevatedButton(
-              child: Text('Save'),
-              onPressed: () {
-                try {
-                  if (_formKey1.currentState!.validate()) {
-                    _formKey1.currentState!.save();
-                    print(formatTimeOfDay(_startTime));
-                    postDataStatic();
-                    // Save the data to your database or perform any other necessary action.
-                  }
-                } catch (e) {
-                  ShowSnakBar(context: context, content: e.toString());
-                }
-              },
-            ),
-          )
-        ],
-      ),
-    ));
+        )),
+      ],
+    );
   }
 }
