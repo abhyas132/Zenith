@@ -4,13 +4,10 @@ import 'package:zenith/globalvariables.dart';
 import 'package:zenith/utils/emotion_face.dart';
 import 'package:zenith/utils/excercise_tile.dart';
 import 'package:zenith/utils/progress_indicator.dart';
-import 'package:zenith/utils/getrequest.dart';
-
 import '../models/scheduleModel.dart';
+import '../utils/getrequest.dart';
 import 'form_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:zenith/utils/getrequest.dart';
-import 'package:zenith/models/scheduleModel.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,7 +37,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.blue[600],
         backgroundColor: Colors.blue[600],
         body: SafeArea(
             child: Container(
@@ -164,9 +160,13 @@ class _HomePageState extends State<HomePage> {
                         height: 20,
                       ),
                       Flexible(
-                          child: ListView(
-                        children: [],
-                      )),
+                        child: ListView.builder(
+                          itemCount: schedule.length,
+                          itemBuilder: (context, index) => tile(
+                              title: schedule[index].title,
+                              description: schedule[index].description),
+                        ),
+                      ),
                     ]),
                   ),
                 ),

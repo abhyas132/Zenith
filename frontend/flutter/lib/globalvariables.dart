@@ -22,4 +22,5 @@ class GlobalVariables {
   static const Color backgroundColorDark = Color(0xFF25254B);
   static const Color shadowColorLight = Color(0xFF4A5367);
   static const Color shadowColorDark = Colors.black;
+  static const Color progresColor = Color(0xFFddd6f3);
 }
