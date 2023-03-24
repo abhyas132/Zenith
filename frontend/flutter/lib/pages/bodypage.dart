@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:zenith/globalvariables.dart';
 import 'package:zenith/pages/form_page.dart';
 import 'package:zenith/pages/homepage.dart';
 
@@ -27,20 +28,22 @@ class _body_pageState extends State<body_page> {
         body: _pageOptions[_selectedPage],
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
+            color: GlobalVariables.backgroundColor,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-            color: Colors.blue[800],
+            //color: Colors.blue[800],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10),
             child: GNav(
               // type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.blue[800]!,
+              backgroundColor: GlobalVariables.backgroundColor,
               color: Colors.white,
-              activeColor: Colors.amberAccent,
-              tabBackgroundColor: Colors.blue,
+              activeColor: GlobalVariables.progresColor,
+              tabBackgroundColor: GlobalVariables.secondaryColor,
               selectedIndex: _selectedPage,
               padding: EdgeInsets.all(18),
+              iconSize: 20,
               //textSize: 3,
               gap: 5,
               tabs: [
