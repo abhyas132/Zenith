@@ -1,7 +1,7 @@
 const User = require('../modals/user_modal');
 const BigPromise = require("../middleware/bigPromise");
 
-exports.c = BigPromise(async(req, res, next) => {
+exports.getUser = BigPromise(async(req, res, next) => {
     let user = req.user ;
 
     if(!user){
@@ -18,7 +18,7 @@ exports.c = BigPromise(async(req, res, next) => {
     })
 })
 
-exports.c = BigPromise(async(req, res, next) => {
+exports.updateUser = BigPromise(async(req, res, next) => {
     const {name, email, password ,zenCoins} = req.body;
 
     let user = req.user ;
@@ -34,7 +34,7 @@ exports.c = BigPromise(async(req, res, next) => {
     });
 })
 
-exports.c = BigPromise(async(req, res, next) => {
+exports.createUser = BigPromise(async(req, res, next) => {
     let {name, email, password ,zenCoins} = req.body;
 
     const user = await User.create({

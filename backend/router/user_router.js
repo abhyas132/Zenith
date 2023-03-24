@@ -6,6 +6,6 @@ const {isLoggedIn} = require("../middleware/userMiddleware") ;
 
 router.route("/create/user").post(createUser) ;
 router.route("/get/user").get(isLoggedIn, getUser) ;
-router.route("/update/user").patch(isLoggedIn, createUser) ;
+router.route("/update/user").patch(isLoggedIn, updateUser) ;
     
 module.exports = router;
