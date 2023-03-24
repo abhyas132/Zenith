@@ -1,18 +1,10 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
-
-var communitySchema = Schema({
+const communitySchema = Schema({
     likes: Number,
     title: String,
-    email: String,
-    college : String,
-    interests: [interestsSchema],
-    image: String,
-    comments: [{
-      comment: String,
-      user : String
-    }]
-    
+    uuid : String,
+    image: String
 });
 
-var community = mongoose.model('community', communitySchema);
+module.exports = mongoose.model('Community', communitySchema);
