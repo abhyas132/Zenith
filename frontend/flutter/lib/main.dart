@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zenith/pages/bodypage.dart';
 import 'package:zenith/pages/homepage.dart';
 
 void main() {
@@ -9,9 +10,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: body_page(),
     );
   }
 }
