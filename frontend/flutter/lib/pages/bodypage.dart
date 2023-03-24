@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:zenith/pages/community_page.dart';
 import 'package:zenith/pages/form_page.dart';
 import 'package:zenith/pages/homepage.dart';
 
@@ -15,7 +16,7 @@ class _body_pageState extends State<body_page> {
 
   final _pageOptions = [
     const HomePage(),
-    const HomePage(),
+    const Community(),
     const HomePage(),
     AddForm(),
     HomePage(),

@@ -48,19 +48,47 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.blue[600],
-                          borderRadius: BorderRadius.circular(12)),
-                      padding: EdgeInsets.all(1),
-                      child: IconButton(
-                        iconSize: 20,
-                        icon: const Icon(Icons.add),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AddForm()));
-                        },
-                      ),
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.blue[600],
+                              borderRadius: BorderRadius.circular(12)),
+                          padding: EdgeInsets.all(1),
+                          child: IconButton(
+                            iconSize: 20,
+                            icon: const Icon(Icons.add),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => AddForm()));
+                            },
+                          ),
+                        ),
+                        PopupMenuButton<String>(
+                          onSelected: (value) {
+                            // Do something when an option is selected
+                          },
+                          itemBuilder: (BuildContext context) =>
+                              <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                              value: 'option1',
+                              child: Text('Option 1'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'option2',
+                              child: Text('Option 2'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'option3',
+                              child: Text('Option 3'),
+                            ),
+                          ],
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: Icon(Icons.share),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
