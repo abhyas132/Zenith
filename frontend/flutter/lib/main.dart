@@ -39,7 +39,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: logged ? body_page() : OnbodingScreen(),
+      //home: logged ? body_page() : OnbodingScreen(),
+      home: body_page(),
     );
   }
 }

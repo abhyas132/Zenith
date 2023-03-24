@@ -4,6 +4,8 @@ import 'package:zenith/globalvariables.dart';
 import 'package:zenith/utils/demotile.dart';
 import 'package:zenith/utils/progress_indicator.dart';
 import 'package:zenith/utils/schedule_tile.dart';
+import '../models/scheduleModel.dart';
+import '../utils/getrequest.dart';
 import 'form_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,6 +17,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<ScheduleModel> schedule = [];
+  bool _loading = true;
+  @override
+  void initState() {
+    super.initState;
+    getData();
+  }
+
+  getData() async {
+    GetRequest sc = GetRequest();
+    await sc.getData();
+    schedule = sc.schedules;
+    setState(() {
+      _loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,24 +163,17 @@ class _HomePageState extends State<HomePage> {
                         height: 20,
                       ),
                       Flexible(
-                          child: ListView(
-                        children: [
-                          tile(
-                            description: 'sports',
-                            task: 'assignment',
-                            endtime: '13:00',
-                            indi: 0,
-                            starttime: '12:00',
+                        child: ListView.builder(
+                          itemCount: schedule.length,
+                          itemBuilder: (context, index) => tile(
+                            starttime: schedule[index].startTime.toString(),
+                            endtime: schedule[index].endTime.toString(),
+                            task: schedule[index].title.toString(),
+                            description: schedule[index].description.toString(),
+                            indi: index.toDouble(),
                           ),
-                          tile(
-                            description: 'sports',
-                            task: 'study',
-                            endtime: '13:00',
-                            indi: 1,
-                            starttime: '12:00',
-                          ),
-                        ],
-                      )),
+                        ),
+                      ),
                     ]),
                   ),
                 ),
