@@ -37,64 +37,66 @@ void showCustomDialog(BuildContext context, {required ValueChanged onValue}) {
             body: Stack(
               clipBehavior: Clip.none,
               children: [
-                Column(
-                  children: [
-                    const Text(
-                      "Sign in",
-                      style: TextStyle(
-                        fontSize: 34,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Text(
-                        "Please sign in to access your account",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    const SignInForm(),
-                    Row(
-                      children: const [
-                        Expanded(
-                          child: Divider(),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Sign in",
+                        style: TextStyle(
+                          fontSize: 34,
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w600,
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            "OR",
-                            style: TextStyle(
-                              color: Colors.black26,
-                              fontWeight: FontWeight.w500,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: Text(
+                          "Please sign in to access your account",
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SignInForm(),
+                      Row(
+                        children: const [
+                          Expanded(
+                            child: Divider(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              "OR",
+                              style: TextStyle(
+                                color: Colors.black26,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(child: Divider()),
-                      ],
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24),
-                      child: Text(
-                        "Sign up Now on Zenith",
-                        style: TextStyle(color: Colors.black54),
+                          Expanded(child: Divider()),
+                        ],
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          padding: EdgeInsets.zero,
-                          icon: SvgPicture.asset(
-                            "assets/icons/email_box.svg",
-                            height: 64,
-                            width: 64,
-                          ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 24),
+                        child: Text(
+                          "Sign up Now on Zenith",
+                          style: TextStyle(color: Colors.black54),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            padding: EdgeInsets.zero,
+                            icon: SvgPicture.asset(
+                              "assets/icons/email_box.svg",
+                              height: 64,
+                              width: 64,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 const Positioned(
                   left: 0,

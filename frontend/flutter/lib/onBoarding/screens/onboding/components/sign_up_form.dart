@@ -5,17 +5,19 @@ import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/pages/bodypage.dart';
 import 'package:zenith/pages/homepage.dart';
+import 'package:zenith/services/auth_services.dart';
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({
+class SignupForm extends StatefulWidget {
+  const SignupForm({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<SignInForm> createState() => _SignInFormState();
+  State<SignupForm> createState() => _SignupFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _SignupFormState extends State<SignupForm> {
+  final AuthServices authService = AuthServices();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isShowLoading = false;
   bool isShowConfetti = false;
@@ -46,13 +48,19 @@ class _SignInFormState extends State<SignInForm> {
     confetti = controller.findInput<bool>("Trigger explosion") as SMITrigger;
   }
 
-  void singIn(
+  void singup(
     BuildContext context,
     String email,
     String password,
     String name,
   ) {
     // confetti.fire();
+    authService.signUp(
+      context: context,
+      name: name,
+      email: email,
+      password: password,
+    );
   }
 
   @override
@@ -65,30 +73,30 @@ class _SignInFormState extends State<SignInForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const Text(
-                //   "Name",
-                //   style: TextStyle(
-                //     color: Colors.black54,
-                //   ),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 8, bottom: 16),
-                //   child: TextFormField(
-                //     controller: name,
-                //     validator: (value) {
-                //       if (value!.isEmpty) {
-                //         return "";
-                //       }
-                //       return null;
-                //     },
-                //     decoration: InputDecoration(
-                //       prefixIcon: Padding(
-                //         padding: const EdgeInsets.symmetric(horizontal: 8),
-                //         child: SvgPicture.asset("assets/icons/email.svg"),
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                const Text(
+                  "Name",
+                  style: TextStyle(
+                    color: Colors.black54,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 16),
+                  child: TextFormField(
+                    controller: name,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: SvgPicture.asset("assets/icons/email.svg"),
+                      ),
+                    ),
+                  ),
+                ),
                 const Text(
                   "Email",
                   style: TextStyle(
@@ -142,8 +150,8 @@ class _SignInFormState extends State<SignInForm> {
                   padding: const EdgeInsets.only(top: 8, bottom: 24),
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      print(email.value.text);
-                      singIn(
+                      // print(email.value.text);
+                      singup(
                         context,
                         email.text,
                         password.text,
@@ -166,7 +174,7 @@ class _SignInFormState extends State<SignInForm> {
                       CupertinoIcons.arrow_right,
                       color: Color(0xFFFE0037),
                     ),
-                    label: const Text("Sign In"),
+                    label: const Text("Sign up"),
                   ),
                 ),
               ],

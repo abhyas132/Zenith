@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zenith/onBoarding/screens/onboding/components/sign_up_dialog.dart';
 
 import 'components/animated_btn.dart';
 import 'components/sign_in_dialog.dart';
@@ -89,28 +90,60 @@ class _OnbodingScreenState extends State<OnbodingScreen> {
                       ),
                     ),
                     const Spacer(flex: 2),
-                    AnimatedBtn(
-                      btnAnimationController: _btnAnimationController,
-                      press: () {
-                        _btnAnimationController.isActive = true;
+                    Row(
+                      children: [
+                        AnimatedBtn(
+                          btnAnimationController: _btnAnimationController,
+                          text: "sign in",
+                          press: () {
+                            _btnAnimationController.isActive = true;
 
-                        Future.delayed(
-                          const Duration(milliseconds: 800),
-                          () {
-                            setState(() {
-                              isShowSignInDialog = true;
-                            });
-                            showCustomDialog(
-                              context,
-                              onValue: (_) {
+                            Future.delayed(
+                              const Duration(milliseconds: 800),
+                              () {
                                 setState(() {
-                                  isShowSignInDialog = false;
+                                  isShowSignInDialog = true;
                                 });
+                                showCustomDialog(
+                                  context,
+                                  onValue: (_) {
+                                    setState(() {
+                                      isShowSignInDialog = false;
+                                    });
+                                  },
+                                );
                               },
                             );
                           },
-                        );
-                      },
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                        ),
+                        AnimatedBtn(
+                          btnAnimationController: _btnAnimationController,
+                          text: "sign up",
+                          press: () {
+                            _btnAnimationController.isActive = true;
+
+                            Future.delayed(
+                              const Duration(milliseconds: 800),
+                              () {
+                                setState(() {
+                                  isShowSignInDialog = true;
+                                });
+                                showCustom2Dialog(
+                                  context,
+                                  onValue: (_) {
+                                    setState(() {
+                                      isShowSignInDialog = false;
+                                    });
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 24),

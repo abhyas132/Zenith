@@ -42,6 +42,7 @@ dependencies:
   percent_indicator: ^4.2.3
   rive: ^0.10.3
   shared_preferences: ^2.0.20
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_lints: ^2.0.0

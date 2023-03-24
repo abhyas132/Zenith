@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/onBoarding/screens/onboding/onboding_screen.dart';
@@ -19,20 +18,20 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool logged = false;
-  void isLoggedIn() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? email = prefs.getString('email');
-    log(email!);
-    if (email != null) {
-      logged = true;
-    }
-  }
+  // void isLoggedIn() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final String? email = prefs.getString('email');
+  //   log(email!);
+  //   if (email != null) {
+  //     logged = true;
+  //   }
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    isLoggedIn();
+    // isLoggedIn();
   }
 
   @override
@@ -40,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       //home: logged ? body_page() : OnbodingScreen(),
-      home: body_page(),
+      home: OnbodingScreen(),
     );
   }
 }

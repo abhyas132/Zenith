@@ -7,11 +7,13 @@ class AnimatedBtn extends StatelessWidget {
     Key? key,
     required RiveAnimationController btnAnimationController,
     required this.press,
+    required this.text,
   })  : _btnAnimationController = btnAnimationController,
         super(key: key);
 
   final RiveAnimationController _btnAnimationController;
   final VoidCallback press;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class AnimatedBtn extends StatelessWidget {
       onTap: press,
       child: SizedBox(
         height: 64,
-        width: 236,
+        width: MediaQuery.of(context).size.width * 0.3,
         child: Stack(
           children: [
             RiveAnimation.asset(
@@ -35,7 +37,7 @@ class AnimatedBtn extends StatelessWidget {
                   const Icon(CupertinoIcons.arrow_right),
                   const SizedBox(width: 8),
                   Text(
-                    "Start your journey",
+                    this.text,
                     style: Theme.of(context).textTheme.button,
                   )
                 ],
