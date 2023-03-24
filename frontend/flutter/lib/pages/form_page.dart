@@ -15,6 +15,7 @@ class AddForm extends StatefulWidget {
 }
 
 class _AddFormState extends State<AddForm> {
+  String taskType = "static";
   int tag = 0;
   List<String> tags = [];
   List<String> options = ['flexible', 'morning', 'afternoon', 'evening'];
@@ -42,6 +43,7 @@ class _AddFormState extends State<AddForm> {
         "description": _description1,
         "taskTag": options[tag],
         "duration": (_selectedItem),
+        "taskType": "dynamic"
       });
       print(response.body);
     } catch (e) {
@@ -58,6 +60,7 @@ class _AddFormState extends State<AddForm> {
         "description": _description2,
         "startTime": int.parse(formatTimeOfDay(_startTime)),
         "endTime": int.parse(formatTimeOfDay(_endTime)),
+        "taskType": "static"
       });
       print(response.body);
     } catch (e) {
@@ -224,13 +227,6 @@ class _AddFormState extends State<AddForm> {
                   ),
                 ],
               ),
-              // TextButton(
-              //   onPressed: () => _selectTime(context),
-              //   child: Text(
-              //     _selectedTime.format(context),
-              //     style: TextStyle(fontSize: 20.0),
-              //   ),
-              // ),
               SizedBox(height: 16),
               TextFormField(
                 decoration: InputDecoration(
@@ -304,7 +300,6 @@ class _AddFormState extends State<AddForm> {
                 },
               ),
               SizedBox(height: 16),
-
               Row(children: [
                 SizedBox(
                   width: 20,
@@ -324,21 +319,6 @@ class _AddFormState extends State<AddForm> {
               SizedBox(
                 height: 16,
               ),
-              // TextFormField(
-              //   decoration: InputDecoration(
-              //     labelText: 'End Time',
-              //     border: OutlineInputBorder(),
-              //   ),
-              //   validator: (value) {
-              //     if (value!.isEmpty) {
-              //       return 'Please enter a duration';
-              //     }
-              //     return null;
-              //   },
-              //   onSaved: (value) {
-              //     _duration = value!;
-              //   },
-              // ),
               Row(
                 children: [
                   SizedBox(

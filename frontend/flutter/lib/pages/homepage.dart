@@ -1,7 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/utils/emotion_face.dart';
 import 'package:zenith/utils/excercise_tile.dart';
@@ -18,6 +16,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<ScheduleModel> schedule = [];
+  bool _loading = true;
+  @override
+  void initState() {
+    super.initState;
+    getData();
+  }
+
+  getData() async {
+    GetRequest sc = GetRequest();
+    await sc.getData();
+    schedule = sc.schedules;
+    setState(() {
+      _loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
