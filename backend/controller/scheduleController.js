@@ -3,7 +3,7 @@ const Task = require("../modals/task")
 const Schedule = require("../modals/schedule_modal") ;
 const _ = require("lodash") ;
 
-const {findVoidIntervals, getCurrentTag} = require("../helper/taskTime") ;
+const {findVoidIntervals, getCurrentTag, findEndTime} = require("../helper/taskTime") ;
 const {accedingSortAccordingToProps, findDuration} = require("../helper/algorithms")
 
 
@@ -35,6 +35,13 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
     // const tasks = await Task.find({userId}) ;
     const tasks = await Task.find() ;
 
+    if(!tasks){
+        return res.status(404).json({
+            status : 401,
+            message : "No tasks found to create schedule",
+        })
+    }
+
     const date = new Date() ;
     const currTime = date.getHours() * 100 + date.getMinutes() ;
 
@@ -64,26 +71,33 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
     let schedule = [] ;
     let copyTask ;
     let currTask = dynamicTasks[0] ;
-    schedule.push(staticTasks) ;
+    let currInterval = unUsedIntervals[0] ;
+
+    schedule.push(...staticTasks) ;
 
     while(i < dynamicTasks.length && j < unUsedIntervals.length){
-        if(currTask.duration <= unUsedIntervals[j][1]){
-            currTask.startTime = unUsedIntervals[j][0] ;
-            currTask.endTime = unUsedIntervals[j][0] + currTask.duration ;
+        if(currTask.duration <= currInterval[2]){
+            currTask.startTime = currInterval[0] ;
+            // currTask.endTime =  currInterval[1];
+            currTask.endTime =  findEndTime(currInterval[0], currTask.duration);
+
             schedule.push(currTask) ;
+
+            currInterval = [currTask.endTime, currInterval[1], findDuration(currTask.endTime, currInterval[1])] ;
+
             i ++ ;
-            j ++ ;
             currTask = dynamicTasks[i] ;
         }
         else{
             // copyTask = currTask[i] ;
 
-            currTask.startTime = unUsedIntervals[j][0] ;
-            currTask.endTime = unUsedIntervals[j][0] + unUsedIntervals[j][1] ;
+            currTask.startTime = currInterval[0] ;
+            currTask.endTime = currInterval[1] ;
             schedule.push(currTask) ;
 
             j ++ ;
-            currTask.startTime = unUsedIntervals[j][0] ;
+            currInterval = unUsedIntervals[j] ;
+            currTask.duration = currInterval[2] - currTask.duration ;
         }
     }
 

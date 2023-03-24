@@ -8,7 +8,7 @@ exports.findDuration = (startTime, endTime) => {
     let finHr = parseInt(endTime/100) ;
     let mins = (60 - startTime % 100) + (endTime % 100) ;
 
-    let duration = finHr - stHr + (mins/60);
+    let duration = finHr - stHr + (mins/60).toFixed(2) ;
 
     return duration ;
 }
