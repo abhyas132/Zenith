@@ -30,16 +30,6 @@ const userSchema = mongoose.Schema({
     },
 });
 
-
-userSchema.pre("save", function () {
-    //I will add
-});
-
-userSchema.post("save", function (doc) {
-    // I wil add
-});
-
-// model...
 userSchema.methods.getJwtToken = function () {
 	return jwt.sign(
 		{ tokenId: this.userId },
@@ -47,5 +37,4 @@ userSchema.methods.getJwtToken = function () {
 	);
 };
 
-const userModal = mongoose.model("userModel", userSchema);
-module.exports = userModal;
+module.exports = mongoose.model("userModel", userSchema);

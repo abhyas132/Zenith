@@ -25,7 +25,7 @@ const taskSchema = mongoose.Schema({
         }
     },
     startTime :{
-        type : Number, //24hrs format : 15:10
+        type : Number, //24hrs format : 1510
     },
     endTime : {
         type : Number,
@@ -42,7 +42,8 @@ const taskSchema = mongoose.Schema({
         }
     },
     userId : {
-        type : String
+        type : String,
+        required : true
     }
 });
 

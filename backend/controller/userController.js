@@ -21,6 +21,13 @@ exports.getUser = BigPromise(async(req, res, next) => {
 exports.updateUser = BigPromise(async(req, res, next) => {
     const {name, email, password ,zenCoins} = req.body;
 
+    if(!name){
+        return reverse.status(400).json({
+            status : 400,
+            message : "Please provide name of the user"
+        })
+    }
+
     let user = req.user ;
 
     user = {...user, name, email, password, zenCoins} ;
@@ -51,9 +58,11 @@ exports.createUser = BigPromise(async(req, res, next) => {
         });
     }
 
+    const token = user.getJwtToken() ;
+
     return res.status(200).json({
         status : 200,
         message: "User created succesfully",
-        user,
+        token
     });
 })

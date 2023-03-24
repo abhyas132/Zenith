@@ -1,14 +1,16 @@
 const mongoose = require("mongoose");
 const Task = require("./task")
 const shortid = require("shortid");
+
 const scheduleSchema = mongoose.Schema({
     user : { //instead of objectId see if can use userId from user
         type : mongoose.Types.ObjectId,
         ref : 'User'
     },
-    tasks:{
-        type : [mongoose.Types.task]
-    },
+    tasks:[{
+        type : mongoose.Types.ObjectId,
+        ref : 'Task'
+    }],
     hours: {
       type: Number,
       default: 24,

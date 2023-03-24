@@ -6,10 +6,9 @@ const _ = require("lodash") ;
 const {findVoidIntervals, getCurrentTag, findEndTime} = require("../helper/taskTime") ;
 const {accedingSortAccordingToProps, findDuration} = require("../helper/algorithms")
 
-
-function comp (a, b){
-    return a[2] - b[2] ;
-}
+// function comp (a, b){
+//     return a[2] - b[2] ;
+// }
 
 exports.getSchedule = BigPromise(async (req,res, next) => {
     const schedule = await Schedule.find();
@@ -23,17 +22,14 @@ exports.getSchedule = BigPromise(async (req,res, next) => {
 
     return res.status(200).json({
         status: 200,
-        message: "Schedulr retrieved successfully",
+        message: "Schedule retrieved successfully",
         schedule
 	});
 })
 
 exports.createSchedule = BigPromise(async (req, res, next) => {
-    // const userId = req.user.userId ;
-    // const {userId} = req.body ;
-
-    // const tasks = await Task.find({userId}) ;
-    const tasks = await Task.find() ;
+    const userId = req.user.userId ;
+    const tasks = await Task.find({userId}) ;
 
     if(!tasks){
         return res.status(404).json({
@@ -63,16 +59,13 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
     dynamicTasks = accedingSortAccordingToProps(dynamicTasks, 'duration') ;
     // unUsedIntervals.sort(comp) ;
     
-    // console.log(dynamicTasks);
-    // console.log(unUsedIntervals);
-
     let i = 0, j = 0 ;
 
-    let schedule = [] ;
+    let taskSchedule = [] ;
     let copyTask = dynamicTasks[0] ;
     let currInterval = unUsedIntervals[0] ;
 
-    schedule.push(...staticTasks) ;
+    taskSchedule.push(...staticTasks) ;
 
     while(i < dynamicTasks.length && j < unUsedIntervals.length){
         let currTask = copyTask ;
@@ -82,7 +75,7 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
             // currTask.endTime =  currInterval[1];
             currTask.endTime =  findEndTime(currInterval[0], currTask.duration);
 
-            schedule.push(currTask) ;
+            taskSchedule.push(currTask) ;
 
             currInterval = [currTask.endTime, currInterval[1], findDuration(currTask.endTime, currInterval[1])] ;
 
@@ -93,7 +86,7 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
             // copyTask = currTask[i] ;
             currTask.startTime = currInterval[0] ;
             currTask.endTime = currInterval[1] ;
-            schedule.push(currTask) ;
+            taskSchedule.push(currTask) ;
 
             j ++ ;
             currInterval = unUsedIntervals[j] ;
@@ -104,9 +97,12 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
         }
     }
 
-    accedingSortAccordingToProps(schedule, 'startTime') ;
+    accedingSortAccordingToProps(taskSchedule, 'startTime') ;
 
-    console.log(schedule) ;
+    const schedule = await Schedule.create({
+        user : req.user,
+        tasks : taskSchedule,
+    })
 
     return res.status(200).json({
         status: 200,
