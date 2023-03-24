@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const shortid = require('shortid') ;
 const jwt = require('jsonwebtoken');
 //user schema...
-
+    
 const userSchema = mongoose.Schema({
     userId : {
         type : String,

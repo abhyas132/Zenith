@@ -31,7 +31,7 @@ exports.getSchedule = BigPromise(async (req,res, next) => {
 exports.createSchedule = BigPromise(async (req, res, next) => {
     // const userId = req.user.userId ;
     // const {userId} = req.body ;
-
+    
     // const tasks = await Task.find({userId}) ;
     const tasks = await Task.find() ;
 
