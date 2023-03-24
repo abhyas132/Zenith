@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:zenith/globalvariables.dart';
-import 'package:zenith/utils/emotion_face.dart';
-import 'package:zenith/utils/excercise_tile.dart';
+import 'package:zenith/utils/demotile.dart';
 import 'package:zenith/utils/progress_indicator.dart';
+import 'package:zenith/utils/schedule_tile.dart';
 import 'form_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -89,6 +89,9 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      SizedBox(
+                        width: 60,
+                      ),
                       Text(
                         'Your Progress',
                         style: TextStyle(
@@ -142,7 +145,22 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Flexible(
                           child: ListView(
-                        children: [tile(), tile(), tile(), tile()],
+                        children: [
+                          tile(
+                            description: 'sports',
+                            task: 'assignment',
+                            endtime: '13:00',
+                            indi: 0,
+                            starttime: '12:00',
+                          ),
+                          tile(
+                            description: 'sports',
+                            task: 'study',
+                            endtime: '13:00',
+                            indi: 1,
+                            starttime: '12:00',
+                          ),
+                        ],
                       )),
                     ]),
                   ),
