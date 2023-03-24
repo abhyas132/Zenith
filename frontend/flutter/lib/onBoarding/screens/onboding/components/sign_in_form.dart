@@ -69,11 +69,12 @@ class _SignInFormState extends State<SignInForm> {
                     await SharedPreferences.getInstance();
 
                 await prefs.setString('email', email);
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const body_page(),
                   ),
+                  (Route<dynamic> route) => false,
                 );
               });
             },
