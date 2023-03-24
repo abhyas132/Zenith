@@ -1,6 +1,6 @@
 class UserModal {
-  String? id;
+  String? userId;
   String? name;
-  String? zenCoins;
-  UserModal({this.id, this.name, this.zenCoins});
+  int? zenCoins;
+  UserModal({this.userId, this.name, this.zenCoins});
 }

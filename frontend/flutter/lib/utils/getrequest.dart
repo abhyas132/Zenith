@@ -19,7 +19,7 @@ class GetRequest {
         jsonData['schedule'].forEach((element) {
           ScheduleModel scheduleModel = ScheduleModel(
             description: element['description'],
-            //  duration: element['duration'] == null ? '0' : element['duration'],
+            duration: element['duration'] == null ? '0' : element['duration'],
             endTime: element['endTime'],
             startTime: element['startTime'],
             title: element['title'],

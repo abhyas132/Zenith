@@ -4,6 +4,8 @@ import 'package:zenith/pages/community_page.dart';
 import 'package:zenith/pages/form_page.dart';
 import 'package:zenith/pages/homepage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:zenith/pages/leaderboard.dart';
+import 'package:zenith/pages/profilePage.dart';
 
 import '../globalvariables.dart';
 
@@ -51,6 +53,8 @@ class _body_pageState extends State<body_page> {
               gap: 5,
               tabs: [
                 GButton(
+                  onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => leaderboard())),
                   icon: Icons.leaderboard,
                   text: "Leader",
                 ),
@@ -69,6 +73,8 @@ class _body_pageState extends State<body_page> {
                 GButton(
                   icon: Icons.person,
                   text: "Profile",
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ProfilePage())),
                 ),
               ],
               onTabChange: (int index) {
