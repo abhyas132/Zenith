@@ -94,24 +94,24 @@ exports.deleteTask = BigPromise(async(req, res, next) => {
     }
 
     if(task.title.includes("play") || task.title.includes("sport") || task.title.includes("game") || task.taskType === 'static'){
-        pointsToAdd += parseInt(task.duration*0.15) ;
+        pointsToAdd += parseInt(task.duration*0.15*60) ;
     }
 
     else if(task.title.includes("study") || task.title.includes("contest") || task.title.includes("read")){
         user.studyActivity ++ ;
-        pointsToAdd += parseInt(task.duration*0.50) ;
+        pointsToAdd += parseInt(task.duration*0.50*60) ;
     }
 
     else{
         user.otherActivity ++ ;
-        pointsToAdd += parseInt(task.duration*0.20) ;
+        pointsToAdd += parseInt(task.duration*0.20*60) ;
     }
 
     user.zenCoins += pointsToAdd ;
 
     await user.save() ;
 
-    await Task.deleteOne({uid : taskId}) ;
+    // await Task.deleteOne({uid : taskId}) ;
 
     return res.status(200).json({
         status: 200,
