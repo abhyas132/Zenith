@@ -33,6 +33,7 @@ class GetRequest {
       if (jsonData['status'] == 200) {
         jsonData['taskSchedule'].forEach((element) {
           ScheduleModel scheduleModel = ScheduleModel(
+            uid: element['uid'],
             description: element['description'],
             duration: element['duration'] == null ? '0' : element['duration'],
             endTime: element['endTime'],
