@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:zenith/globalvariables.dart';
 import 'package:zenith/onBoarding/screens/onboding/components/sign_up_form.dart';
 import 'sign_in_form.dart';
 
@@ -43,6 +44,7 @@ void showCustom2Dialog(BuildContext context, {required ValueChanged onValue}) {
                       const Text(
                         "Sign up",
                         style: TextStyle(
+                          color: GlobalVariables.buttonColortile,
                           fontSize: 34,
                           fontFamily: "Poppins",
                           fontWeight: FontWeight.w600,

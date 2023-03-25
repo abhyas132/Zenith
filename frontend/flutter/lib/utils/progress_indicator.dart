@@ -8,15 +8,15 @@ class progress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
-      tween: Tween(begin: 0.0, end: 1.0),
-      duration: Duration(seconds: 4),
+      tween: Tween(begin: 0.0, end: 0.37),
+      duration: Duration(seconds: 2),
       builder: (context, value, child) => SizedBox(
-        height: 80,
-        width: 80,
+        height: 76,
+        width: 76,
         child: CircularProgressIndicator(
           value: value,
           color: GlobalVariables.progresColor,
-          backgroundColor: GlobalVariables.progresColor,
+          backgroundColor: GlobalVariables.backgroundColor,
           strokeWidth: 10,
         ),
       ),

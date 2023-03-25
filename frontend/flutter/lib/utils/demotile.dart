@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zenith/globalvariables.dart';
+import 'package:cupertino_icons/cupertino_icons.dart';
 
 class tile1 extends StatelessWidget {
   final String task;
   final String description;
   final String starttime;
   final String endtime;
-  final int indi;
+  final double indi;
   tile1({
     super.key,
     required this.task,
@@ -51,13 +52,11 @@ class tile1 extends StatelessWidget {
                       ? Icon(CupertinoIcons.pen)
                       : task == 'study'
                           ? Icon(CupertinoIcons.book)
-                          : task == 'sports'
+                          : task == 'excercise'
                               ? Icon(CupertinoIcons.sportscourt)
                               : task == 'hobby'
                                   ? Icon(CupertinoIcons.hand_draw)
-                                  : task == 'sleep'
-                                      ? Icon(CupertinoIcons.moon_zzz)
-                                      : Icon(CupertinoIcons.clock),
+                                  : Icon(CupertinoIcons.clock),
                 ),
 
                 ///
@@ -70,6 +69,7 @@ class tile1 extends StatelessWidget {
                 ),
                 SizedBox(
                   width: 90,
+                  height: 90,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -91,9 +91,9 @@ class tile1 extends StatelessWidget {
                     ],
                   ),
                 ),
-                // SizedBox(
-                //   width: ,
-                // ),
+                SizedBox(
+                  width: 30,
+                ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -103,15 +103,13 @@ class tile1 extends StatelessWidget {
                         Text(
                           'Start Time',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 12),
+                              fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                         SizedBox(
                           height: 8,
                         ),
                         Text(
-                          starttime.substring(0, 2) +
-                              ":" +
-                              starttime.substring(2, 4),
+                          starttime,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -128,15 +126,13 @@ class tile1 extends StatelessWidget {
                         Text(
                           'End Time',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 12),
+                              fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                         SizedBox(
                           height: 8,
                         ),
                         Text(
-                          endtime.substring(0, 2) +
-                              ":" +
-                              endtime.substring(2, 4),
+                          endtime,
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
