@@ -1,7 +1,7 @@
 let mongoose = require('mongoose');
 let shortid = require('shortId');
 
-const communitySchema = Schema({
+const communitySchema = new mongoose.Schema({
     likes: {
         type : Number,
         default : 0
@@ -11,7 +11,11 @@ const communitySchema = Schema({
         type : String,
         default : shortid.generate
     },
-    image: String
+    image: String,
+    userId : {
+        type : mongoose.Types.ObjectId,
+        ref : 'User'
+    }
 });
 
 module.exports = mongoose.model('Community', communitySchema);
