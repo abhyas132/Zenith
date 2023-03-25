@@ -1,10 +1,7 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/onBoarding/screens/onboding/onboding_screen.dart';
 import 'package:zenith/pages/bodypage.dart';
-import 'package:zenith/pages/homepage.dart';
 import 'package:zenith/provider/user_provider.dart';
 import 'package:zenith/services/auth_services.dart';
 

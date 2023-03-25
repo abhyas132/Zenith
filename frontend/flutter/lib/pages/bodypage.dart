@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:zenith/games/game_screen.dart';
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/pages/community_page.dart';
 import 'package:zenith/pages/form_page.dart';
 import 'package:zenith/pages/homepage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:zenith/pages/leaderboard.dart';
-import 'package:zenith/pages/profilePage.dart';
-
-import '../globalvariables.dart';
 
 class body_page extends StatefulWidget {
   const body_page({super.key});
@@ -24,7 +22,7 @@ class _body_pageState extends State<body_page> {
     const Community(),
     const HomePage(),
     AddForm(),
-    HomePage(),
+    GameScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -73,9 +71,6 @@ class _body_pageState extends State<body_page> {
                   GButton(
                     icon: Icons.person,
                     text: "Profile",
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const ProfilePage())),
                   ),
                 ],
                 onTabChange: (int index) {

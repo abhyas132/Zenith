@@ -28,6 +28,18 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0,
     },
+    sportActivity : {
+        type : Number,
+        default : 0
+    },
+    studyActivity : {
+        type : Number,
+        default : 0
+    },
+    otherActivity : {
+        type : Number,
+        default : 0
+    }
 });
 
 userSchema.methods.getJwtToken = function () {

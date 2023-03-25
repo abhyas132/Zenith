@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zenith/globalvariables.dart';
 import 'package:zenith/onBoarding/screens/onboding/onboding_screen.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -16,19 +17,23 @@ class _ProfilePageState extends State<ProfilePage> {
     final _height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: GlobalVariables.backgroundColor,
         actions: [
-          IconButton(
-              onPressed: () async {
-                SharedPreferences preferences =
-                    await SharedPreferences.getInstance();
-                await preferences.clear();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => OnbodingScreen()),
-                  (route) => false,
-                );
-              },
-              icon: Icon(Icons.logout))
+          Container(
+            decoration: BoxDecoration(),
+            child: IconButton(
+                onPressed: () async {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  await preferences.clear();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => OnbodingScreen()),
+                    (route) => false,
+                  );
+                },
+                icon: Icon(Icons.logout)),
+          )
         ],
       ),
       body: new Container(
@@ -53,19 +58,31 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: new Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            new CircleAvatar(
-                              backgroundImage: new NetworkImage(
-                                  "https://blog.boot.dev/img/800/anonymous-person.png.webp"),
-                              radius: _height / 10,
+                            Container(
+                              child: Container(
+                                // decoration: BoxDecoration(
+                                //   // borderRadius: Bor,
+                                //   boxShadow: [
+                                //     BoxShadow(
+                                //       blurRadius: 1.0,
+                                //     ),
+                                //   ],
+                                // ),
+                                child: new CircleAvatar(
+                                  backgroundImage: new NetworkImage(
+                                      "https://blog.boot.dev/img/800/anonymous-person.png.webp"),
+                                  radius: _height / 10,
+                                ),
+                              ),
                             ),
                             new SizedBox(
                               height: _height / 30,
                             ),
                             new Text(
-                              'Ayush Mishra',
+                              'Samyak',
                               style: new TextStyle(
                                   fontSize: 18.0,
-                                  color: Colors.white,
+                                  color: GlobalVariables.textcolor,
                                   fontWeight: FontWeight.bold),
                             )
                           ],
@@ -87,11 +104,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: <Widget>[
                           new Container(
                             decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
                                 color: Colors.white,
                                 boxShadow: [
                                   new BoxShadow(
                                       color: Colors.black45,
-                                      blurRadius: 2.0,
+                                      blurRadius: 4.0,
                                       offset: new Offset(0.0, 2.0))
                                 ]),
                             child: new Padding(
@@ -116,31 +134,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                     _width, Icons.group_add, 'Add to group'),
                                 infoChild(_width, Icons.chat_bubble,
                                     'Show all comments'),
-                                new Padding(
-                                  padding:
-                                      new EdgeInsets.only(top: _height / 30),
-                                  child: new Container(
-                                    width: _width / 3,
-                                    height: _height / 20,
-                                    decoration: new BoxDecoration(
-                                        color: const Color(0xFF26CBE6),
-                                        borderRadius: new BorderRadius.all(
-                                            new Radius.circular(_height / 40)),
-                                        boxShadow: [
-                                          new BoxShadow(
-                                              color: Colors.black87,
-                                              blurRadius: 2.0,
-                                              offset: new Offset(0.0, 1.0))
-                                        ]),
-                                    child: new Center(
-                                      child: new Text('FOLLOW ME',
-                                          style: new TextStyle(
-                                              fontSize: 12.0,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                  ),
-                                )
+                                // new Padding(
+                                //   padding:
+                                //       new EdgeInsets.only(top: _height / 30),
+                                //   child: new Container(
+                                //     width: _width / 3,
+                                //     height: _height / 20,
+                                //     decoration: new BoxDecoration(
+                                //         color: const Color(0xFF26CBE6),
+                                //         borderRadius: new BorderRadius.all(
+                                //             new Radius.circular(_height / 40)),
+                                //         boxShadow: [
+                                //           new BoxShadow(
+                                //               color: Colors.black87,
+                                //               blurRadius: 2.0,
+                                //               offset: new Offset(0.0, 1.0))
+                                //         ]),
+                                //     child: new Center(
+                                //         // child: new Text('FOLLOW ME',
+                                //         //     style: new TextStyle(
+                                //         //         fontSize: 12.0,
+                                //         //         color: Colors.white,
+                                //         //         fontWeight: FontWeight.bold)),
+                                //         ),
+                                //   ),
+                                // )
                               ],
                             ),
                           )

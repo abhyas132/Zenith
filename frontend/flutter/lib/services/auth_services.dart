@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 
 class AuthServices {
   final url = GlobalVariables.baseUrl;
-  void signUp({
+  Future<void> signUp({
     required context,
     required name,
     required email,
@@ -35,6 +35,51 @@ class AuthServices {
         //print(res.body);
         // print(res.body);
         print(jsonDecode(res.body)['user']);
+        var data = jsonDecode(res.body)['user'];
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        User user = User(
+          name: data['name'],
+          email: data['email'],
+          password: data['password'],
+        );
+        Provider.of<UserProvider>(context, listen: false)
+            .setUserFromModel(user);
+        await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => body_page(),
+          ),
+          (route) => false,
+        );
+      } else {
+        ShowSnakBar(
+          context: context,
+          content: res.body,
+        );
+      }
+    } catch (e) {
+      ShowSnakBar(context: context, content: e.toString());
+    }
+  }
+
+  Future<void> signin({
+    required context,
+    required email,
+  }) async {
+    var body = jsonEncode({
+      "email": email,
+    });
+    print(body);
+    try {
+      final res = await http.post(Uri.parse('${url}api/v1/signin/user'),
+          body: body,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+      print(res.body);
+      if (res.statusCode == 200) {
+        // print(jsonDecode(res.body)['user']);
         var data = jsonDecode(res.body)['user'];
         SharedPreferences prefs = await SharedPreferences.getInstance();
         User user = User(

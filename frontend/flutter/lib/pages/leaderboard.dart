@@ -42,7 +42,10 @@ class _leaderboardState extends State<leaderboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("LeaderBoard")),
+        appBar: AppBar(
+          title: Text("LeaderBoard"),
+          backgroundColor: GlobalVariables.backgroundColor,
+        ),
         body: SingleChildScrollView(
           child: Column(children: [
             // Container(

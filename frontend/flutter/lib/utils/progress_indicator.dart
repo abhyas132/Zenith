@@ -8,15 +8,28 @@ class progress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircularPercentIndicator(
-      radius: 30.0,
-      animation: true,
-      animationDuration: 1200,
-      lineWidth: 10.0,
-      percent: GlobalVariables.taskdone / GlobalVariables.total_task,
-      circularStrokeCap: CircularStrokeCap.butt,
-      backgroundColor: GlobalVariables.backgroundColor,
-      progressColor: GlobalVariables.lightsecondaryColor,
+ //   return CircularPercentIndicator(
+ //     radius: 30.0,
+   //   animation: true,
+     // animationDuration: 1200,
+    //  lineWidth: 10.0,
+     // percent: GlobalVariables.taskdone / GlobalVariables.total_task,
+   //   circularStrokeCap: CircularStrokeCap.butt,
+   //   backgroundColor: GlobalVariables.backgroundColor,
+     // progressColor: GlobalVariables.lightsecondaryColor,
+    return TweenAnimationBuilder(
+      tween: Tween(begin: 0.0, end: 0.37),
+      duration: Duration(seconds: 2),
+      builder: (context, value, child) => SizedBox(
+        height: 76,
+        width: 76,
+        child: CircularProgressIndicator(
+          value: value,
+          color: GlobalVariables.progresColor,
+          backgroundColor: GlobalVariables.backgroundColor,
+          strokeWidth: 10,
+        ),
+      ),
     );
   }
 }

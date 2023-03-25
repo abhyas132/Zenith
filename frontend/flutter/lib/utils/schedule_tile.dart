@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zenith/globalvariables.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 
 import '../models/scheduleModel.dart';
 
@@ -65,7 +64,7 @@ class _tile1State extends State<tile1> {
                       ? Icon(CupertinoIcons.pen)
                       : widget.task == 'study'
                           ? Icon(CupertinoIcons.book)
-                          : widget.task == 'excercise'
+                          : task == 'sports'
                               ? Icon(CupertinoIcons.sportscourt)
                               : widget.task == 'hobby'
                                   ? Icon(CupertinoIcons.hand_draw)

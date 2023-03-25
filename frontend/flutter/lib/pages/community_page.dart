@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:zenith/globalvariables.dart';
 import 'package:zenith/pages/share_page.dart';
 
 class Community extends StatefulWidget {
@@ -11,18 +14,22 @@ class Community extends StatefulWidget {
 }
 
 class _CommunityState extends State<Community> {
+  List<File> images = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: GlobalVariables.backgroundColor,
         actions: [
           IconButton(
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        SharePage(title: "story to community")),
+                  builder: (context) => SharePage(
+                    title: "share to community",
+                  ),
+                ),
               );
             },
             icon: Icon(

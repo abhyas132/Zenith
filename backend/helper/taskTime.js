@@ -31,7 +31,7 @@ exports.findVoidIntervals = (currentTime, staticTasks) => {
     }
 
     if(unUsedIntervals.length === 0){
-        unUsedIntervals.push([currentTime, 2400, findDuration(currentTime,2400)])
+        unUsedIntervals.push([currentTime, 2400, findDuration(currentTime, 2400)])
     }
 
     return unUsedIntervals ;
@@ -57,12 +57,21 @@ exports.findEndTime = (startTime, duration) => {
     let mins = (startTime % 100) ;
 
     let getDecimalVal = duration.toString().indexOf(".");
-    let decimalPart = parseInt(duration.toString().substring(getDecimalVal+1, getDecimalVal + 3));
+    let decimalPart = 0;
+    let hrsPart = 0 ;
+    
+    if(getDecimalVal !== -1){
+        decimalPart = parseInt(duration.toString().substring(getDecimalVal+1, getDecimalVal + 3));
+        hrsPart = parseInt(duration.toString().substring(0, getDecimalVal));
+    }
+    else{
+        hrsPart = duration ;
+    }
     
     if(decimalPart < 10)
         decimalPart *= 10 ;
 
-    let hrsPart = parseInt(duration.toString().substring(0, getDecimalVal));
+    // if(getDecimalVal !== -1)
 
     let minsToadd = (hrsPart * 60) + parseInt(decimalPart * 6 / 10) ;
     
