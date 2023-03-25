@@ -1,9 +1,10 @@
 class ScheduleModel {
+  String? uid;
   int? startTime;
   int? endTime;
   String? title;
   String? description;
-  int? duration;
+  double? duration;
   ScheduleModel(
       {this.description,
       this.duration,

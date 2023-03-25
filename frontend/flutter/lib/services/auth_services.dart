@@ -22,7 +22,7 @@ class AuthServices {
       User user = User(
         name: name,
         email: email,
-        password: password,
+        // password: password,
       );
       print("hh");
       final res = await http.post(Uri.parse('${url}api/v1/create/user'),
@@ -40,7 +40,11 @@ class AuthServices {
         User user = User(
           name: data['name'],
           email: data['email'],
-          password: data['password'],
+          // password: data['password'],
+          sportActivity: data['sportActivity'],
+          studyActivity: data['studyActivity'],
+          otherActivity: data['otherActivity'],
+          zenCoins: data['zenCoins'],
         );
         Provider.of<UserProvider>(context, listen: false)
             .setUserFromModel(user);
@@ -77,15 +81,20 @@ class AuthServices {
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           });
-      print(res.body);
+      //print(res.body);
       if (res.statusCode == 200) {
         // print(jsonDecode(res.body)['user']);
         var data = jsonDecode(res.body)['user'];
+        print(data);
         SharedPreferences prefs = await SharedPreferences.getInstance();
         User user = User(
           name: data['name'],
           email: data['email'],
-          password: data['password'],
+          // password: data['password'],
+          sportActivity: data['sportActivity'],
+          studyActivity: data['studyActivity'],
+          otherActivity: data['otherActivity'],
+          zenCoins: data['zenCoins'],
         );
         Provider.of<UserProvider>(context, listen: false)
             .setUserFromModel(user);
@@ -130,7 +139,7 @@ class AuthServices {
       User user = User(
         name: data['name'],
         email: data['email'],
-        password: data['password'],
+        // password: data['password'],
         zenCoins: data['zenCoins'],
       );
       Provider.of<UserProvider>(context, listen: false).setUserFromModel(user);
