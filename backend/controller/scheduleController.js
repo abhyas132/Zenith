@@ -109,6 +109,7 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
     //     user : req.user,
     //     tasks : taskSchedule,
     // })
+    console.log(taskSchedule);
 
     console.log(taskSchedule);
 

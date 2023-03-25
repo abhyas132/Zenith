@@ -48,4 +48,4 @@ exports.updateLikes = BigPromise(async(req, res, next) => {
     });
 })
 
-exports.createSchedule = BigPromise((req, res) => {});
+// exports.createSchedule = BigPromise((req, res) => {});

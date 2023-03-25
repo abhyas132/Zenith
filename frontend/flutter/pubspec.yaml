@@ -51,6 +51,7 @@ dependencies:
   carousel_slider: ^4.2.1
   image_picker: ^0.8.7
   file_picker: ^5.2.6
+  loader_overlay: ^2.1.0
 
   dart_numerics: ^0.0.6
   
@@ -61,9 +62,6 @@ dependencies:
   
   
   favorite_button: ^0.0.4
-  
-  image_picker: ^0.8.7
-  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0
