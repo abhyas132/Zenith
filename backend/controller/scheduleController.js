@@ -108,11 +108,10 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
 
     console.log(taskSchedule);
 
-    setTimeout(() => {
+    
         return res.status(200).json({
             status: 200,
             message: "Schedule created successfully",
             taskSchedule,
           });
-    }, 5000) ;
 })

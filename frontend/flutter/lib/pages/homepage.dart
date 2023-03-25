@@ -169,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                             endtime: schedule[index].endTime.toString(),
                             task: schedule[index].title.toString(),
                             description: schedule[index].description.toString(),
-                            indi: index.toDouble(),
+                            indi: index,
                           ),
                         ),
                       ),

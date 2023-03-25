@@ -47,8 +47,8 @@ class LeaderBoardTile extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.10,
       decoration: BoxDecoration(
           border: Border.all(width: 2),
-          borderRadius: BorderRadius.circular(15),
-          color: Color.fromARGB(255, 181, 221, 241)),
+          borderRadius: BorderRadius.circular(35),
+          color: GlobalVariables.lightsecondaryColor),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:zenith/globalvariables.dart';
 import 'package:zenith/pages/share_page.dart';
 
 class Community extends StatefulWidget {
@@ -15,6 +16,7 @@ class _CommunityState extends State<Community> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: GlobalVariables.backgroundColor,
         actions: [
           IconButton(
             onPressed: () {
