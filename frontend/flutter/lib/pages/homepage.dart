@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               'Todays Sceduele',
-                              style: GoogleFonts.varelaRound(
+                              style: GoogleFonts.poppins(
                                 textStyle: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 20),
                               ),

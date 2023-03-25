@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/pages/community_page.dart';
 import 'package:zenith/pages/form_page.dart';
@@ -38,50 +39,55 @@ class _body_pageState extends State<body_page> {
                 topLeft: Radius.circular(15), topRight: Radius.circular(15)),
             //color: Colors.blue[800],
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10),
-            child: GNav(
-              // type: BottomNavigationBarType.fixed,
-              backgroundColor: GlobalVariables.backgroundColor,
-              color: Colors.white,
-              activeColor: GlobalVariables.progresColor,
-              tabBackgroundColor: GlobalVariables.secondaryColor,
-              selectedIndex: _selectedPage,
-              padding: EdgeInsets.all(18),
-              iconSize: 20,
-              //textSize: 3,
-              gap: 5,
-              tabs: [
-                GButton(
-                  onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => leaderboard())),
-                  icon: Icons.leaderboard,
-                  text: "Leader",
-                ),
-                GButton(
-                  icon: Icons.chat,
-                  text: "Community",
-                ),
-                GButton(
-                  icon: Icons.home,
-                  text: "Home",
-                ),
-                GButton(
-                  icon: Icons.add,
-                  text: "Add Task",
-                ),
-                GButton(
-                  icon: Icons.person,
-                  text: "Profile",
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ProfilePage())),
-                ),
-              ],
-              onTabChange: (int index) {
-                setState(() {
-                  _selectedPage = index;
-                });
-              },
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10),
+              child: GNav(
+                // type: BottomNavigationBarType.fixed,
+                backgroundColor: GlobalVariables.backgroundColor,
+                color: Colors.white,
+                activeColor: GlobalVariables.progresColor,
+                tabBackgroundColor: GlobalVariables.secondaryColor,
+                selectedIndex: _selectedPage,
+                padding: EdgeInsets.all(18),
+                iconSize: 20,
+                //textSize: 3,
+                gap: 5,
+                tabs: [
+                  GButton(
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => leaderboard())),
+                    icon: Icons.leaderboard,
+                    text: "Leader",
+                  ),
+                  GButton(
+                    icon: Icons.chat,
+                    text: "Community",
+                  ),
+                  GButton(
+                    icon: Icons.home,
+                    text: "Home",
+                  ),
+                  GButton(
+                    icon: Icons.add,
+                    text: "Add Task",
+                  ),
+                  GButton(
+                    icon: Icons.person,
+                    text: "Profile",
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => const ProfilePage())),
+                  ),
+                ],
+                onTabChange: (int index) {
+                  setState(() {
+                    _selectedPage = index;
+                  });
+                },
+              ),
             ),
           ),
         ),
