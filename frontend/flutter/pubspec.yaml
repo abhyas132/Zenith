@@ -42,7 +42,7 @@ dependencies:
   intl: ^0.18.0
   lottie: ^2.3.0
   percent_indicator: ^4.2.3
-  provider: ^6.0.5
+
   rive: ^0.10.3
   shared_preferences: ^2.0.20
   provider: ^6.0.5
