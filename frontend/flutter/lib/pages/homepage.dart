@@ -99,7 +99,29 @@ class _HomePageState extends State<HomePage> {
                         width: 40,
                       ),
                       Row(
-                        children: [progress()],
+                        children: [
+                          Column(
+                            children: [
+                              progress(),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Your Progress',
+                                    style: TextStyle(
+                                        color: Colors.blue[100],
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     ],
                   ),

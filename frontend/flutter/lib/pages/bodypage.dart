@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:zenith/games/game_screen.dart';
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/pages/community_page.dart';
 import 'package:zenith/pages/form_page.dart';
 import 'package:zenith/pages/homepage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:zenith/pages/leaderboard.dart';
-import 'package:zenith/pages/profilePage.dart';
-
-import '../globalvariables.dart';
 
 class body_page extends StatefulWidget {
   const body_page({super.key});
@@ -24,7 +22,7 @@ class _body_pageState extends State<body_page> {
     const Community(),
     const HomePage(),
     AddForm(),
-    ProfilePage(),
+    GameScreen(),
   ];
   @override
   Widget build(BuildContext context) {

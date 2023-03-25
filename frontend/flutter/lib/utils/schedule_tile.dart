@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zenith/globalvariables.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 
 class tile1 extends StatelessWidget {
   final String task;
@@ -54,7 +51,7 @@ class tile1 extends StatelessWidget {
                       ? Icon(CupertinoIcons.pen)
                       : task == 'study'
                           ? Icon(CupertinoIcons.book)
-                          : task == 'excercise'
+                          : task == 'sports'
                               ? Icon(CupertinoIcons.sportscourt)
                               : task == 'hobby'
                                   ? Icon(CupertinoIcons.hand_draw)
