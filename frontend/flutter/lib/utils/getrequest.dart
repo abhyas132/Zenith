@@ -14,9 +14,9 @@ class GetRequest {
       // var Url = Uri.parse('${url}api/v1/create/schedule');
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
-      
+
       print(token);
-      
+
       var response = await http.post(
         Uri.parse('${url}api/v1/create/schedule'),
         //body: {"name": "name"},
@@ -28,14 +28,15 @@ class GetRequest {
 
       var jsonData = jsonDecode(response.body);
 
-      print("schedule is  " + response.body);
+      print(jsonData);
 
       if (jsonData['status'] == 200) {
         jsonData['taskSchedule'].forEach((element) {
           ScheduleModel scheduleModel = ScheduleModel(
             uid: element['uid'],
-            description: element['description'],
-            duration: element['duration'] == null ? '0' : element['duration'],
+            description:
+                element['description'] == null ? 'N/A' : element['description'],
+            duration: double.parse(element['duration'].toString()),
             endTime: element['endTime'],
             startTime: element['startTime'],
             title: element['title'],

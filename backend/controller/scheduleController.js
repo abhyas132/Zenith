@@ -30,6 +30,9 @@ exports.getSchedule = BigPromise(async (req,res, next) => {
 exports.createSchedule = BigPromise(async (req, res, next) => {
     const userId = req.user.userId ;
 
+    const relaxationTime = 0.25 ; //15 mins
+    let totalTimeBusy = 0 ;
+
     console.log(req.user.name);
     const tasks = await Task.find({userId}) ;
 
@@ -55,7 +58,7 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
         return task.taskType === 'dynamic' ;
     })
 
-    let unUsedIntervals = findVoidIntervals(currTime, staticTasks) ;
+    let unUsedIntervals = await findVoidIntervals(currTime, staticTasks, relaxationTime) ;
     const currSuitableTag = getCurrentTag(currTime) ;
 
     dynamicTasks = accedingSortAccordingToProps(dynamicTasks, 'duration') ;
@@ -73,15 +76,45 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
         let currTask = copyTask ;
 
         if(currTask.duration <= currInterval[2]){
-            currTask.startTime = currInterval[0] ;
-            // currTask.endTime =  currInterval[1];
-            currTask.endTime =  findEndTime(currInterval[0], currTask.duration);
+
+            if(totalTimeBusy + currTask.duration <= currTask.attentionTime){
+                totalTimeBusy += currTask.duration ; 
+
+                currTask.startTime = currInterval[0] ;
+                currTask.endTime =  findEndTime(currInterval[0], currTask.duration);
+
+                currInterval = [currTask.endTime, currInterval[1], findDuration(currTask.endTime, currInterval[1])] ;
+            }
+            else{
+                totalTimeBusy = 0 ;
+
+                currTask.startTime = currInterval[0] ;
+                currTask.endTime =  findEndTime(currInterval[0], attentionTime - totalTimeBusy);
+                   
+                if(currTask.endTime < 2400){
+                    let relaxTask = new Task({
+                        title : "Take rest",
+                        description : "Have a break, have a kitkat",
+                        taskType : "static",
+                        startTime : currTask.endTime,
+                        endTime : Math.min(2400, Math.max(this.findEndTime(currTask.endTime, relaxationTime), currInterval[1])),
+                        duration : relaxationTime,
+                        userId : currTask.userId
+                    })
+                    taskSchedule.push(relaxTask) ;
+
+                    currInterval = [relaxTask.endTime, currInterval[1], findDuration(relaxTask.endTime, currInterval[1])] ;
+                }
+            }
+
+            // currTask.startTime = currInterval[0] ;
+            // currTask.endTime =  findEndTime(currInterval[0], currTask.duration);
             
-            console.log(currTask.startTime + " " + currTask.endTime);
+            // console.log(currTask.startTime + " " + currTask.endTime);
 
             taskSchedule.push(currTask) ;
 
-            currInterval = [currTask.endTime, currInterval[1], findDuration(currTask.endTime, currInterval[1])] ;
+            // currInterval = [currTask.endTime, currInterval[1], findDuration(currTask.endTime, currInterval[1])] ;
 
             i ++ ;
             copyTask = dynamicTasks[i] ;
@@ -92,7 +125,7 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
             currTask.endTime = currInterval[1] ;
             taskSchedule.push(currTask) ;
                
-            console.log(currTask.startTime + " " + currTask.endTime);
+            // console.log(currTask.startTime + " " + currTask.endTime);
             
             j ++ ;
             currInterval = unUsedIntervals[j] ;
@@ -111,12 +144,9 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
     // })
     console.log(taskSchedule);
 
-    console.log(taskSchedule);
-
-    
-        return res.status(200).json({
-            status: 200,
-            message: "Schedule created successfully",
-            taskSchedule,
-          });
+    return res.status(200).json({
+        status: 200,
+        message: "Schedule created successfully",
+        taskSchedule,
+      });
 })

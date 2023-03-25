@@ -1,15 +1,16 @@
 class ScheduleModel {
+  String? uid;
   int? startTime;
   int? endTime;
   String? title;
   String? description;
-  String? uid;
-  int? duration;
-  ScheduleModel(
-      {this.uid,
-      this.description,
-      this.duration,
-      this.endTime,
-      this.startTime,
-      this.title});
+  double? duration;
+  ScheduleModel({
+    this.uid,
+    this.description = '',
+    this.duration = 0.0,
+    this.endTime,
+    this.startTime,
+    this.title,
+  });
 }
