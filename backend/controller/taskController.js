@@ -63,3 +63,31 @@ exports.createTask = BigPromise(async (req, res, next) => {
         task,
     });
 });
+
+exports.getAllTasks = BigPromise(async(req, res, next) => {
+    const tasks = await Task.find({userId : req.user.userId}) ;
+
+    if(!tasks){
+        return res.status(500).json({
+            status: 500,
+            message: "Internal error, task could not be retrieved",
+        });
+    }
+
+    return res.status(200).json({
+        status: 200,
+        message: "All task retrived successfully",
+        tasks,
+    });
+})
+
+exports.deleteTask = BigPromise(async(req, res, next) => {
+    const taskId = req.params.taskId ;
+
+    await Task.deleteOne({uid : taskId}) ;
+
+    return res.status(200).json({
+        status: 200,
+        message: "Task deleted successfully",
+    });
+});
