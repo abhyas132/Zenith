@@ -11,8 +11,8 @@ class progress extends StatelessWidget {
       tween: Tween(begin: 0.0, end: 1.0),
       duration: Duration(seconds: 4),
       builder: (context, value, child) => SizedBox(
-        height: 80,
-        width: 80,
+        height: 76,
+        width: 76,
         child: CircularProgressIndicator(
           value: value,
           color: GlobalVariables.progresColor,
