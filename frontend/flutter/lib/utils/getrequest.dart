@@ -28,7 +28,7 @@ class GetRequest {
 
       var jsonData = jsonDecode(response.body);
 
-      //print(jsonData['taskSchedule'][0]['duration']);
+      print(jsonData);
 
       if (jsonData['status'] == 200) {
         jsonData['taskSchedule'].forEach((element) {
