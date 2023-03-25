@@ -5,6 +5,7 @@ import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/pages/bodypage.dart';
 import 'package:zenith/pages/homepage.dart';
+import 'package:zenith/services/auth_services.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
@@ -17,6 +18,7 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AuthServices auth = AuthServices();
   bool isShowLoading = false;
   bool isShowConfetti = false;
   late SMITrigger error;
@@ -49,10 +51,10 @@ class _SignInFormState extends State<SignInForm> {
   void singIn(
     BuildContext context,
     String email,
-    String password,
-    String name,
   ) {
     // confetti.fire();
+    print(email);
+    auth.signin(context: context, email: email);
   }
 
   @override
@@ -142,12 +144,10 @@ class _SignInFormState extends State<SignInForm> {
                   padding: const EdgeInsets.only(top: 8, bottom: 24),
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      print(email.value.text);
+                      //print(email.value.text);
                       singIn(
                         context,
                         email.text,
-                        password.text,
-                        name.text,
                       );
                     },
                     style: ElevatedButton.styleFrom(

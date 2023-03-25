@@ -45,6 +45,12 @@ dependencies:
   rive: ^0.10.3
   shared_preferences: ^2.0.20
   provider: ^6.0.5
+  cloudinary: ^1.1.1
+  cloudinary_public: ^0.13.0
+  dotted_border: ^2.0.0+3
+  carousel_slider: ^4.2.1
+  image_picker: ^0.8.7
+  file_picker: ^5.2.6
 
   dart_numerics: ^0.0.6
   

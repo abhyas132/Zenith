@@ -14,7 +14,9 @@ class GetRequest {
       // var Url = Uri.parse('${url}api/v1/create/schedule');
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
+      
       print(token);
+      
       var response = await http.post(
         Uri.parse('${url}api/v1/create/schedule'),
         //body: {"name": "name"},
@@ -42,6 +44,7 @@ class GetRequest {
         });
       }
     } catch (e) {
+      print("catch exception ");
       print(e.toString());
     }
   }

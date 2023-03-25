@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -12,6 +14,7 @@ class Community extends StatefulWidget {
 }
 
 class _CommunityState extends State<Community> {
+   List<File> images = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
