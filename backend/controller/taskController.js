@@ -87,17 +87,27 @@ exports.deleteTask = BigPromise(async(req, res, next) => {
     const task = await Task.findOne({uid : taskId}) ;
     const user = req.user ;
 
+    let pointsToAdd = 0 ;
+
     if(task.title.includes("play") || task.title.includes("sport") || task.title.includes("game")){
         user.sportActivity ++ ;
     }
 
+    if(task.title.includes("play") || task.title.includes("sport") || task.title.includes("game") || task.taskType === 'static'){
+        pointsToAdd += parseInt(task.duration*0.15) ;
+    }
+
     else if(task.title.includes("study") || task.title.includes("contest") || task.title.includes("read")){
         user.studyActivity ++ ;
+        pointsToAdd += parseInt(task.duration*0.50) ;
     }
 
     else{
         user.otherActivity ++ ;
+        pointsToAdd += parseInt(task.duration*0.20) ;
     }
+
+    user.zenCoins += pointsToAdd ;
 
     await user.save() ;
 
