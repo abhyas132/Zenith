@@ -162,16 +162,39 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Flexible(
                         child: ListView.builder(
-                          itemCount: schedule.length,
-                          itemBuilder: (context, index) => tile1(
-                            //duration: schedule[index].duration.toString(),
-                            starttime: schedule[index].startTime.toString(),
-                            endtime: schedule[index].endTime.toString(),
-                            task: schedule[index].title.toString(),
-                            description: schedule[index].description.toString(),
-                            indi: index.toDouble(),
-                          ),
-                        ),
+                            itemCount: schedule.length,
+                            itemBuilder: (context, index) {
+                              final item = schedule[index];
+                              return Dismissible(
+                                background: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 15,
+                                      vertical: 4,
+                                    ),
+                                    alignment: Alignment.centerRight,
+                                    padding: const EdgeInsets.only(right: 20),
+                                    child: const Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                    color: Colors.green),
+                                key: Key(item.uid!),
+                                direction: DismissDirection.endToStart,
+                                onDismissed: (direction) => setState(() {
+                                  schedule.removeAt(index);
+                                }),
+                                child: tile1(
+                                  totaltask: schedule.length.toDouble(),
+                                  starttime:
+                                      schedule[index].startTime.toString(),
+                                  endtime: schedule[index].endTime.toString(),
+                                  task: schedule[index].title.toString(),
+                                  description:
+                                      schedule[index].description.toString(),
+                                  indi: index,
+                                ),
+                              );
+                            }),
                       ),
                     ]),
                   ),

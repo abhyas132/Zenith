@@ -30,6 +30,10 @@ exports.findVoidIntervals = (currentTime, staticTasks) => {
         lastEndTime = task.endTime ;
     }
 
+    if(unUsedIntervals.length === 0){
+        unUsedIntervals.push([currentTime, 2400, findDuration(currentTime,2400)])
+    }
+
     return unUsedIntervals ;
 }
 
