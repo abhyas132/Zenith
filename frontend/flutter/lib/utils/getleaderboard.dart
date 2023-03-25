@@ -23,8 +23,21 @@ class GetLeaderBoard {
         });
         //}
       }
+      users.sort(mySortComparison);
     } catch (e) {
       print("Not fetched leaderboard");
+    }
+  }
+
+  int mySortComparison(UserModal a, UserModal b) {
+    int propertyA = a.zenCoins!;
+    int propertyB = b.zenCoins!;
+    if (propertyA > propertyB) {
+      return -1;
+    } else if (propertyA < propertyB) {
+      return 1;
+    } else {
+      return 0;
     }
   }
 }
