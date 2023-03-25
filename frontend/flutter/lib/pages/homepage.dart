@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:zenith/globalvariables.dart';
+import 'package:zenith/provider/user_provider.dart';
 import 'package:zenith/utils/emotion_face.dart';
 import 'package:zenith/utils/excercise_tile.dart';
 import 'package:zenith/utils/progress_indicator.dart';
@@ -9,21 +12,154 @@ import '../utils/getrequest.dart';
 import '../utils/schedule_tile.dart';
 import 'form_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  var _currentIndex = 0;
+  var ItemList = [
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        //padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Hello, Samyak ',
+                  style: GoogleFonts.varelaRound(
+                    textStyle: TextStyle(
+                        color: Colors.blue[100],
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  '25 March,23',
+                  style: TextStyle(color: Colors.blue[100]),
+                ),
+              ],
+            ),
+            // SizedBox(
+            //   width: MediaQuery.of(context).size.width * 0.1,
+            // ),
+            Row(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    progress(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Your Progress',
+                          style: TextStyle(
+                              color: Colors.blue[100],
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+    Container(
+      padding: EdgeInsets.only(top: 20, left: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          // ignore: unnecessary_new
+          Column(
+            children: [
+              new CircularPercentIndicator(
+                radius: 33.0,
+                lineWidth: 4.0,
+                percent: 0.1,
+                center: new Text("10%"),
+                progressColor: Colors.red,
+              ),
+              Text("study")
+            ],
+          ),
+          new Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+          ),
+          Column(
+            children: [
+              new CircularPercentIndicator(
+                radius: 33.0,
+                lineWidth: 4.0,
+                percent: 0.30,
+                center: new Text("30%"),
+                progressColor: Colors.orange,
+              ),
+              Text("sports")
+            ],
+          ),
+          new Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+          ),
+          Column(
+            children: [
+              new CircularPercentIndicator(
+                radius: 33.0,
+                lineWidth: 4.0,
+                percent: 0.60,
+                center: new Text("60%"),
+                progressColor: Colors.yellow,
+              ),
+              Text("others")
+            ],
+          ),
+          new Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+          ),
+          // new CircularPercentIndicator(
+          //   radius: 25.0,
+          //   lineWidth: 4.0,
+          //   percent: 0.90,
+          //   center: new Text("90%"),
+          //   progressColor: Colors.green,
+          // )
+        ],
+      ),
+    ),
+  ];
   List<ScheduleModel> schedule = [];
   bool _loading = true;
   @override
   void initState() {
     super.initState;
     getData();
+    // Future.delayed(Duration.zero, () {
+    //   sports =
+    //       Provider.of<UserProvider>(context, listen: false).user.sportActivity;
+    //   study =
+    //       Provider.of<UserProvider>(context, listen: false).user.studyActivity;
+    //   others =
+    //       Provider.of<UserProvider>(context, listen: false).user.otherActivity;
+    // });
   }
 
   getData() async {
@@ -37,10 +173,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // sports = user.sportActivity;
+    // study = user.studyActivity;
+    // others = user.otherActivity;
     return Scaffold(
         backgroundColor: Colors.blue[600],
         body: SafeArea(
             child: Container(
+          // width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             // borderRadius: BorderRadius.circular(20),
             gradient: const LinearGradient(
@@ -56,7 +196,7 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Column(children: [
             Container(
-              //height: MediaQuery.of(context).size.height * 0.35,
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 // borderRadius: BorderRadius.circular(20),
                 gradient: const LinearGradient(
@@ -70,75 +210,42 @@ class _HomePageState extends State<HomePage> {
                   tileMode: TileMode.repeated,
                 ),
               ),
-              padding: EdgeInsets.all(25),
+              //padding: EdgeInsets.all(25),
+              margin: EdgeInsets.only(top: 20),
               child: Column(
                 children: [
-                  Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Hello, Samyak ',
-                            style: GoogleFonts.varelaRound(
-                              textStyle: TextStyle(
-                                  color: Colors.blue[100],
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        height: 200.0,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        pauseAutoPlayOnTouch: true,
+                        // aspectRatio: 2.0,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _currentIndex = index;
+                          });
+                        },
+                      ),
+                      items: ItemList.map((card) {
+                        return Builder(builder: (BuildContext context) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.30,
+                            width: MediaQuery.of(context).size.width,
+                            child: Card(
+                              // elevation: 5,
+                              color: Colors.white,
+                              child: card,
                             ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            '25 March,23',
-                            style: TextStyle(color: Colors.blue[100]),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 40,
-                      ),
-                      Row(
-                        children: [
-                          Column(
-                            children: [
-                              progress(),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Your Progress',
-                                    style: TextStyle(
-                                        color: Colors.blue[100],
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Your Progress',
-                        style: TextStyle(
-                            color: Colors.blue[100],
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                          );
+                        });
+                      }).toList(),
+                    ),
                   ),
                   SizedBox(
                     height: 25,

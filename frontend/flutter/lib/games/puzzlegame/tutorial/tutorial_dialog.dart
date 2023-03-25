@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:zenith/games/puzzlegame/data/board_config.dart';
 import 'package:zenith/games/puzzlegame/data/game_state.dart';
 import 'package:zenith/games/puzzlegame/puzzle/puzzle_piece.dart';
+import 'package:zenith/globalvariables.dart';
 
 class TutorialDialog extends StatefulWidget {
   final void Function(bool hideText) onDismiss;
@@ -127,127 +128,22 @@ class _DialogState extends State<_Dialog> {
       children: [
         Text(
           'How to Play',
-          style: header.copyWith(fontSize: 32),
+          style:
+              TextStyle(color: GlobalVariables.backgroundColor, fontSize: 32),
           textAlign: TextAlign.center,
         ),
         RichText(
           text: TextSpan(
             style: body,
             children: [
-              TextSpan(text: '\nObjective\n', style: header),
-              const TextSpan(
-                  text: '\nThe goal is to move ',
-                  style: TextStyle(color: Colors.blueGrey)),
-              TextSpan(text: '🕵🏻', style: em),
-              const TextSpan(
-                  text: ' to ', style: TextStyle(color: Colors.blueGrey)),
-              TextSpan(text: 'the Jail', style: em),
-              const TextSpan(
-                  text: ' in as few ',
-                  style: TextStyle(color: Colors.blueGrey)),
-              TextSpan(text: 'steps', style: em),
-              const TextSpan(
-                  text: ' as possible.',
-                  style: TextStyle(color: Colors.blueGrey)),
-            ],
-          ),
-        ),
-        RichText(
-          text: TextSpan(
-            style: body,
-            children: [
-              TextSpan(text: '\nPieces\n', style: header),
-              const TextSpan(
-                  text: '\nThe largest piece is ',
-                  style: TextStyle(color: Colors.blueGrey)),
-              TextSpan(text: '🕵🏻', style: em),
-              const TextSpan(
-                  text: '. All other pieces are ',
-                  style: TextStyle(color: Colors.blueGrey)),
               TextSpan(
-                text: '👮🏻',
-                style: em,
-              ),
-              const TextSpan(
-                  text: ' preventing ',
-                  style: TextStyle(color: Colors.blueGrey)),
-              TextSpan(text: '🕵🏻', style: em),
-              const TextSpan(
-                  text: ' from reaching ',
-                  style: TextStyle(color: Colors.blueGrey)),
-              TextSpan(text: 'the Jail', style: em),
-              const TextSpan(
-                  text: '. Swipe them away to clear a path for ',
-                  style: TextStyle(color: Colors.blueGrey)),
-              TextSpan(text: '🕵🏻', style: em),
-              const TextSpan(
-                  text: '.', style: TextStyle(color: Colors.blueGrey)),
-            ],
-          ),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 16),
-            _buildPuzzlePiece(
-              Piece(0, label: '🕵🏻', width: 2, height: 2, x: 0, y: 0),
-            ),
-            Text('CHOR', style: em),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildPuzzlePiece(
-                  Piece(1, label: '👮🏻', width: 2, height: 1, x: 0, y: 0),
-                ),
-                _buildPuzzlePiece(
-                  Piece(2, label: '👮🏻', width: 1, height: 1, x: 0, y: 0),
-                ),
-                _buildPuzzlePiece(
-                  Piece(3, label: '👮🏻', width: 1, height: 2, x: 0, y: 0),
-                ),
-              ],
-            ),
-            Text('Police', style: em),
-          ],
-        ),
-        RichText(
-          text: TextSpan(
-            style: body,
-            children: [
-              TextSpan(
-                text: '\nThe Jail\n',
-                style: header,
-              ),
-              const TextSpan(
-                  text: '\nThe jail is located ',
-                  style: TextStyle(color: Colors.blueGrey)),
-              TextSpan(text: 'at the bottom', style: em),
-              const TextSpan(
-                  text: ' of the game board for each level. Once ',
-                  style: TextStyle(color: Colors.blueGrey)),
-              TextSpan(text: '🕵🏻', style: em),
-              const TextSpan(
-                  text: ' reaches the Jail, '
-                      'the game will advance to the next level.',
-                  style: TextStyle(color: Colors.blueGrey)),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        RichText(
-          text: TextSpan(
-            style: body,
-            children: [
-              TextSpan(text: '\nSteps\n', style: header),
-              const TextSpan(
-                  text: '\nThe game is not timed, but there is a ',
-                  style: TextStyle(color: Colors.blueGrey)),
-              TextSpan(text: 'step counter', style: em),
+                  text: '\nObjective\n',
+                  style: TextStyle(
+                      color: GlobalVariables.backgroundColor, fontSize: 24)),
               const TextSpan(
                   text:
-                      ' at the top. Solving the puzzle is already an incredible'
-                      " achievement, so don't be stressed about the steps.",
-                  style: TextStyle(color: Colors.blueGrey)),
+                      '\nThe goal is to relieve "🧠" from "😓" by moving it outside the box',
+                  style: TextStyle(color: GlobalVariables.backgroundColor)),
             ],
           ),
         ),
