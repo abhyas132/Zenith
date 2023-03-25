@@ -146,6 +146,7 @@ class _AddFormState extends State<AddForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: GlobalVariables.backgroundColor,
         title: Text('Add New Item'),
       ),
       body: Container(
@@ -334,7 +335,10 @@ class _AddFormState extends State<AddForm> {
                 SizedBox(
                   width: 20,
                 ),
-                Text("Start Time"),
+                Text(
+                  "Start Time",
+                  //style: TextStyle(color:),
+                ),
                 SizedBox(
                   width: 20,
                 ),
@@ -387,20 +391,28 @@ class _AddFormState extends State<AddForm> {
               ),
               SizedBox(height: 32),
               Center(
-                child: ElevatedButton(
-                  child: Text('Save'),
-                  onPressed: () {
-                    try {
-                      if (_formKey1.currentState!.validate()) {
-                        _formKey1.currentState!.save();
-                        print(formatTimeOfDay(_startTime));
-                        postDataStatic();
-                        // Save the data to your database or perform any other necessary action.
+                child: Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(45)),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          GlobalVariables.backgroundColor),
+                    ),
+                    child: Text('Add Task'),
+                    onPressed: () {
+                      try {
+                        if (_formKey1.currentState!.validate()) {
+                          _formKey1.currentState!.save();
+                          print(formatTimeOfDay(_startTime));
+                          postDataStatic();
+                          // Save the data to your database or perform any other necessary action.
+                        }
+                      } catch (e) {
+                        ShowSnakBar(context: context, content: e.toString());
                       }
-                    } catch (e) {
-                      ShowSnakBar(context: context, content: e.toString());
-                    }
-                  },
+                    },
+                  ),
                 ),
               )
             ],

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:zenith/games/game_screen.dart';
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/pages/community_page.dart';
 import 'package:zenith/pages/form_page.dart';
 import 'package:zenith/pages/homepage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:zenith/pages/leaderboard.dart';
-import 'package:zenith/pages/profilePage.dart';
-
-import '../globalvariables.dart';
 
 class body_page extends StatefulWidget {
   const body_page({super.key});
@@ -20,11 +18,11 @@ class _body_pageState extends State<body_page> {
   int _selectedPage = 0;
 
   final _pageOptions = [
-    const HomePage(),
+    leaderboard(),
     const Community(),
     const HomePage(),
     AddForm(),
-    HomePage(),
+    GameScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -40,48 +38,47 @@ class _body_pageState extends State<body_page> {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10),
-            child: GNav(
-              // type: BottomNavigationBarType.fixed,
-              backgroundColor: GlobalVariables.backgroundColor,
-              color: Colors.white,
-              activeColor: GlobalVariables.progresColor,
-              tabBackgroundColor: GlobalVariables.secondaryColor,
-              selectedIndex: _selectedPage,
-              padding: EdgeInsets.all(18),
-              iconSize: 20,
-              //textSize: 3,
-              gap: 5,
-              tabs: [
-                GButton(
-                  onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => leaderboard())),
-                  icon: Icons.leaderboard,
-                  text: "Leader",
-                ),
-                GButton(
-                  icon: Icons.chat,
-                  text: "Community",
-                ),
-                GButton(
-                  icon: Icons.home,
-                  text: "Home",
-                ),
-                GButton(
-                  icon: Icons.add,
-                  text: "Add Task",
-                ),
-                GButton(
-                  icon: Icons.person,
-                  text: "Profile",
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ProfilePage())),
-                ),
-              ],
-              onTabChange: (int index) {
-                setState(() {
-                  _selectedPage = index;
-                });
-              },
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: GNav(
+                // type: BottomNavigationBarType.fixed,
+                backgroundColor: GlobalVariables.backgroundColor,
+                color: Colors.white,
+                activeColor: GlobalVariables.progresColor,
+                tabBackgroundColor: GlobalVariables.secondaryColor,
+                selectedIndex: _selectedPage,
+                padding: EdgeInsets.all(18),
+                iconSize: 20,
+                //textSize: 3,
+                gap: 5,
+                tabs: [
+                  GButton(
+                    icon: Icons.leaderboard,
+                    text: "Leader",
+                  ),
+                  GButton(
+                    icon: Icons.chat,
+                    text: "Community",
+                  ),
+                  GButton(
+                    icon: Icons.home,
+                    text: "Home",
+                  ),
+                  GButton(
+                    icon: Icons.add,
+                    text: "Add Task",
+                  ),
+                  GButton(
+                    icon: Icons.person,
+                    text: "Profile",
+                  ),
+                ],
+                onTabChange: (int index) {
+                  setState(() {
+                    _selectedPage = index;
+                  });
+                },
+              ),
             ),
           ),
         ),

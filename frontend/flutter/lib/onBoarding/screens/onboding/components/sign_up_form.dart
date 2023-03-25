@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zenith/globalvariables.dart';
 import 'package:zenith/pages/bodypage.dart';
 import 'package:zenith/pages/homepage.dart';
 import 'package:zenith/services/auth_services.dart';
