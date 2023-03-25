@@ -105,9 +105,9 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
     // })
 
     return res.status(200).json({
-        status: 200,
-        message: "Schedule created successfully",
-        taskSchedule
-    })
+      status: 200,
+      message: "Schedule created successfully",
+      taskSchedule,
+    });
 
 })

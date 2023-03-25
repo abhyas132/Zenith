@@ -27,7 +27,7 @@ class GetRequest {
       );
 
       //var jsonData = jsonDecode(response.body);
-      print("resposne " + response.body);
+      print(response.body);
       // if (jsonData['status'] == 200) {
       //   jsonData['schedule'].forEach((element) {
       //     ScheduleModel scheduleModel = ScheduleModel(
