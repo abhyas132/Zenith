@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/utils/snackbar.dart';
 
 import '../models/scheduleModel.dart';
@@ -11,10 +12,20 @@ class GetRequest {
   Future<void> getData() async {
     try {
       var Url = Uri.parse('${url}api/v1/create/schedule');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+      print(token);
+      var response = await http.post(
+        Uri.parse('${url}api/v1/get/schedule'),
+        body: {"name": "name"},
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': token!
+        },
+      );
 
-      var response = await http.post(Url);
       var jsonData = jsonDecode(response.body);
-
+      print(response.body);
       if (jsonData['status'] == 200) {
         jsonData['schedule'].forEach((element) {
           ScheduleModel scheduleModel = ScheduleModel(
@@ -29,7 +40,7 @@ class GetRequest {
         });
       }
     } catch (e) {
-      print("No data fetched");
+      print(e.toString());
     }
   }
 }

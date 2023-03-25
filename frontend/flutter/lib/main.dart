@@ -36,6 +36,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     // isLoggedIn();
     auth.getUser(context);
+
     //print(Provider.of<UserProvider>(context).user.email);
   }
 
