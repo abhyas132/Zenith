@@ -8,7 +8,7 @@ class ScheduleModel {
   ScheduleModel({
     this.uid,
     this.description = '',
-    this.duration = 0,
+    this.duration = 0.0,
     this.endTime,
     this.startTime,
     this.title,

@@ -122,9 +122,11 @@ class _tile1State extends State<tile1> {
                           height: 8,
                         ),
                         Text(
-                          widget.starttime.substring(0, 2) +
-                              ":" +
-                              widget.starttime.substring(2, 4),
+                          widget.starttime.length < 4
+                              ? widget.starttime
+                              : widget.starttime.substring(0, 2) +
+                                  ":" +
+                                  widget.starttime.substring(2, 4),
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -147,9 +149,11 @@ class _tile1State extends State<tile1> {
                           height: 8,
                         ),
                         Text(
-                          widget.endtime.substring(0, 2) +
-                              ":" +
-                              widget.endtime.substring(2, 4),
+                          widget.endtime.length < 4
+                              ? widget.endtime
+                              : widget.endtime.substring(0, 2) +
+                                  ":" +
+                                  widget.endtime.substring(2, 4),
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
