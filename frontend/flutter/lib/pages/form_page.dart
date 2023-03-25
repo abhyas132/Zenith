@@ -145,56 +145,67 @@ class _AddFormState extends State<AddForm> {
 
   @override
   Widget build(BuildContext context) {
-    return LoaderOverlay(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: GlobalVariables.backgroundColor,
-          title: Text('Add New Item'),
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/background2.jpg"),
-              opacity: 0.1,
-              fit: BoxFit.cover,
-            ),
+return LoaderOverlay(
+    child: Scaffold(
+      appBar: AppBar(
+        backgroundColor: GlobalVariables.backgroundColor,
+        title: Text('Add New Item'),
+      ),
+      body: Container(
+        height: 1456789876567,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/background2.jpg"),
+            opacity: 0.1,
+            fit: BoxFit.cover,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Radio(
-                        value: true,
-                        groupValue: _isStatic,
-                        onChanged: (bool? val) {
-                          setState(() {
-                            _isStatic = val!;
-                          });
-                        },
-                      ),
-                      Text('Static'),
-                      SizedBox(width: 32),
-                      Radio(
-                        value: false,
-                        groupValue: _isStatic,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            _isStatic = value!;
-                          });
-                        },
-                      ),
-                      Text('Dynamic'),
-                    ],
-                  ),
-                  SizedBox(height: 16),
-                  _isStatic ? _buildStaticForm() : _buildDynamicForm(),
-                ],
-              ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Radio(
+                      value: true,
+                      activeColor: GlobalVariables.backgroundColor,
+                      groupValue: _isStatic,
+                      onChanged: (bool? val) {
+                        setState(() {
+                          _isStatic = val!;
+                        });
+                      },
+                    ),
+                    Text('Static',
+                        style: TextStyle(
+                            color: GlobalVariables.backgroundColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
+                    SizedBox(width: 32),
+                    Radio(
+                      activeColor: GlobalVariables.backgroundColor,
+                      value: false,
+                      groupValue: _isStatic,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isStatic = value!;
+                        });
+                      },
+                    ),
+                    Text('Dynamic',
+                        style: TextStyle(
+                            color: GlobalVariables.backgroundColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                SizedBox(height: 16),
+                _isStatic ? _buildStaticForm() : _buildDynamicForm(),
+              ],
+              )
             ),
           ),
         ),
@@ -243,13 +254,21 @@ class _AddFormState extends State<AddForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text("Duration"),
+                  Text("Duration",
+                      style: TextStyle(
+                          color: GlobalVariables.backgroundColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
                   DropdownButton<String>(
                     value: _selectedItem,
                     items: _durationhrs.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value,
+                            style: TextStyle(
+                                color: GlobalVariables.secondaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold)),
                       );
                     }).toList(),
                     onChanged: (String? selectedItem) {
@@ -282,7 +301,11 @@ class _AddFormState extends State<AddForm> {
               SizedBox(height: 32),
               Center(
                 child: ElevatedButton(
-                  child: Text('Save'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        GlobalVariables.backgroundColor),
+                  ),
+                  child: Text('Add Task'),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       try {
@@ -345,6 +368,10 @@ class _AddFormState extends State<AddForm> {
                 ),
                 Text(
                   "Start Time",
+                  style: TextStyle(
+                      color: GlobalVariables.backgroundColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                   //style: TextStyle(color:),
                 ),
                 SizedBox(
@@ -353,8 +380,11 @@ class _AddFormState extends State<AddForm> {
                 TextButton(
                   onPressed: () => _selectTime(context),
                   child: Text(
+                    style: TextStyle(
+                        color: GlobalVariables.secondaryColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                     _startTime.format(context),
-                    style: TextStyle(fontSize: 20.0),
                   ),
                 ),
               ]),
@@ -366,16 +396,23 @@ class _AddFormState extends State<AddForm> {
                   SizedBox(
                     width: 20,
                   ),
-                  Text("End Time"),
+                  Text(
+                    "End Time",
+                    style: TextStyle(
+                        color: GlobalVariables.backgroundColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
                   SizedBox(
-                    width: 20,
+                    width: 30,
                   ),
                   TextButton(
                     onPressed: () => _selectTime2(context),
-                    child: Text(
-                      _endTime.format(context),
-                      style: TextStyle(fontSize: 20.0),
-                    ),
+                    child: Text(_endTime.format(context),
+                        style: TextStyle(
+                            color: GlobalVariables.secondaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),

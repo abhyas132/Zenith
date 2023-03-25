@@ -137,3 +137,67 @@ class RegularButton extends StatelessWidget {
     );
   }
 }
+
+class AltButton extends StatelessWidget {
+  final destination;
+  String? imagePath;
+  final title;
+  Widget? trailing;
+  AltButton(
+      {this.imagePath,
+      required this.destination,
+      required this.title,
+      this.trailing});
+  //var darkData;
+  @override
+  Widget build(BuildContext context) {
+    // darkData = Provider.of<DarkMode>(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 15),
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        tileColor: Colors.white,
+        onTap: () {
+          // if (destination is String) {
+          //   Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => NewsSection(destination)));
+          // } else {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => destination));
+          //
+        },
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                height: 6,
+              ),
+              imagePath != null
+                  ? Image.asset(
+                      imagePath!,
+                      height: 100,
+                      width: 400,
+                      fit: BoxFit.cover,
+                    )
+                  : Container(),
+              const SizedBox(
+                height: 6,
+              ),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 23,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
