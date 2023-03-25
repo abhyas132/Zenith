@@ -77,11 +77,8 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
             // currTask.endTime =  currInterval[1];
             currTask.endTime =  findEndTime(currInterval[0], currTask.duration);
             
-<<<<<<< HEAD
-=======
             console.log(currTask.startTime + " " + currTask.endTime);
 
->>>>>>> 004190e17237d98db2c7a5a71a902900b6fe0c5b
             taskSchedule.push(currTask) ;
 
             currInterval = [currTask.endTime, currInterval[1], findDuration(currTask.endTime, currInterval[1])] ;

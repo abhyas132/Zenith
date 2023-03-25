@@ -29,6 +29,7 @@ class _SharePageState extends State<SharePage> {
   // final url = GlobalVariables.baseUrl;
   final url = GlobalVariables.baseUrl;
   List<File> images = [];
+  List<String> imageUrls = [];
   Future<List<File>> pickImages() async {
     try {
       var files = await FilePicker.platform.pickFiles(
@@ -49,7 +50,7 @@ class _SharePageState extends State<SharePage> {
   Future<void> upload() async {
     try {
       final cloudinary = CloudinaryPublic('ddvkshhsl', 'wcs4kqai');
-      List<String> imageUrls = [];
+
       print(images.length);
       for (int i = 0; i < images.length; i++) {
         CloudinaryResponse res = await cloudinary.uploadFile(
@@ -74,7 +75,7 @@ class _SharePageState extends State<SharePage> {
   }
 
   void uploadCommunityPost() async {
-    if (images.length > 0 && controller.text.isNotEmpty) {
+    if (imageUrls.length > 0 && controller.text.isNotEmpty) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
 
@@ -86,7 +87,7 @@ class _SharePageState extends State<SharePage> {
         },
         body: jsonEncode(
           {
-            "image": images[0],
+            "image": imageUrls[0],
             "title": controller.text,
           },
         ),
