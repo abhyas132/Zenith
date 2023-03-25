@@ -1,13 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { getSchedule } = require("../controller/scheduleController");
-const { createSchedule } = require("../controller/scheduleController");
-const { createTask } = require("../controller/taskController");
+const { createCommunityPost, updateLikes} = require("../controller/communityController");
+const { isLoggedIn } = require("../middleware/userMiddleware");
 
-router.route("/get/schedule").get(getSchedule);
-router.route("/create/schedule").post(createSchedule);
-
-router.route("/create/task").post(createTask);
+router.route("/create/communityPost").post(isLoggedIn, createCommunityPost);
+router.route("/:postId/likes").post(updateLikes);
 
 module.exports = router;

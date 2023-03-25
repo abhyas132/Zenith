@@ -44,18 +44,14 @@ class tile extends StatelessWidget {
                   children: [
                     Text(
                       title!,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(fontSize: 12),
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     Text(
                       endTime!.toString(),
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14),
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ],
                 ),

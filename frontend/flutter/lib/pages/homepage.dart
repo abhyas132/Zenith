@@ -6,6 +6,7 @@ import 'package:zenith/utils/excercise_tile.dart';
 import 'package:zenith/utils/progress_indicator.dart';
 import '../models/scheduleModel.dart';
 import '../utils/getrequest.dart';
+import '../utils/schedule_tile.dart';
 import 'form_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -98,7 +99,29 @@ class _HomePageState extends State<HomePage> {
                         width: 40,
                       ),
                       Row(
-                        children: [progress()],
+                        children: [
+                          Column(
+                            children: [
+                              progress(),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Your Progress',
+                                    style: TextStyle(
+                                        color: Colors.blue[100],
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     ],
                   ),
@@ -161,14 +184,39 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Flexible(
                         child: ListView.builder(
-                          itemCount: schedule.length,
-                          itemBuilder: (context, index) => tile(
-                              duration: schedule[index].duration,
-                              startTime: schedule[index].startTime,
-                              endTime: schedule[index].endTime,
-                              title: schedule[index].title,
-                              description: schedule[index].description),
-                        ),
+                            itemCount: schedule.length,
+                            itemBuilder: (context, index) {
+                              final item = schedule[index];
+                              return Dismissible(
+                                background: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 15,
+                                      vertical: 4,
+                                    ),
+                                    alignment: Alignment.centerRight,
+                                    padding: const EdgeInsets.only(right: 20),
+                                    child: const Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                    color: Colors.green),
+                                key: Key(item.uid!),
+                                direction: DismissDirection.endToStart,
+                                onDismissed: (direction) => setState(() {
+                                  schedule.removeAt(index);
+                                }),
+                                child: tile1(
+                                  totaltask: schedule.length.toDouble(),
+                                  starttime:
+                                      schedule[index].startTime.toString(),
+                                  endtime: schedule[index].endTime.toString(),
+                                  task: schedule[index].title.toString(),
+                                  description:
+                                      schedule[index].description.toString(),
+                                  indi: index,
+                                ),
+                              );
+                            }),
                       ),
                     ]),
                   ),

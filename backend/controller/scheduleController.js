@@ -29,6 +29,8 @@ exports.getSchedule = BigPromise(async (req,res, next) => {
 
 exports.createSchedule = BigPromise(async (req, res, next) => {
     const userId = req.user.userId ;
+
+    console.log(req.user.name);
     const tasks = await Task.find({userId}) ;
 
     if(!tasks){
@@ -74,6 +76,8 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
             currTask.startTime = currInterval[0] ;
             // currTask.endTime =  currInterval[1];
             currTask.endTime =  findEndTime(currInterval[0], currTask.duration);
+            
+            console.log(currTask.startTime + " " + currTask.endTime);
 
             taskSchedule.push(currTask) ;
 
@@ -87,7 +91,9 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
             currTask.startTime = currInterval[0] ;
             currTask.endTime = currInterval[1] ;
             taskSchedule.push(currTask) ;
-
+               
+            console.log(currTask.startTime + " " + currTask.endTime);
+            
             j ++ ;
             currInterval = unUsedIntervals[j] ;
 
@@ -103,11 +109,14 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
     //     user : req.user,
     //     tasks : taskSchedule,
     // })
+    console.log(taskSchedule);
 
-    return res.status(200).json({
-      status: 200,
-      message: "Schedule created successfully",
-      taskSchedule,
-    });
+    console.log(taskSchedule);
 
+    
+        return res.status(200).json({
+            status: 200,
+            message: "Schedule created successfully",
+            taskSchedule,
+          });
 })
