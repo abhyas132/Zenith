@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 
 class AuthServices {
   final url = GlobalVariables.baseUrl;
-  void signUp({
+  Future<void> signUp({
     required context,
     required name,
     required email,
@@ -63,7 +63,7 @@ class AuthServices {
     }
   }
 
-  void signin({
+  Future<void> signin({
     required context,
     required email,
   }) async {

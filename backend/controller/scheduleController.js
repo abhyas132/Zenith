@@ -74,7 +74,7 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
             currTask.startTime = currInterval[0] ;
             // currTask.endTime =  currInterval[1];
             currTask.endTime =  findEndTime(currInterval[0], currTask.duration);
-
+            
             taskSchedule.push(currTask) ;
 
             currInterval = [currTask.endTime, currInterval[1], findDuration(currTask.endTime, currInterval[1])] ;
@@ -103,6 +103,7 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
     //     user : req.user,
     //     tasks : taskSchedule,
     // })
+    console.log(taskSchedule);
 
     return res.status(200).json({
       status: 200,
