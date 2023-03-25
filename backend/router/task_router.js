@@ -5,7 +5,7 @@ const {createTask, getAllTasks, deleteTask} = require('../controller/taskControl
 const {isLoggedIn} = require('../middleware/userMiddleware') ;
 
 router.route('/create/task').post(isLoggedIn, createTask) ;
-router.route('/all/task').post(isLoggedIn, getAllTasks) ;
-router.route('/:taskId/task').post(isLoggedIn, deleteTask) ;
+router.route('/all/task').get(isLoggedIn, getAllTasks) ;
+router.route('/:taskId/task').delete(isLoggedIn, deleteTask) ;
 
 module.exports = router ;
