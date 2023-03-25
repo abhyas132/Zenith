@@ -64,7 +64,7 @@ class _tile1State extends State<tile1> {
                       ? Icon(CupertinoIcons.pen)
                       : widget.task == 'study'
                           ? Icon(CupertinoIcons.book)
-                          : task == 'sports'
+                          : widget.task == 'sports'
                               ? Icon(CupertinoIcons.sportscourt)
                               : widget.task == 'hobby'
                                   ? Icon(CupertinoIcons.hand_draw)
