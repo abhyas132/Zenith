@@ -76,7 +76,7 @@ class AuthServices {
         Uri.parse('${url}api/v1/get/user'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': token!
+          'Authorization': "Bearer " + token!
         },
       );
       print(res.body);

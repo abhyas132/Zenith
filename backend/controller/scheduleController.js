@@ -99,15 +99,15 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
 
     accedingSortAccordingToProps(taskSchedule, 'startTime') ;
 
-    const schedule = await Schedule.create({
-        user : req.user,
-        tasks : taskSchedule,
-    })
+    // const schedule = await Schedule.create({
+    //     user : req.user,
+    //     tasks : taskSchedule,
+    // })
 
     return res.status(200).json({
-        status: 200,
-        message: "Schedule created successfully",
-        schedule
-    })
+      status: 200,
+      message: "Schedule created successfully",
+      taskSchedule,
+    });
 
 })

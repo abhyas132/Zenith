@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:chips_choice_null_safety/chips_choice_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/utils/snackbar.dart';
 
@@ -38,14 +40,22 @@ class _AddFormState extends State<AddForm> {
 
   postDataDynamic() async {
     try {
-      var response =
-          await http.post(Uri.parse('${url}api/v1/create/task'), body: {
-        "title": _title1,
-        "description": _description1,
-        "taskTag": options[tag],
-        "duration": (_selectedItem),
-        "taskType": "dynamic"
-      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+      var response = await http.post(
+        Uri.parse('${url}api/v1/create/task'),
+        body: jsonEncode({
+          "title": _title1,
+          "description": _description1,
+          "taskTag": options[tag],
+          "duration": (_selectedItem),
+          "taskType": "dynamic"
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer " + token!
+        },
+      );
       print(response.body);
     } catch (e) {
       print(e.toString());
@@ -55,15 +65,24 @@ class _AddFormState extends State<AddForm> {
 
   postDataStatic() async {
     try {
-      var response =
-          await http.post(Uri.parse('${url}api/v1/create/task'), body: {
-        "title": _title2,
-        "description": _description2,
-        "startTime": (formatTimeOfDay(_startTime)),
-        "endTime": (formatTimeOfDay(_endTime)),
-        "duration": "0",
-        "taskType": "static"
-      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+
+      var response = await http.post(
+        Uri.parse('${url}api/v1/create/task'),
+        body: jsonEncode({
+          "title": _title2,
+          "description": _description2,
+          "startTime": (formatTimeOfDay(_startTime)),
+          "endTime": (formatTimeOfDay(_endTime)),
+          "duration": "0",
+          "taskType": "static"
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer " + token!
+        },
+      );
       print(response.body);
     } catch (e) {
       ShowSnakBar(context: context, content: e.toString());

@@ -11,34 +11,34 @@ class GetRequest {
   List<ScheduleModel> schedules = [];
   Future<void> getData() async {
     try {
-      var Url = Uri.parse('${url}api/v1/create/schedule');
+      // var Url = Uri.parse('${url}api/v1/create/schedule');
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
       print(token);
       var response = await http.post(
-        Uri.parse('${url}api/v1/get/schedule'),
-        body: {"name": "name"},
+        Uri.parse('${url}api/v1/create/schedule'),
+        //body: {"name": "name"},
         headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': token!
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer " + token!
         },
       );
 
-      var jsonData = jsonDecode(response.body);
+      //var jsonData = jsonDecode(response.body);
       print(response.body);
-      if (jsonData['status'] == 200) {
-        jsonData['schedule'].forEach((element) {
-          ScheduleModel scheduleModel = ScheduleModel(
-            description: element['description'],
-            duration: element['duration'] == null ? '0' : element['duration'],
-            endTime: element['endTime'],
-            startTime: element['startTime'],
-            title: element['title'],
-          );
-          schedules.add(scheduleModel);
-          print(jsonData);
-        });
-      }
+      // if (jsonData['status'] == 200) {
+      //   jsonData['schedule'].forEach((element) {
+      //     ScheduleModel scheduleModel = ScheduleModel(
+      //       description: element['description'],
+      //       duration: element['duration'] == null ? '0' : element['duration'],
+      //       endTime: element['endTime'],
+      //       startTime: element['startTime'],
+      //       title: element['title'],
+      //     );
+      //     schedules.add(scheduleModel);
+      //     print(jsonData);
+      //   });
+      // }
     } catch (e) {
       print(e.toString());
     }
