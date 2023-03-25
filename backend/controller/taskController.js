@@ -83,6 +83,23 @@ exports.getAllTasks = BigPromise(async(req, res, next) => {
 
 exports.deleteTask = BigPromise(async(req, res, next) => {
     const taskId = req.params.taskId ;
+    console.log(taskId);
+    const task = await Task.findOne({uid : taskId}) ;
+    const user = req.user ;
+
+    if(task.title.includes("play") || task.title.includes("sport") || task.title.includes("game")){
+        user.sportActivity ++ ;
+    }
+
+    else if(task.title.includes("study") || task.title.includes("contest") || task.title.includes("read")){
+        user.studyActivity ++ ;
+    }
+
+    else{
+        user.otherActivity ++ ;
+    }
+
+    await user.save() ;
 
     await Task.deleteOne({uid : taskId}) ;
 

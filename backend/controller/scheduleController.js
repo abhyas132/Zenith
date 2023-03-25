@@ -74,6 +74,8 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
             currTask.startTime = currInterval[0] ;
             // currTask.endTime =  currInterval[1];
             currTask.endTime =  findEndTime(currInterval[0], currTask.duration);
+            
+            console.log(currTask.startTime + " " + currTask.endTime);
 
             taskSchedule.push(currTask) ;
 
@@ -87,7 +89,9 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
             currTask.startTime = currInterval[0] ;
             currTask.endTime = currInterval[1] ;
             taskSchedule.push(currTask) ;
-
+               
+            console.log(currTask.startTime + " " + currTask.endTime);
+            
             j ++ ;
             currInterval = unUsedIntervals[j] ;
 
