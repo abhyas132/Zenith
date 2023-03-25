@@ -25,19 +25,35 @@ class _HomePageState extends State<HomePage> {
   var _currentIndex = 0;
   var ItemList = [
     Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(0.0),
       child: Container(
         //padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          gradient: const LinearGradient(
+            colors: [
+              GlobalVariables.backgroundColor,
+              GlobalVariables.secondaryColor
+            ],
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            stops: [0.4, 0.7],
+            tileMode: TileMode.repeated,
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(
+              width: 10,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Hello, Samyak ',
+                  'Hello, Yash ',
                   style: GoogleFonts.varelaRound(
                     textStyle: TextStyle(
                         color: Colors.blue[100],
@@ -47,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  '25 March,23',
+                  '26 March,23',
                   style: TextStyle(color: Colors.blue[100]),
                 ),
               ],
@@ -80,12 +96,29 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),
+            SizedBox(
+              width: 20,
+            )
           ],
         ),
+        // SizedBox(width: ,)
       ),
     ),
     Container(
       padding: EdgeInsets.only(top: 20, left: 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        gradient: const LinearGradient(
+          colors: [
+            GlobalVariables.backgroundColor,
+            GlobalVariables.secondaryColor
+          ],
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight,
+          stops: [0.4, 0.7],
+          tileMode: TileMode.repeated,
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -177,44 +210,49 @@ class _HomePageState extends State<HomePage> {
     // study = user.studyActivity;
     // others = user.otherActivity;
     return Scaffold(
-        backgroundColor: Colors.blue[600],
+        backgroundColor: GlobalVariables.backgroundColor,
         body: SafeArea(
             child: Container(
           // width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            // borderRadius: BorderRadius.circular(20),
-            gradient: const LinearGradient(
-              colors: [
-                GlobalVariables.backgroundColor,
-                GlobalVariables.secondaryColor
-              ],
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              stops: [0.4, 0.7],
-              tileMode: TileMode.repeated,
-            ),
-          ),
+              // borderRadius: BorderRadius.circular(20),
+              color: GlobalVariables.lightbackgroundColor
+              // gradient: const LinearGradient(
+              //   colors: [
+              //     GlobalVariables.backgroundColor,
+              //     GlobalVariables.secondaryColor
+              //   ],
+              //   begin: Alignment.bottomLeft,
+              //   end: Alignment.topRight,
+              //   stops: [0.4, 0.7],
+              //   tileMode: TileMode.repeated,
+              // ),
+              ),
           child: Column(children: [
             Container(
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                // borderRadius: BorderRadius.circular(20),
-                gradient: const LinearGradient(
-                  colors: [
-                    GlobalVariables.backgroundColor,
-                    GlobalVariables.secondaryColor
-                  ],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  stops: [0.4, 0.7],
-                  tileMode: TileMode.repeated,
-                ),
-              ),
+              decoration:
+                  BoxDecoration(color: GlobalVariables.lightbackgroundColor
+
+                      // borderRadius: BorderRadius.circular(20),
+                      // gradient: const LinearGradient(
+                      //   colors: [
+                      //     GlobalVariables.backgroundColor,
+                      //     GlobalVariables.secondaryColor
+                      //   ],
+                      //   begin: Alignment.bottomLeft,
+                      //   end: Alignment.topRight,
+                      //   stops: [0.4, 0.7],
+                      //   tileMode: TileMode.repeated,
+                      // ),
+                      ),
               //padding: EdgeInsets.all(25),
               margin: EdgeInsets.only(top: 20),
               child: Column(
                 children: [
                   Container(
+// decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(25)),
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.2,
                     child: CarouselSlider(
@@ -238,8 +276,8 @@ class _HomePageState extends State<HomePage> {
                             height: MediaQuery.of(context).size.height * 0.30,
                             width: MediaQuery.of(context).size.width,
                             child: Card(
-                              // elevation: 5,
-                              color: Colors.white,
+                              elevation: 0,
+                              color: GlobalVariables.lightbackgroundColor,
                               child: card,
                             ),
                           );

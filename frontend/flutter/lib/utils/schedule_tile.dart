@@ -122,9 +122,16 @@ class _tile1State extends State<tile1> {
                           height: 8,
                         ),
                         Text(
-                          widget.starttime.substring(0, 2) +
-                              ":" +
-                              widget.starttime.substring(2, 4),
+                          widget.starttime.length < 4
+                              ? widget.starttime.length < 3
+                                  ? "00" + ":" + widget.starttime
+                                  : "0" +
+                                      widget.starttime.substring(0, 1) +
+                                      ":" +
+                                      widget.starttime.substring(1)
+                              : widget.starttime.substring(0, 2) +
+                                  ":" +
+                                  widget.starttime.substring(2, 4),
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -147,9 +154,16 @@ class _tile1State extends State<tile1> {
                           height: 8,
                         ),
                         Text(
-                          widget.endtime.substring(0, 2) +
-                              ":" +
-                              widget.endtime.substring(2, 4),
+                          widget.endtime.length < 4
+                              ? widget.endtime.length < 3
+                                  ? "00" + ":" + widget.endtime
+                                  : "0" +
+                                      widget.endtime.substring(0, 1) +
+                                      ":" +
+                                      widget.endtime.substring(1)
+                              : widget.endtime.substring(0, 2) +
+                                  ":" +
+                                  widget.endtime.substring(2, 4),
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

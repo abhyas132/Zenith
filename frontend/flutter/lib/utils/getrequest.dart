@@ -36,7 +36,7 @@ class GetRequest {
             uid: element['uid'],
             description:
                 element['description'] == null ? 'N/A' : element['description'],
-            duration: element['duration'],
+            duration: double.parse(element['duration'].toString()),
             endTime: element['endTime'],
             startTime: element['startTime'],
             title: element['title'],
