@@ -6,7 +6,6 @@ const scheduleSchema = mongoose.Schema({
     user : { //instead of objectId see if can use userId from user
         type : mongoose.Types.ObjectId,
         ref : 'User',
-        unique : true
     },
     tasks:[{
         type : mongoose.Schema.Types.Mixed,
