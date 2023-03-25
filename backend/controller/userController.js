@@ -1,5 +1,6 @@
 const User = require('../modals/user_modal');
 const BigPromise = require("../middleware/bigPromise");
+const jwt = require('jsonwebtoken');
 
 exports.getAllUser = BigPromise(async (req, res, next) => {
     let users = await User.find();
@@ -50,6 +51,32 @@ exports.updateUser = BigPromise(async(req, res, next) => {
         user,
     });
 })
+
+exports.signin = BigPromise(async (req, res, next) => {
+    let { email } = req.body;
+    const user = await User.findOne({ email: email });
+
+    if (user)
+    {
+        console.log(user);
+        const token = jwt.sign({ tokenId: user.userId }, process.env.JWT_SECRET);
+
+        console.log(token);
+        
+         return res.status(200).json({
+           status: 200,
+           message: "User fetched successfully",
+           user :user,
+           token : token,
+         });
+    }
+    if (!user) {
+      return res.status(500).json({
+        status: 500,
+        message: "Internal error, user not found",
+      });
+    }
+});
 
 exports.createUser = BigPromise(async(req, res, next) => {
     let {name, email, password ,zenCoins} = req.body;
