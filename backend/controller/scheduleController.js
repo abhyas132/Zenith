@@ -11,7 +11,7 @@ const {accedingSortAccordingToProps, findDuration} = require("../helper/algorith
 // }
 
 exports.getSchedule = BigPromise(async (req,res, next) => {
-    const schedule = await Schedule.find();
+    const schedule = await Schedule.find({user : req.user.id});
     
     if(!schedule){
         return res.status(200).json({

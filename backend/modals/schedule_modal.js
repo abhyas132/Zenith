@@ -5,7 +5,8 @@ const shortid = require("shortid");
 const scheduleSchema = mongoose.Schema({
     user : { //instead of objectId see if can use userId from user
         type : mongoose.Types.ObjectId,
-        ref : 'User'
+        ref : 'User',
+        unique : true
     },
     tasks:[{
         type : mongoose.Schema.Types.Mixed,
