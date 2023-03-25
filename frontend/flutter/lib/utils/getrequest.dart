@@ -24,21 +24,21 @@ class GetRequest {
         },
       );
 
-      //var jsonData = jsonDecode(response.body);
+      var jsonData = jsonDecode(response.body);
       print(response.body);
-      // if (jsonData['status'] == 200) {
-      //   jsonData['schedule'].forEach((element) {
-      //     ScheduleModel scheduleModel = ScheduleModel(
-      //       description: element['description'],
-      //       duration: element['duration'] == null ? '0' : element['duration'],
-      //       endTime: element['endTime'],
-      //       startTime: element['startTime'],
-      //       title: element['title'],
-      //     );
-      //     schedules.add(scheduleModel);
-      //     print(jsonData);
-      //   });
-      // }
+      if (jsonData['status'] == 200) {
+        jsonData['taskSchedule'].forEach((element) {
+          ScheduleModel scheduleModel = ScheduleModel(
+            description: element['description'],
+            duration: element['duration'] == null ? '0' : element['duration'],
+            endTime: element['endTime'],
+            startTime: element['startTime'],
+            title: element['title'],
+          );
+          schedules.add(scheduleModel);
+          print(jsonData);
+        });
+      }
     } catch (e) {
       print(e.toString());
     }

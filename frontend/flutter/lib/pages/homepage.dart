@@ -6,6 +6,7 @@ import 'package:zenith/utils/excercise_tile.dart';
 import 'package:zenith/utils/progress_indicator.dart';
 import '../models/scheduleModel.dart';
 import '../utils/getrequest.dart';
+import '../utils/schedule_tile.dart';
 import 'form_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -162,12 +163,14 @@ class _HomePageState extends State<HomePage> {
                       Flexible(
                         child: ListView.builder(
                           itemCount: schedule.length,
-                          itemBuilder: (context, index) => tile(
-                              duration: schedule[index].duration,
-                              startTime: schedule[index].startTime,
-                              endTime: schedule[index].endTime,
-                              title: schedule[index].title,
-                              description: schedule[index].description),
+                          itemBuilder: (context, index) => tile1(
+                            //duration: schedule[index].duration.toString(),
+                            starttime: schedule[index].startTime.toString(),
+                            endtime: schedule[index].endTime.toString(),
+                            task: schedule[index].title.toString(),
+                            description: schedule[index].description.toString(),
+                            indi: index.toDouble(),
+                          ),
                         ),
                       ),
                     ]),
