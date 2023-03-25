@@ -6,7 +6,8 @@ class ScheduleModel {
   String? description;
   double? duration;
   ScheduleModel(
-      {this.description,
+      {this.uid,
+      this.description,
       this.duration,
       this.endTime,
       this.startTime,
