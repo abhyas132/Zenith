@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:zenith/games/custom_button.dart';
+import 'package:zenith/globalvariables.dart';
 
 import 'level_transition/level_end_transition.dart';
 import 'data/board_config.dart';
@@ -54,7 +55,8 @@ class _puz extends State<puz> with TickerProviderStateMixin {
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: GlobalVariables.backgroundColor,
+        foregroundColor: Colors.white,
         elevation: 0,
         title: const Text(
           "Puzzle game",
@@ -63,7 +65,7 @@ class _puz extends State<puz> with TickerProviderStateMixin {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.black,
+            color: Colors.white,
           ),
           onPressed: () {},
         ),

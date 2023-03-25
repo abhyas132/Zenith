@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zenith/games/first/counter.dart';
+import 'package:zenith/globalvariables.dart';
 
 class Tile extends StatefulWidget {
   int id;
@@ -46,7 +47,7 @@ class _TileState extends State<Tile> {
         style: ElevatedButton.styleFrom(
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20))),
-            primary: Colors.indigo),
+            primary: GlobalVariables.backgroundColor),
         onPressed: () {
           if (!widget.selected && counter.getCounter >= 0) {
             counter.increment();

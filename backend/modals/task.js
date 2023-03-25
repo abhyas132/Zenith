@@ -44,6 +44,10 @@ const taskSchema = mongoose.Schema({
     userId : {
         type : String,
         required : true
+    },
+    attentionTime : {
+        type : Number,
+        default : 24
     }
 });
 

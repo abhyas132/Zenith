@@ -5,7 +5,7 @@ const { convertIntoHMS } = require("../helper/taskTime");
 const { findDuration } = require("../helper/algorithms");
 
 exports.createTask = BigPromise(async (req, res, next) => {
-    let { title, description, taskType, taskTag, startTime, endTime, duration } = req.body;
+    let { title, description, taskType, taskTag, startTime, endTime, duration, attentionTime } = req.body;
     
     const userId = req.user.userId ;
 
@@ -55,7 +55,8 @@ exports.createTask = BigPromise(async (req, res, next) => {
         endTime,
         duration,
         taskTag,
-        userId
+        userId,
+        attentionTime
     })  
 
     return res.status(200).json({
