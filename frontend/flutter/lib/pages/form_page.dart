@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/utils/snackbar.dart';
@@ -38,7 +39,7 @@ class _AddFormState extends State<AddForm> {
     //return formattedTime.replaceFirst(RegExp(':'), '');
   }
 
-  postDataDynamic() async {
+  Future<void> postDataDynamic() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
@@ -63,7 +64,7 @@ class _AddFormState extends State<AddForm> {
     }
   }
 
-  postDataStatic() async {
+  Future<void> postDataStatic() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
@@ -144,12 +145,14 @@ class _AddFormState extends State<AddForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+return LoaderOverlay(
+    child: Scaffold(
       appBar: AppBar(
         backgroundColor: GlobalVariables.backgroundColor,
         title: Text('Add New Item'),
       ),
       body: Container(
+        height: 1456789876567,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/background2.jpg"),
@@ -168,6 +171,7 @@ class _AddFormState extends State<AddForm> {
                   children: [
                     Radio(
                       value: true,
+                      activeColor: GlobalVariables.backgroundColor,
                       groupValue: _isStatic,
                       onChanged: (bool? val) {
                         setState(() {
@@ -175,9 +179,14 @@ class _AddFormState extends State<AddForm> {
                         });
                       },
                     ),
-                    Text('Static'),
+                    Text('Static',
+                        style: TextStyle(
+                            color: GlobalVariables.backgroundColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
                     SizedBox(width: 32),
                     Radio(
+                      activeColor: GlobalVariables.backgroundColor,
                       value: false,
                       groupValue: _isStatic,
                       onChanged: (bool? value) {
@@ -186,12 +195,17 @@ class _AddFormState extends State<AddForm> {
                         });
                       },
                     ),
-                    Text('Dynamic'),
+                    Text('Dynamic',
+                        style: TextStyle(
+                            color: GlobalVariables.backgroundColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
                   ],
                 ),
                 SizedBox(height: 16),
                 _isStatic ? _buildStaticForm() : _buildDynamicForm(),
               ],
+              )
             ),
           ),
         ),
@@ -240,13 +254,21 @@ class _AddFormState extends State<AddForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text("Duration"),
+                  Text("Duration",
+                      style: TextStyle(
+                          color: GlobalVariables.backgroundColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
                   DropdownButton<String>(
                     value: _selectedItem,
                     items: _durationhrs.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value,
+                            style: TextStyle(
+                                color: GlobalVariables.secondaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold)),
                       );
                     }).toList(),
                     onChanged: (String? selectedItem) {
@@ -279,13 +301,22 @@ class _AddFormState extends State<AddForm> {
               SizedBox(height: 32),
               Center(
                 child: ElevatedButton(
-                  child: Text('Save'),
-                  onPressed: () {
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        GlobalVariables.backgroundColor),
+                  ),
+                  child: Text('Add Task'),
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       try {
                         _formKey.currentState!.save();
                         print(_title1);
-                        postDataDynamic();
+                        context.loaderOverlay.show();
+                        await postDataDynamic();
+                        context.loaderOverlay.hide();
+                        ShowSnakBar(
+                            context: context,
+                            content: "Task added successfully");
                       } catch (e) {
                         ShowSnakBar(context: context, content: e.toString());
                       }
@@ -337,6 +368,10 @@ class _AddFormState extends State<AddForm> {
                 ),
                 Text(
                   "Start Time",
+                  style: TextStyle(
+                      color: GlobalVariables.backgroundColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                   //style: TextStyle(color:),
                 ),
                 SizedBox(
@@ -345,8 +380,11 @@ class _AddFormState extends State<AddForm> {
                 TextButton(
                   onPressed: () => _selectTime(context),
                   child: Text(
+                    style: TextStyle(
+                        color: GlobalVariables.secondaryColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                     _startTime.format(context),
-                    style: TextStyle(fontSize: 20.0),
                   ),
                 ),
               ]),
@@ -358,16 +396,23 @@ class _AddFormState extends State<AddForm> {
                   SizedBox(
                     width: 20,
                   ),
-                  Text("End Time"),
+                  Text(
+                    "End Time",
+                    style: TextStyle(
+                        color: GlobalVariables.backgroundColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
                   SizedBox(
-                    width: 20,
+                    width: 30,
                   ),
                   TextButton(
                     onPressed: () => _selectTime2(context),
-                    child: Text(
-                      _endTime.format(context),
-                      style: TextStyle(fontSize: 20.0),
-                    ),
+                    child: Text(_endTime.format(context),
+                        style: TextStyle(
+                            color: GlobalVariables.secondaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
@@ -400,12 +445,18 @@ class _AddFormState extends State<AddForm> {
                           GlobalVariables.backgroundColor),
                     ),
                     child: Text('Add Task'),
-                    onPressed: () {
+                    onPressed: () async {
                       try {
                         if (_formKey1.currentState!.validate()) {
                           _formKey1.currentState!.save();
                           print(formatTimeOfDay(_startTime));
-                          postDataStatic();
+                          context.loaderOverlay.show();
+                          await postDataStatic();
+
+                          context.loaderOverlay.hide();
+                          ShowSnakBar(
+                              context: context,
+                              content: "Task added successfully");
                           // Save the data to your database or perform any other necessary action.
                         }
                       } catch (e) {

@@ -102,8 +102,7 @@ class tile1 extends StatelessWidget {
                       children: [
                         Text(
                           'Start Time',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
+                          style: TextStyle(fontSize: 12),
                         ),
                         SizedBox(
                           height: 8,
@@ -125,8 +124,7 @@ class tile1 extends StatelessWidget {
                       children: [
                         Text(
                           'End Time',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
+                          style: TextStyle(fontSize: 12),
                         ),
                         SizedBox(
                           height: 8,
