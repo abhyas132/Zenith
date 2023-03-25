@@ -2,17 +2,20 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/provider/user_provider.dart';
 import 'package:zenith/utils/emotion_face.dart';
 import 'package:zenith/utils/excercise_tile.dart';
 import 'package:zenith/utils/progress_indicator.dart';
+import 'package:zenith/utils/snackbar.dart';
 import '../models/scheduleModel.dart';
 import '../utils/getrequest.dart';
 import '../utils/schedule_tile.dart';
 import 'form_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -22,6 +25,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final url = GlobalVariables.baseUrl;
+  deleteTask(String taskId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('x-auth-token');
+    final res = await http.delete(
+      Uri.parse('${url}api/v1/$taskId/task'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': "Bearer " + token!
+      },
+    );
+    print(res.body);
+    if (res.statusCode == 200) {
+      ShowSnakBar(context: context, content: "Task completed");
+    } else {
+      // ShowSnakBar(context: context, content: "");
+
+    }
+  }
+
   var _currentIndex = 0;
   var ItemList = [
     Padding(
@@ -311,6 +334,7 @@ class _HomePageState extends State<HomePage> {
                                 direction: DismissDirection.endToStart,
                                 onDismissed: (direction) => setState(() {
                                   schedule.removeAt(index);
+                                  deleteTask(item.uid!);
                                 }),
                                 child: tile1(
                                   totaltask: schedule.length.toDouble(),
