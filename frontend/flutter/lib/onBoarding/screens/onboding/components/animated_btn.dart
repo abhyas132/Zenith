@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
+import 'package:zenith/globalvariables.dart';
 
 class AnimatedBtn extends StatelessWidget {
   const AnimatedBtn({
@@ -24,23 +25,28 @@ class AnimatedBtn extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.3,
         child: Stack(
           children: [
-            RiveAnimation.asset(
-              "assets/RiveAssets/button.riv",
-              controllers: [_btnAnimationController],
-            ),
+            // RiveAnimation.asset(
+            //   "assets/RiveAssets/button.riv",
+            //   controllers: [_btnAnimationController],
+            // ),
             Positioned.fill(
               top: 8,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Icon(CupertinoIcons.arrow_right),
-                  const SizedBox(width: 8),
-                  Text(
-                    this.text,
-                    style: Theme.of(context).textTheme.button,
-                  )
-                ],
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: GlobalVariables.buttonColortile),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(CupertinoIcons.arrow_right),
+                    const SizedBox(width: 8),
+                    Text(
+                      this.text,
+                      style: Theme.of(context).textTheme.button,
+                    )
+                  ],
+                ),
               ),
             )
           ],
