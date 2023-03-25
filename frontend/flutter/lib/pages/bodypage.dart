@@ -20,7 +20,7 @@ class _body_pageState extends State<body_page> {
   int _selectedPage = 0;
 
   final _pageOptions = [
-    const HomePage(),
+    leaderboard(),
     const Community(),
     const HomePage(),
     AddForm(),
@@ -53,8 +53,6 @@ class _body_pageState extends State<body_page> {
               gap: 5,
               tabs: [
                 GButton(
-                  onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => leaderboard())),
                   icon: Icons.leaderboard,
                   text: "Leader",
                 ),

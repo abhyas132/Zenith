@@ -14,6 +14,8 @@ class GlobalVariables {
 
   static const secondaryColor = Color.fromARGB(255, 95, 191, 161);
   static const backgroundColor = Color(0xFF02aab0);
+  static const backgroundColortile = Color(0xFF02aab0);
+  static const secondaryColortile = Color.fromARGB(255, 95, 191, 161);
   static const Color greyBackgroundCOlor = Color(0xffebecee);
   static var selectedNavBarColor = Colors.cyan[800]!;
   static const unselectedNavBarColor = Color.fromARGB(221, 20, 12, 12);
@@ -23,4 +25,8 @@ class GlobalVariables {
   static const Color shadowColorLight = Color(0xFF4A5367);
   static const Color shadowColorDark = Colors.black;
   static const Color progresColor = Color(0xFFddd6f3);
+  static const TextStyle textstylehead =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.normal);
+  static const TextStyle textstylesmall =
+      TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500);
 }
