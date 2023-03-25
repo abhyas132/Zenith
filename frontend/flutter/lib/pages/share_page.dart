@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/globalvariables.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 class SharePage extends StatefulWidget {
   const SharePage({super.key, required this.title});
@@ -22,8 +24,12 @@ class SharePage extends StatefulWidget {
 }
 
 class _SharePageState extends State<SharePage> {
+  TextEditingController controller = TextEditingController();
+
+  // final url = GlobalVariables.baseUrl;
   final url = GlobalVariables.baseUrl;
   List<File> images = [];
+  List<String> imageUrls = [];
   Future<List<File>> pickImages() async {
     try {
       var files = await FilePicker.platform.pickFiles(
@@ -41,18 +47,24 @@ class _SharePageState extends State<SharePage> {
     return images;
   }
 
-  void upload() async {
-    final cloudinary = CloudinaryPublic('ddvkshhsl', 'wcs4kqai');
-    List<String> imageUrls = [];
+  Future<void> upload() async {
+    try {
+      final cloudinary = CloudinaryPublic('ddvkshhsl', 'wcs4kqai');
 
-    for (int i = 0; i < images.length; i++) {
-      CloudinaryResponse res = await cloudinary.uploadFile(
-        CloudinaryFile.fromFile(images[i].path, folder: "community"),
-      );
-      imageUrls.add(res.secureUrl);
+      print(images.length);
+      for (int i = 0; i < images.length; i++) {
+        CloudinaryResponse res = await cloudinary.uploadFile(
+          CloudinaryFile.fromFile(images[i].path, folder: "community"),
+        );
+        //print("hii");
+        imageUrls.add(res.secureUrl);
+      }
+      print("hii");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+    } catch (e) {
+      print(e.toString());
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('x-auth-token');
   }
 
   void selectImages() async {
@@ -63,99 +75,120 @@ class _SharePageState extends State<SharePage> {
   }
 
   void uploadCommunityPost() async {
-    CloudinaryPublic cloudinary =
-        CloudinaryPublic('dqxxxoh8z', '424957936198753');
+    if (imageUrls.length > 0 && controller.text.isNotEmpty) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
 
+      final res = http.post(
+        Uri.parse('${url}api/v1/create/communityPost'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer " + token!
+        },
+        body: jsonEncode(
+          {
+            "image": imageUrls[0],
+            "title": controller.text,
+          },
+        ),
+      );
+    } else {
+      print("please choose imageor enter text");
+    }
     // Image.network(response.secureUrl.toString());
   }
 
-  TextEditingController controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border:
-                        Border.all(color: Color.fromARGB(255, 74, 102, 225))),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    labelText: "start typing here...",
+    return LoaderOverlay(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border:
+                          Border.all(color: Color.fromARGB(255, 74, 102, 225))),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: "start typing here...",
+                    ),
+                    controller: controller,
                   ),
-                  controller: controller,
                 ),
               ),
-            ),
-            images.isNotEmpty
-                ? CarouselSlider(
-                    items: images.map(
-                      (i) {
-                        return Builder(
-                          builder: (BuildContext context) => Image.file(
-                            i,
-                            fit: BoxFit.cover,
-                            height: 200,
-                          ),
-                        );
-                      },
-                    ).toList(),
-                    options: CarouselOptions(
-                      viewportFraction: 1,
-                      height: 200,
-                    ),
-                  )
-                : GestureDetector(
-                    onTap: selectImages,
-                    child: DottedBorder(
-                      borderType: BorderType.Rect,
-                      radius: const Radius.circular(10),
-                      dashPattern: const [10, 4],
-                      strokeCap: StrokeCap.round,
-                      child: Container(
-                        width: double.infinity,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(children: const [
-                          Icon(
-                            Icons.folder_open,
-                            size: 40,
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'Select Product Images',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey,
+              images.isNotEmpty
+                  ? CarouselSlider(
+                      items: images.map(
+                        (i) {
+                          return Builder(
+                            builder: (BuildContext context) => Image.file(
+                              i,
+                              fit: BoxFit.cover,
+                              height: 200,
                             ),
+                          );
+                        },
+                      ).toList(),
+                      options: CarouselOptions(
+                        viewportFraction: 1,
+                        height: 200,
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: selectImages,
+                      child: DottedBorder(
+                        borderType: BorderType.Rect,
+                        radius: const Radius.circular(10),
+                        dashPattern: const [10, 4],
+                        strokeCap: StrokeCap.round,
+                        child: Container(
+                          width: double.infinity,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        ]),
+                          child: Column(children: const [
+                            Icon(
+                              Icons.folder_open,
+                              size: 40,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              'Select Product Images',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ]),
+                        ),
                       ),
                     ),
-                  ),
-            ElevatedButton(
-              onPressed: () {
-                upload();
-              },
-              child: const Text("share ?"),
-            ),
-          ],
+              ElevatedButton(
+                onPressed: () async {
+                  context.loaderOverlay.show();
+                  await upload();
+                  context.loaderOverlay.hide();
+                  uploadCommunityPost();
+                  Navigator.pop(context);
+                },
+                child: const Text("share"),
+              ),
+            ],
+          ),
         ),
       ),
     );

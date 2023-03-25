@@ -14,7 +14,7 @@ class Community extends StatefulWidget {
 }
 
 class _CommunityState extends State<Community> {
-   List<File> images = [];
+  List<File> images = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +26,10 @@ class _CommunityState extends State<Community> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        SharePage(title: "story to community")),
+                  builder: (context) => SharePage(
+                    title: "share to community",
+                  ),
+                ),
               );
             },
             icon: Icon(

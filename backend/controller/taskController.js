@@ -2,6 +2,7 @@ const _ = require("lodash");
 const Task = require("../modals/task");
 const BigPromise = require("../middleware/bigPromise");
 const { convertIntoHMS } = require("../helper/taskTime");
+const { findDuration } = require("../helper/algorithms");
 
 exports.createTask = BigPromise(async (req, res, next) => {
     let { title, description, taskType, taskTag, startTime, endTime, duration } = req.body;
@@ -83,25 +84,38 @@ exports.getAllTasks = BigPromise(async(req, res, next) => {
 
 exports.deleteTask = BigPromise(async(req, res, next) => {
     const taskId = req.params.taskId ;
-    console.log(taskId);
     const task = await Task.findOne({uid : taskId}) ;
     const user = req.user ;
 
-    if(task.title.includes("play") || task.title.includes("sport") || task.title.includes("game")){
+    let duration ;
+
+    if(task.taskType === 'static'){
+        duration = findDuration(task.startTime, task.endTime) ;
+    }
+    else{
+        duration = task.duration
+    }
+
+    let pointsToAdd = 0 ;
+
+    if(task.title.includes("play") || task.title.includes("sport") || task.title.includes("game") || task.taskType === 'static'){
+        pointsToAdd += parseInt(duration*0.15*60) ;
         user.sportActivity ++ ;
     }
-
     else if(task.title.includes("study") || task.title.includes("contest") || task.title.includes("read")){
         user.studyActivity ++ ;
+        pointsToAdd += parseInt(duration*0.50*60) ;
     }
-
     else{
         user.otherActivity ++ ;
+        pointsToAdd += parseInt(duration*0.20*60) ;
     }
+
+    user.zenCoins += pointsToAdd ;
 
     await user.save() ;
 
-    await Task.deleteOne({uid : taskId}) ;
+    // await Task.deleteOne({uid : taskId}) ;
 
     return res.status(200).json({
         status: 200,

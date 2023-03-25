@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/utils/snackbar.dart';
@@ -38,7 +39,7 @@ class _AddFormState extends State<AddForm> {
     //return formattedTime.replaceFirst(RegExp(':'), '');
   }
 
-  postDataDynamic() async {
+  Future<void> postDataDynamic() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
@@ -63,7 +64,7 @@ class _AddFormState extends State<AddForm> {
     }
   }
 
-  postDataStatic() async {
+  Future<void> postDataStatic() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
@@ -144,7 +145,8 @@ class _AddFormState extends State<AddForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+return LoaderOverlay(
+    child: Scaffold(
       appBar: AppBar(
         backgroundColor: GlobalVariables.backgroundColor,
         title: Text('Add New Item'),
@@ -203,6 +205,7 @@ class _AddFormState extends State<AddForm> {
                 SizedBox(height: 16),
                 _isStatic ? _buildStaticForm() : _buildDynamicForm(),
               ],
+              )
             ),
           ),
         ),
@@ -303,12 +306,17 @@ class _AddFormState extends State<AddForm> {
                         GlobalVariables.backgroundColor),
                   ),
                   child: Text('Add Task'),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       try {
                         _formKey.currentState!.save();
                         print(_title1);
-                        postDataDynamic();
+                        context.loaderOverlay.show();
+                        await postDataDynamic();
+                        context.loaderOverlay.hide();
+                        ShowSnakBar(
+                            context: context,
+                            content: "Task added successfully");
                       } catch (e) {
                         ShowSnakBar(context: context, content: e.toString());
                       }
@@ -437,12 +445,18 @@ class _AddFormState extends State<AddForm> {
                           GlobalVariables.backgroundColor),
                     ),
                     child: Text('Add Task'),
-                    onPressed: () {
+                    onPressed: () async {
                       try {
                         if (_formKey1.currentState!.validate()) {
                           _formKey1.currentState!.save();
                           print(formatTimeOfDay(_startTime));
-                          postDataStatic();
+                          context.loaderOverlay.show();
+                          await postDataStatic();
+
+                          context.loaderOverlay.hide();
+                          ShowSnakBar(
+                              context: context,
+                              content: "Task added successfully");
                           // Save the data to your database or perform any other necessary action.
                         }
                       } catch (e) {

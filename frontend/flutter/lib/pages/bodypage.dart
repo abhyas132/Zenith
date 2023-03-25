@@ -23,8 +23,8 @@ class _body_pageState extends State<body_page> {
 
   final _pageOptions = [
     leaderboard(),
-    Community(),
-    const HomePage(),
+    const Community(),
+    HomePage(),
     AddForm(),
     ProfilePage(),
   ];
