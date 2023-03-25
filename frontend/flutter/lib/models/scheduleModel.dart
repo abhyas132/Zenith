@@ -5,11 +5,12 @@ class ScheduleModel {
   String? title;
   String? description;
   double? duration;
-  ScheduleModel(
-      {this.uid,
-      this.description,
-      this.duration,
-      this.endTime,
-      this.startTime,
-      this.title});
+  ScheduleModel({
+    this.uid,
+    this.description = '',
+    this.duration = 0,
+    this.endTime,
+    this.startTime,
+    this.title,
+  });
 }

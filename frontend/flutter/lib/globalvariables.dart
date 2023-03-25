@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class GlobalVariables {
-  static const baseUrl = "http://172.16.128.151:3000/";
+  static const baseUrl = "http://172.16.128.140:3000/";
   static const appBarGradient = LinearGradient(
     colors: [
       Color.fromARGB(255, 29, 201, 192),
