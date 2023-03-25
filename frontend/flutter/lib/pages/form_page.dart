@@ -150,6 +150,7 @@ class _AddFormState extends State<AddForm> {
         title: Text('Add New Item'),
       ),
       body: Container(
+        height: 1456789876567,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/background2.jpg"),
@@ -168,6 +169,7 @@ class _AddFormState extends State<AddForm> {
                   children: [
                     Radio(
                       value: true,
+                      activeColor: GlobalVariables.backgroundColor,
                       groupValue: _isStatic,
                       onChanged: (bool? val) {
                         setState(() {
@@ -175,9 +177,14 @@ class _AddFormState extends State<AddForm> {
                         });
                       },
                     ),
-                    Text('Static'),
+                    Text('Static',
+                        style: TextStyle(
+                            color: GlobalVariables.backgroundColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
                     SizedBox(width: 32),
                     Radio(
+                      activeColor: GlobalVariables.backgroundColor,
                       value: false,
                       groupValue: _isStatic,
                       onChanged: (bool? value) {
@@ -186,7 +193,11 @@ class _AddFormState extends State<AddForm> {
                         });
                       },
                     ),
-                    Text('Dynamic'),
+                    Text('Dynamic',
+                        style: TextStyle(
+                            color: GlobalVariables.backgroundColor,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
                   ],
                 ),
                 SizedBox(height: 16),
@@ -240,13 +251,21 @@ class _AddFormState extends State<AddForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text("Duration"),
+                  Text("Duration",
+                      style: TextStyle(
+                          color: GlobalVariables.backgroundColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
                   DropdownButton<String>(
                     value: _selectedItem,
                     items: _durationhrs.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(value,
+                            style: TextStyle(
+                                color: GlobalVariables.secondaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold)),
                       );
                     }).toList(),
                     onChanged: (String? selectedItem) {
@@ -279,7 +298,11 @@ class _AddFormState extends State<AddForm> {
               SizedBox(height: 32),
               Center(
                 child: ElevatedButton(
-                  child: Text('Save'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        GlobalVariables.backgroundColor),
+                  ),
+                  child: Text('Add Task'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       try {
@@ -337,6 +360,10 @@ class _AddFormState extends State<AddForm> {
                 ),
                 Text(
                   "Start Time",
+                  style: TextStyle(
+                      color: GlobalVariables.backgroundColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                   //style: TextStyle(color:),
                 ),
                 SizedBox(
@@ -345,8 +372,11 @@ class _AddFormState extends State<AddForm> {
                 TextButton(
                   onPressed: () => _selectTime(context),
                   child: Text(
+                    style: TextStyle(
+                        color: GlobalVariables.secondaryColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                     _startTime.format(context),
-                    style: TextStyle(fontSize: 20.0),
                   ),
                 ),
               ]),
@@ -358,16 +388,23 @@ class _AddFormState extends State<AddForm> {
                   SizedBox(
                     width: 20,
                   ),
-                  Text("End Time"),
+                  Text(
+                    "End Time",
+                    style: TextStyle(
+                        color: GlobalVariables.backgroundColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
                   SizedBox(
-                    width: 20,
+                    width: 30,
                   ),
                   TextButton(
                     onPressed: () => _selectTime2(context),
-                    child: Text(
-                      _endTime.format(context),
-                      style: TextStyle(fontSize: 20.0),
-                    ),
+                    child: Text(_endTime.format(context),
+                        style: TextStyle(
+                            color: GlobalVariables.secondaryColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
