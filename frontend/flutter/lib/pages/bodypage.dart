@@ -9,6 +9,7 @@ import 'package:zenith/pages/homepage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:zenith/pages/leaderboard.dart';
 import 'package:zenith/pages/profilePage.dart';
+import 'package:zenith/pages/retentionpage.dart';
 import 'package:zenith/yoga/yoga_home.dart';
 
 class body_page extends StatefulWidget {
@@ -26,7 +27,7 @@ class _body_pageState extends State<body_page> {
     const Community(),
     HomePage(),
     AddForm(),
-    ProfilePage(),
+    retention(),
   ];
   @override
   Widget build(BuildContext context) {
