@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zenith/globalvariables.dart';
 import 'package:zenith/onBoarding/screens/onboding/components/sign_up_dialog.dart';
 
 import 'components/animated_btn.dart';
@@ -76,6 +77,7 @@ class _OnbodingScreenState extends State<OnbodingScreen> {
                           Text(
                             "Regularize your habits & optimize your schedule",
                             style: TextStyle(
+                              color: GlobalVariables.textcolor,
                               fontSize: 40,
                               fontWeight: FontWeight.w700,
                               fontFamily: "Poppins",

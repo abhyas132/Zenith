@@ -29,6 +29,8 @@ exports.getSchedule = BigPromise(async (req,res, next) => {
 
 exports.createSchedule = BigPromise(async (req, res, next) => {
     const userId = req.user.userId ;
+
+    console.log(req.user.name);
     const tasks = await Task.find({userId}) ;
 
     if(!tasks){
@@ -104,10 +106,13 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
     //     tasks : taskSchedule,
     // })
 
-    return res.status(200).json({
-      status: 200,
-      message: "Schedule created successfully",
-      taskSchedule,
-    });
+    console.log(taskSchedule);
 
+    setTimeout(() => {
+        return res.status(200).json({
+            status: 200,
+            message: "Schedule created successfully",
+            taskSchedule,
+          });
+    }, 5000) ;
 })
