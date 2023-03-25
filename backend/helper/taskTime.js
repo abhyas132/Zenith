@@ -1,4 +1,4 @@
-const task = require("../modals/task");
+const Task = require("../modals/task");
 const { accedingSortAccordingToProps, findDuration } = require("./algorithms")
 
 exports.convertIntoHMS = (time) => {
@@ -17,11 +17,32 @@ exports.convertIntoHMS = (time) => {
     return time ;
 }
 
-exports.findVoidIntervals = (currentTime, staticTasks) => {
+exports.findVoidIntervals = async (currentTime, staticTasks, relaxationTime) => {
     staticTasks = accedingSortAccordingToProps(staticTasks, 'startTime') ;
 
     let unUsedIntervals = [] ; // [[startTime, duration]]
     let lastEndTime = currentTime ;
+    const len = staticTasks.length ;
+
+    for(let i = 0; i < len; i++){
+        let task = staticTasks[i] ;
+
+        if(task.endTime < 2400){
+            let relaxTask = new Task({
+                title : "Take rest",
+                description : "Have a break, have a kitkat",
+                taskType : "static",
+                startTime : task.endTime,
+                endTime : Math.min(2400, this.findEndTime(task.endTime, relaxationTime)),
+                duration : relaxationTime,
+                userId : task.userId
+            })
+            
+            staticTasks.push(relaxTask) ;
+        }
+    }
+
+    accedingSortAccordingToProps(staticTasks, 'startTime') ;
 
     for(let task of staticTasks){
         if(task.startTime > lastEndTime){
