@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zenith/globalvariables.dart';
 import 'package:zenith/pages/bodypage.dart';
 import 'package:zenith/pages/homepage.dart';
 import 'package:zenith/services/auth_services.dart';
@@ -92,7 +93,10 @@ class _SignupFormState extends State<SignupForm> {
                     decoration: InputDecoration(
                       prefixIcon: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: SvgPicture.asset("assets/icons/email.svg"),
+                        child: SvgPicture.asset(
+                          "assets/icons/email.svg",
+                          //color: GlobalVariables.buttonColortile,
+                        ),
                       ),
                     ),
                   ),
@@ -159,7 +163,7 @@ class _SignupFormState extends State<SignupForm> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFF77D8E),
+                      backgroundColor: GlobalVariables.buttonColortile,
                       minimumSize: const Size(double.infinity, 56),
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -172,6 +176,7 @@ class _SignupFormState extends State<SignupForm> {
                     ),
                     icon: const Icon(
                       CupertinoIcons.arrow_right,
+                      //color: GlobalVariables.buttonColortile,
                       color: Color(0xFFFE0037),
                     ),
                     label: const Text("Sign up"),
