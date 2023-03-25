@@ -1,9 +1,16 @@
 let mongoose = require('mongoose');
+let shortid = require('shortId');
 
 const communitySchema = Schema({
-    likes: Number,
+    likes: {
+        type : Number,
+        default : 0
+    },
     title: String,
-    uuid : String,
+    uuid : {
+        type : String,
+        default : shortid.generate
+    },
     image: String
 });
 
