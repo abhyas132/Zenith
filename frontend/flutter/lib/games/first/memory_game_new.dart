@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 import 'package:zenith/games/first/counter.dart';
 import 'package:zenith/games/first/tile.dart';
+
+import '../../utils/emotion_face.dart';
+import '../../utils/snackbar.dart';
 
 class MemoryGame1 extends StatefulWidget {
   const MemoryGame1({Key? key}) : super(key: key);
@@ -37,6 +42,7 @@ class _MemoryGame1State extends State<MemoryGame1> {
 
   @override
   void dispose() {
+    Countdown;
     super.dispose();
   }
 
@@ -77,6 +83,36 @@ class _MemoryGame1State extends State<MemoryGame1> {
                       crossAxisCount: 3),
                   children: counter.getCounter < 0 ? generateTiles() : grid,
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    emotionface(emoji: "⌛"),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Countdown(
+                      seconds: 120,
+                      build: (BuildContext context, double time) => Text(
+                        time.toString() + " s",
+                        style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.red)),
+                      ),
+                      interval: Duration(milliseconds: 100),
+                      onFinished: () {
+                        ShowSnakBar(
+                            context: context,
+                            content: "Play Time Over, Please Come Later");
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                )
 
                 // Text(
                 //   "Time Left : ${_showSecs}",

@@ -2,9 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 import 'package:zenith/games/custom_button.dart';
 import 'package:zenith/globalvariables.dart';
 
+import '../../utils/emotion_face.dart';
+import '../../utils/snackbar.dart';
 import 'level_transition/level_end_transition.dart';
 import 'data/board_config.dart';
 import 'puzzle/puzzle_level.dart';
@@ -27,6 +31,7 @@ class _puz extends State<puz> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    Countdown;
     // TODO: implement dispose
     super.dispose();
   }
@@ -70,38 +75,70 @@ class _puz extends State<puz> with TickerProviderStateMixin {
           onPressed: () {},
         ),
       ),
-      body: GradientContainer(
-        child: BoardConfig(
-          unitSize: unitSize,
-          hideTexts: _hideTexts,
-          child: Stack(
-            children: [
-              if (_currentLevel == 0)
-                TutorialDialog(
-                  onDismiss: (bool hideTexts) {
-                    setState(() => _hideTexts = hideTexts);
-                    _advanceToNextLevel();
-                  },
-                ),
-              if (_currentLevel > 0)
-                Center(
-                  child: ScaleTransition(
-                    scale: CurveTween(curve: Curves.easeOut)
-                        .animate(_levelBeginController),
-                    child: LevelEndTransition(
-                      animation: _levelEndController,
-                      child: PuzzleLevel(
-                        // A single level of the puzzle.
-                        key: ValueKey(_currentLevel),
-                        level: _currentLevel,
-                        onWin: _onLevelCompleted,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GradientContainer(
+            child: BoardConfig(
+              unitSize: unitSize,
+              hideTexts: _hideTexts,
+              child: Stack(
+                children: [
+                  if (_currentLevel == 0)
+                    TutorialDialog(
+                      onDismiss: (bool hideTexts) {
+                        setState(() => _hideTexts = hideTexts);
+                        _advanceToNextLevel();
+                      },
+                    ),
+                  if (_currentLevel > 0)
+                    Center(
+                      child: ScaleTransition(
+                        scale: CurveTween(curve: Curves.easeOut)
+                            .animate(_levelBeginController),
+                        child: LevelEndTransition(
+                          animation: _levelEndController,
+                          child: PuzzleLevel(
+                            // A single level of the puzzle.
+                            key: ValueKey(_currentLevel),
+                            level: _currentLevel,
+                            onWin: _onLevelCompleted,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-            ],
+                ],
+              ),
+            ),
           ),
-        ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              emotionface(emoji: "⌛"),
+              SizedBox(
+                width: 10,
+              ),
+              Countdown(
+                seconds: 120,
+                build: (BuildContext context, double time) => Text(
+                  time.toString() + " s",
+                  style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red)),
+                ),
+                interval: Duration(milliseconds: 100),
+                onFinished: () {
+                  ShowSnakBar(
+                      context: context,
+                      content: "Play Time Over, Please Come Later");
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

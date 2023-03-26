@@ -29,6 +29,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  anim_search_bar: ^2.0.3
   audioplayers: ^3.0.1
   carousel_slider: ^4.2.1
   chips_choice_null_safety: ^2.0.6
@@ -58,9 +59,9 @@ dependencies:
   quickalert: ^1.0.1
   rive: ^0.10.3
   shared_preferences: ^2.0.20
+  timer_count_down: ^2.2.2
   video_player: ^2.6.0
-  anim_search_bar: ^2.0.3
-  
+
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/models/user_modal.dart';
@@ -59,6 +60,7 @@ class _SearchPageState extends State<SearchPage> {
   void addFriend(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('x-auth-token');
+    context.loaderOverlay.show();
     final res = await http.post(
       Uri.parse("${url}api/v1/add/friend"),
       headers: <String, String>{
@@ -73,6 +75,7 @@ class _SearchPageState extends State<SearchPage> {
     );
 
     print(res.body);
+    context.loaderOverlay.hide();
     if (res.statusCode == 200) {
       ShowSnakBar(context: context, content: "Added a friend");
     } else {
@@ -90,43 +93,45 @@ class _SearchPageState extends State<SearchPage> {
   bool isLog = true;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "searched result",
+    return LoaderOverlay(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "searched result",
+          ),
+          backgroundColor: GlobalVariables.backgroundColor,
         ),
-        backgroundColor: GlobalVariables.backgroundColor,
-      ),
-      body: isLog
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : user != null
-              ? Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      //radius: 50,
-                      backgroundImage: AssetImage('assets/man.png'),
-                    ),
-                    title: Text(
-                      user!.name,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+        body: isLog
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : user != null
+                ? Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        //radius: 50,
+                        backgroundImage: AssetImage('assets/man.png'),
+                      ),
+                      title: Text(
+                        user!.name,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text("add a friend"),
+                      trailing: IconButton(
+                        onPressed: () {
+                          addFriend(context);
+                        },
+                        icon: Icon(Icons.add),
                       ),
                     ),
-                    subtitle: Text("add a friend"),
-                    trailing: IconButton(
-                      onPressed: () {
-                        addFriend(context);
-                      },
-                      icon: Icon(Icons.add),
-                    ),
+                  )
+                : Center(
+                    child: Text("Not found"),
                   ),
-                )
-              : Center(
-                  child: Text("Not found"),
-                ),
+      ),
     );
   }
 }

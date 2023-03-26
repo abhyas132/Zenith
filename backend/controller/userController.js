@@ -38,6 +38,7 @@ exports.addFriend = BigPromise(async (req, res, next) => {
     let { id } = req.body;
 
     for(let objId of user.friends){
+        console.log(objId.toString());
         if(objId.toString() === id.toString()){
             return res.status(404).json({
                 status: 404,
