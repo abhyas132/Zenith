@@ -12,6 +12,8 @@ import 'package:zenith/utils/snackbar.dart';
 import '../models/scheduleModel.dart';
 import '../utils/getrequest.dart';
 import '../utils/schedule_tile.dart';
+import 'package:quickalert/quickalert.dart';
+
 import 'form_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -39,7 +41,12 @@ class _HomePageState extends State<HomePage> {
     );
     print(res.body);
     if (res.statusCode == 200) {
-      ShowSnakBar(context: context, content: "Task completed");
+      // ShowSnakBar(context: context, content: "Task completed");
+      return QuickAlert.show(
+        context: context,
+        type: QuickAlertType.success,
+        text: 'Task Done Successfully!',
+      );
     } else {
       // ShowSnakBar(context: context, content: "");
     }
@@ -380,10 +387,12 @@ class _HomePageState extends State<HomePage> {
                                         color: Colors.green),
                                     key: Key(item.uid!),
                                     direction: DismissDirection.endToStart,
-                                    onDismissed: (direction) => setState(() {
-                                      schedule.removeAt(index);
-                                      deleteTask(item.uid!);
-                                    }),
+                                    onDismissed: (direction) {
+                                      setState(() {
+                                        schedule.removeAt(index);
+                                        deleteTask(item.uid!);
+                                      });
+                                    },
                                     child: tile1(
                                       totaltask: schedule.length.toDouble(),
                                       starttime:

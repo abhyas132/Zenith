@@ -75,7 +75,7 @@ class _SharePageState extends State<SharePage> {
   }
 
   void uploadCommunityPost() async {
-    if (imageUrls.length > 0 && controller.text.isNotEmpty) {
+    if (controller.text.isNotEmpty) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
 
@@ -87,7 +87,7 @@ class _SharePageState extends State<SharePage> {
         },
         body: jsonEncode(
           {
-            "image": imageUrls[0],
+            "image": "",
             "title": controller.text,
           },
         ),
@@ -104,20 +104,25 @@ class _SharePageState extends State<SharePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          backgroundColor: GlobalVariables.backgroundColor,
         ),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              SizedBox(
+                height: 30,
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
+                  height: 200,
                   padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border:
-                          Border.all(color: Color.fromARGB(255, 74, 102, 225))),
+                          Border.all(color: GlobalVariables.buttonColortile)),
                   child: TextField(
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -127,65 +132,79 @@ class _SharePageState extends State<SharePage> {
                   ),
                 ),
               ),
-              images.isNotEmpty
-                  ? CarouselSlider(
-                      items: images.map(
-                        (i) {
-                          return Builder(
-                            builder: (BuildContext context) => Image.file(
-                              i,
-                              fit: BoxFit.cover,
-                              height: 200,
-                            ),
-                          );
-                        },
-                      ).toList(),
-                      options: CarouselOptions(
-                        viewportFraction: 1,
-                        height: 200,
-                      ),
-                    )
-                  : GestureDetector(
-                      onTap: selectImages,
-                      child: DottedBorder(
-                        borderType: BorderType.Rect,
-                        radius: const Radius.circular(10),
-                        dashPattern: const [10, 4],
-                        strokeCap: StrokeCap.round,
-                        child: Container(
-                          width: double.infinity,
-                          height: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(children: const [
-                            Icon(
-                              Icons.folder_open,
-                              size: 40,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              'Select Product Images',
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ]),
-                        ),
-                      ),
-                    ),
-              ElevatedButton(
-                onPressed: () async {
-                  context.loaderOverlay.show();
-                  await upload();
-                  context.loaderOverlay.hide();
-                  uploadCommunityPost();
-                  Navigator.pop(context);
-                },
-                child: const Text("share"),
+              // images.isNotEmpty
+              //     ? CarouselSlider(
+              //         items: images.map(
+              //           (i) {
+              //             return Builder(
+              //               builder: (BuildContext context) => Image.file(
+              //                 i,
+              //                 fit: BoxFit.cover,
+              //                 height: 200,
+              //               ),
+              //             );
+              //           },
+              //         ).toList(),
+              //         options: CarouselOptions(
+              //           viewportFraction: 1,
+              //           height: 200,
+              //         ),
+              //       )
+              // : GestureDetector(
+              //     onTap: selectImages,
+              //     child: DottedBorder(
+              //       borderType: BorderType.Rect,
+              //       radius: const Radius.circular(10),
+              //       dashPattern: const [10, 4],
+              //       strokeCap: StrokeCap.round,
+              //       child: Container(
+              //         width: double.infinity,
+              //         height: 150,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(10),
+              //         ),
+              //         child: Column(children: const [
+              //           Icon(
+              //             Icons.folder_open,
+              //             size: 40,
+              //           ),
+              //           SizedBox(
+              //             height: 15,
+              //           ),
+              //           Text(
+              //             'Select Product Images',
+              //             style: TextStyle(
+              //               fontSize: 15,
+              //               color: Colors.grey,
+              //             ),
+              //           ),
+              //         ]),
+              //       ),
+              //     ),
+              //   ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 1,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: GlobalVariables.backgroundColor,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                        textStyle: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                    onPressed: () async {
+                      context.loaderOverlay.show();
+                      //await upload();
+                      context.loaderOverlay.hide();
+                      uploadCommunityPost();
+                      Navigator.pop(context);
+                    },
+                    child: Container(child: Center(child: const Text("share"))),
+                  ),
+                ],
               ),
             ],
           ),
