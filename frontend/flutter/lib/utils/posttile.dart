@@ -25,7 +25,7 @@ class PostTile extends StatelessWidget {
               Container(
                   //color: GlobalVariables.backgroundColor,
                   // padding: EdgeInsets.only(left: 10),
-                  height: 60,
+                  height: 200,
                   width: 270,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
