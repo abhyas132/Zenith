@@ -50,7 +50,7 @@ class _leaderboardState extends State<leaderboard> {
           )
         : Scaffold(
             appBar: AppBar(
-              title: Text("search Friend"),
+              title: Text("leaderboard"),
               actions: [
                 AnimSearchBar(
                   width: MediaQuery.of(context).size.width * 0.8,

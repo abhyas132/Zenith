@@ -95,13 +95,26 @@ class _SearchPageState extends State<SearchPage> {
               child: CircularProgressIndicator(),
             )
           : user != null
-              ? ListTile(
-                  title: Text(user!.name),
-                  trailing: IconButton(
-                    onPressed: () {
-                      addFriend();
-                    },
-                    icon: Icon(Icons.add),
+              ? Card(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      //radius: 50,
+                      backgroundImage: AssetImage('assets/man.png'),
+                    ),
+                    title: Text(
+                      user!.name,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Text("add a friend"),
+                    trailing: IconButton(
+                      onPressed: () {
+                        addFriend();
+                      },
+                      icon: Icon(Icons.add),
+                    ),
                   ),
                 )
               : Center(
