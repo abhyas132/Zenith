@@ -37,6 +37,15 @@ exports.addFriend = BigPromise(async (req, res, next) => {
     let user = req.user;
     let { id } = req.body;
 
+    for(let objId of user.friends){
+        if(objId.toString() === id.toString()){
+            return res.status(404).json({
+                status: 404,
+                message: "user already added to friends list",
+              });
+        }
+    }
+
     user.friends = [...user.friends, id];
 
     await user.save();
