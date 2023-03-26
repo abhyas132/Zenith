@@ -26,6 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final url = GlobalVariables.baseUrl;
+  bool isLoad = true;
   deleteTask(String taskId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('x-auth-token');
@@ -207,6 +208,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState;
     getData();
+
     // Future.delayed(Duration.zero, () {
     //   sports =
     //       Provider.of<UserProvider>(context, listen: false).user.sportActivity;
@@ -217,7 +219,7 @@ class _HomePageState extends State<HomePage> {
     // });
   }
 
-  getData() async {
+  Future<void> getData() async {
     GetRequest sc = GetRequest();
     await sc.getData();
     schedule = sc.schedules;
