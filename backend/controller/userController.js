@@ -32,6 +32,7 @@ exports.searchUser = BigPromise(async (req, res, next) => {
     }
 
 });
+
 exports.addFriend = BigPromise(async (req, res, next) => {
     let user = req.user;
     let { id } = req.body;
@@ -40,22 +41,19 @@ exports.addFriend = BigPromise(async (req, res, next) => {
 
     await user.save();
 
-   return res.status(200).json({
-     status: 200,
-     message: "user added successfully",
-   });
-
-
+    return res.status(200).json({
+      status: 200,
+      message: "user added successfully",
+    });
 });
 
 exports.getFriends = BigPromise(async (req, res, next) => {
+    let user = await User.findOne({userId : req.user.userId}).populate([{path : 'friends', model : User}]) ;
 
-    let user = await User.findOne({userId : req.user.userId}).populate([{path : 'friends'}]) ;
-    console.log(user);
     return res.status(200).json({
         status: 200,
         message: "friends fetch successfully",
-        user,
+        friends : user.friends,
     });
 
 });
