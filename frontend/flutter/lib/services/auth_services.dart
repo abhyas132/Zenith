@@ -141,6 +141,9 @@ class AuthServices {
         email: data['email'],
         // password: data['password'],
         zenCoins: data['zenCoins'],
+        studyActivity: data['studyActivity'],
+        sportActivity: data['sportActivity'],
+        otherActivity: data['otherActivity'],
       );
       Provider.of<UserProvider>(context, listen: false).setUserFromModel(user);
     } catch (e) {
