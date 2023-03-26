@@ -77,7 +77,7 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
 
         if(currTask.duration <= currInterval[2]){
 
-            if(totalTimeBusy + currTask.duration <= currTask.attentionTime){
+            if(totalTimeBusy + currTask.duration <= 1){
                 totalTimeBusy += currTask.duration ; 
 
                 currTask.startTime = currInterval[0] ;
@@ -89,7 +89,7 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
                 totalTimeBusy = 0 ;
 
                 currTask.startTime = currInterval[0] ;
-                currTask.endTime =  findEndTime(currInterval[0], attentionTime - totalTimeBusy);
+                currTask.endTime =  findEndTime(currInterval[0], 1 - totalTimeBusy);
                    
                 if(currTask.endTime < 2400){
                     let relaxTask = new Task({
@@ -97,7 +97,7 @@ exports.createSchedule = BigPromise(async (req, res, next) => {
                         description : "Have a break, have a kitkat",
                         taskType : "static",
                         startTime : currTask.endTime,
-                        endTime : Math.min(2400, Math.max(this.findEndTime(currTask.endTime, relaxationTime), currInterval[1])),
+                        endTime : Math.min(2400, Math.min(this.findEndTime(currTask.endTime, relaxationTime), currInterval[1])),
                         duration : relaxationTime,
                         userId : currTask.userId
                     })

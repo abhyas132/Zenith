@@ -117,6 +117,7 @@ exports.deleteTask = BigPromise(async(req, res, next) => {
     await user.save() ;
 
     await Task.deleteOne({uid : taskId}) ;
+    console.log(taskId);
 
     return res.status(200).json({
         status: 200,

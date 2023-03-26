@@ -74,8 +74,8 @@ class _body_pageState extends State<body_page> {
                     text: "Add Task",
                   ),
                   GButton(
-                    icon: Icons.person,
-                    text: "Profile",
+                    icon: Icons.pages,
+                    text: "Retention",
                   ),
                 ],
                 onTabChange: (int index) {
