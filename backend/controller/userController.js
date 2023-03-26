@@ -12,6 +12,54 @@ exports.getAllUser = BigPromise(async (req, res, next) => {
     });
 });
 
+exports.searchUser = BigPromise(async (req, res, next) => {
+    let { email } = req.body;
+    let user = await User.findOne({ email: email });
+
+    if (user)
+    {
+        return res.status(200).json({
+            status: 200,
+            message: "user found successfully",
+            user,
+        });
+    }
+    else {
+         return res.status(404).json({
+           status: 404,
+           message: "user not found",
+         });
+    }
+
+});
+exports.addFriend = BigPromise(async (req, res, next) => {
+    let user = req.user;
+    let { id } = req.body;
+
+    user.friends = [...user.friends, id];
+
+    await user.save();
+
+   return res.status(200).json({
+     status: 200,
+     message: "user added successfully",
+   });
+
+
+});
+
+exports.getFriends = BigPromise(async (req, res, next) => {
+
+    let user = await User.findOne({userId : req.user.userId}).populate([{path : 'friends'}]) ;
+    console.log(user);
+    return res.status(200).json({
+        status: 200,
+        message: "friends fetch successfully",
+        user,
+    });
+
+});
+
 exports.getUser = BigPromise(async(req, res, next) => {
     let user = req.user ;
 
@@ -33,7 +81,7 @@ exports.updateUser = BigPromise(async(req, res, next) => {
     const {name, email, password ,zenCoins} = req.body;
 
     if(!name){
-        return reverse.status(400).json({
+        return res.status(400).json({
             status : 400,
             message : "Please provide name of the user"
         })

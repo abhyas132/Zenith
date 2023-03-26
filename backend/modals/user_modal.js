@@ -39,7 +39,10 @@ const userSchema = mongoose.Schema({
     otherActivity : {
         type : Number,
         default : 0
-    }
+    },
+    friends: [{
+        type: mongoose.Types.ObjectId,
+    }]
 });
 
 userSchema.methods.getJwtToken = function () {
