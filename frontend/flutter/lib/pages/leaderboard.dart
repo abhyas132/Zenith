@@ -51,6 +51,7 @@ class _leaderboardState extends State<leaderboard> {
         : Scaffold(
             appBar: AppBar(
               title: Text("leaderboard"),
+              backgroundColor: GlobalVariables.backgroundColor,
               actions: [
                 AnimSearchBar(
                   width: MediaQuery.of(context).size.width * 0.8,

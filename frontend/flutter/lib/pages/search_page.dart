@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/models/user_modal.dart';
+import 'package:zenith/utils/snackbar.dart';
 
 class SearchPage extends StatefulWidget {
   String txt;
@@ -55,7 +56,7 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
-  void addFriend() async {
+  void addFriend(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('x-auth-token');
     final res = await http.post(
@@ -72,6 +73,11 @@ class _SearchPageState extends State<SearchPage> {
     );
 
     print(res.body);
+    if (res.statusCode == 200) {
+      ShowSnakBar(context: context, content: "Added a friend");
+    } else {
+      ShowSnakBar(context: context, content: "Already a friend");
+    }
   }
 
   @override
@@ -89,6 +95,7 @@ class _SearchPageState extends State<SearchPage> {
         title: Text(
           "searched result",
         ),
+        backgroundColor: GlobalVariables.backgroundColor,
       ),
       body: isLog
           ? Center(
@@ -111,7 +118,7 @@ class _SearchPageState extends State<SearchPage> {
                     subtitle: Text("add a friend"),
                     trailing: IconButton(
                       onPressed: () {
-                        addFriend();
+                        addFriend(context);
                       },
                       icon: Icon(Icons.add),
                     ),
