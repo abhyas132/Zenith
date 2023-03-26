@@ -42,7 +42,7 @@ const userSchema = mongoose.Schema({
     },
     friends: [{
         type: mongoose.Types.ObjectId,
-        unique : true
+        unique : true 
     }]
 });
 
