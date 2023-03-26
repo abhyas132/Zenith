@@ -33,7 +33,7 @@ exports.findVoidIntervals = async (currentTime, staticTasks, relaxationTime) => 
                 description : "Have a break, have a kitkat",
                 taskType : "static",
                 startTime : task.endTime,
-                endTime : Math.min(2400, this.findEndTime(task.endTime, relaxationTime)),
+                endTime : Math.min(2400, Math.min(this.findEndTime(task.endTime, relaxationTime), i+1 < len ? staticTasks[i+1].startTime : 2400)),
                 duration : relaxationTime,
                 userId : task.userId
             })

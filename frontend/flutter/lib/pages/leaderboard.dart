@@ -41,52 +41,31 @@ class _leaderboardState extends State<leaderboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("LeaderBoard"),
-          backgroundColor: GlobalVariables.backgroundColor,
-        ),
-        body: SingleChildScrollView(
-          child: Column(children: [
-            // Container(
-            //   // margin: EdgeInsets.only(left: 15, right: 15),
-            //   padding: EdgeInsets.only(left: 12, right: 30),
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(15),
-            //     color: Colors.blue,
-            //   ),
-            //   margin: EdgeInsets.only(top: 15, left: 4, right: 4),
-            //   height: MediaQuery.of(context).size.height * 0.09,
-            // //   child: Row(
-            // //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // //     children: [
-            // //       Icon(
-            // //         CupertinoIcons.add,
-            // //       ),
-            // //       SizedBox(
-            // //         width: 3,
-            // //       ),
-            // //       Text("User",
-            // //           style: GoogleFonts.poppins(
-            // //               textStyle: GlobalVariables.textstylehead)),
-            // //       Text("ZenCoins")
-            // //     ],
-            // //   ),
-            // // ),
-            ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                return LeaderBoardTile(
-                  index: index,
-                  userId: users[index].userId,
-                  name: users[index].name,
-                  zenCoins: users[index].zenCoins,
-                );
-              },
-            )
-          ]),
-        ));
+    return _loading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Scaffold(
+            appBar: AppBar(
+              title: Text("LeaderBoard"),
+              backgroundColor: GlobalVariables.backgroundColor,
+            ),
+            body: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: users.length,
+                  itemBuilder: (context, index) {
+                    return LeaderBoardTile(
+                      index: index,
+                      userId: users[index].userId,
+                      name: users[index].name,
+                      zenCoins: users[index].zenCoins,
+                    );
+                  },
+                )
+              ]),
+            ));
   }
 }

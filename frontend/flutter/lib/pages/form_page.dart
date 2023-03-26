@@ -145,25 +145,25 @@ class _AddFormState extends State<AddForm> {
 
   @override
   Widget build(BuildContext context) {
-return LoaderOverlay(
-    child: Scaffold(
-      appBar: AppBar(
-        backgroundColor: GlobalVariables.backgroundColor,
-        title: Text('Add New Item'),
-      ),
-      body: Container(
-        height: 1456789876567,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/background2.jpg"),
-            opacity: 0.1,
-            fit: BoxFit.cover,
-          ),
+    return LoaderOverlay(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: GlobalVariables.backgroundColor,
+          title: Text('Add New Item'),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
+        body: Container(
+          height: 1456789876567,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/background2.jpg"),
+              opacity: 0.1,
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+                child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
@@ -205,8 +205,7 @@ return LoaderOverlay(
                 SizedBox(height: 16),
                 _isStatic ? _buildStaticForm() : _buildDynamicForm(),
               ],
-              )
-            ),
+            )),
           ),
         ),
       ),
@@ -251,32 +250,63 @@ return LoaderOverlay(
                 },
               ),
               SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Column(
                 children: [
-                  Text("Duration",
-                      style: TextStyle(
-                          color: GlobalVariables.backgroundColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
-                  DropdownButton<String>(
-                    value: _selectedItem,
-                    items: _durationhrs.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value,
-                            style: TextStyle(
-                                color: GlobalVariables.secondaryColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold)),
-                      );
-                    }).toList(),
-                    onChanged: (String? selectedItem) {
-                      setState(() {
-                        _selectedItem = (selectedItem!);
-                        print(_selectedItem);
-                      });
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text("Duration",
+                          style: TextStyle(
+                              color: GlobalVariables.backgroundColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold)),
+                      DropdownButton<String>(
+                        value: _selectedItem,
+                        items: _durationhrs.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value,
+                                style: TextStyle(
+                                    color: GlobalVariables.secondaryColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold)),
+                          );
+                        }).toList(),
+                        onChanged: (String? selectedItem) {
+                          setState(() {
+                            _selectedItem = (selectedItem!);
+                            print(_selectedItem);
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text("Attention Time",
+                          style: TextStyle(
+                              color: GlobalVariables.backgroundColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold)),
+                      DropdownButton<String>(
+                        value: _selectedItem,
+                        items: _durationhrs.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value,
+                                style: TextStyle(
+                                    color: GlobalVariables.secondaryColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold)),
+                          );
+                        }).toList(),
+                        onChanged: (String? selectedItem) {},
+                      ),
+                    ],
                   ),
                 ],
               ),
