@@ -7,10 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:zenith/globalvariables.dart';
 import 'package:zenith/models/post.dart';
+import 'package:zenith/pages/search_page.dart';
 import 'package:zenith/utils/getleaderboard.dart';
 import 'package:zenith/utils/leaderBoardtile.dart';
 
 import '../models/userModal.dart';
+import 'package:anim_search_bar/anim_search_bar.dart';
 
 const url = GlobalVariables.baseUrl;
 
@@ -41,14 +43,33 @@ class _leaderboardState extends State<leaderboard> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController txt = TextEditingController();
     return _loading
         ? Center(
             child: CircularProgressIndicator(),
           )
         : Scaffold(
             appBar: AppBar(
-              title: Text("LeaderBoard"),
-              backgroundColor: GlobalVariables.backgroundColor,
+              title: Text("search Friend"),
+              actions: [
+                AnimSearchBar(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  onSubmitted: (value) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SearchPage(txt: value),
+                      ),
+                    );
+                  },
+                  textController: txt,
+                  onSuffixTap: () {
+                    setState(() {
+                      txt.clear();
+                    });
+                  },
+                ),
+              ],
             ),
             body: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
